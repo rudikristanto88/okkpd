@@ -163,4 +163,8 @@
         return $this->upload->data();
       }
     }
+
+    public function trial(){
+      echo "halo";
+    }
   }
