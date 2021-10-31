@@ -2136,4 +2136,8 @@ class Dashboard extends MY_Controller {
 							// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
 				}
 
+
+				function helloword(){
+					echo "Hello";
+				}
 				}
