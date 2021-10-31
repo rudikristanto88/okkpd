@@ -1,0 +1,99 @@
+.theme-deep-purple {
+  /* breadcrumb style */
+  /* card header style */
+  /* table pagination style */
+  /* primary button */
+  /* Tab selected color */ }
+  .theme-deep-purple .navbar {
+    background-color: #673AB7; }
+  .theme-deep-purple .nav > li > a {
+    color: #fff; }
+    .theme-deep-purple .nav > li > a:hover {
+      background-color: rgba(0, 0, 0, 0);
+      text-decoration: none; }
+    .theme-deep-purple .nav > li > a:focus {
+      background-color: rgba(0, 0, 0, 0);
+      text-decoration: none; }
+  .theme-deep-purple .bars {
+    color: #fff; }
+  .theme-deep-purple .sidebar .menu .list li.active {
+    background-color: rgba(0, 0, 0, 0); }
+    .theme-deep-purple .sidebar .menu .list li.active > :first-child i, .theme-deep-purple .sidebar .menu .list li.active > :first-child span {
+      color: #673AB7; }
+  .theme-deep-purple .sidebar .menu .list li a {
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s; }
+    .theme-deep-purple .sidebar .menu .list li a i, .theme-deep-purple .sidebar .menu .list li a span {
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s; }
+    .theme-deep-purple .sidebar .menu .list li a:hover {
+      color: #673AB7; }
+      .theme-deep-purple .sidebar .menu .list li a:hover i, .theme-deep-purple .sidebar .menu .list li a:hover span {
+        color: #673AB7; }
+  .theme-deep-purple .sidebar .menu .list .toggled {
+    background-color: rgba(0, 0, 0, 0); }
+  .theme-deep-purple .sidebar .menu .list .ml-menu {
+    background-color: rgba(0, 0, 0, 0); }
+    .theme-deep-purple .sidebar .menu .list .ml-menu .active a {
+      font-weight: 700; }
+  .theme-deep-purple .sidebar .legal {
+    background-color: #fff; }
+    .theme-deep-purple .sidebar .legal .copyright a {
+      color: #673AB7 !important; }
+  .theme-deep-purple .breadcrumb li a {
+    color: #673AB7 !important; }
+  .theme-deep-purple .card .header h2 strong {
+    color: #bbb !important; }
+  .theme-deep-purple .page-item.active .page-link {
+    background-color: #673AB7;
+    border-color: #673AB7;
+    color: #FFFFFF;
+    border-radius: 50%;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2); }
+  .theme-deep-purple .btn-primary {
+    background-color: #673AB7 !important;
+    color: #fff !important;
+    border-color: #673AB7 !important; }
+    .theme-deep-purple .btn-primary:hover {
+      background-color: #673AB7 !important;
+      color: #fff !important; }
+    .theme-deep-purple .btn-primary:active {
+      background-color: #673AB7 !important;
+      color: #fff !important; }
+    .theme-deep-purple .btn-primary:focus {
+      background-color: #673AB7 !important;
+      color: #fff !important; }
+    .theme-deep-purple .btn-primary:disabled {
+      background-color: #673AB7 !important;
+      color: #fff !important; }
+  .theme-deep-purple .btn-outline-primary {
+    background: 0 0 !important;
+    color: #673AB7 !important;
+    border: 1px solid #673AB7 !important; }
+    .theme-deep-purple .btn-outline-primary:hover {
+      background: #673AB7 !important;
+      color: #fff !important;
+      border: 1px solid #673AB7 !important; }
+  .theme-deep-purple .timelineLabelColor strong {
+    color: #673AB7 !important; }
+  .theme-deep-purple .top-sidebar .horizontal-menu li.active > a {
+    color: #673AB7; }
+  .theme-deep-purple .top-sidebar .horizontal-menu li a {
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s; }
+    .theme-deep-purple .top-sidebar .horizontal-menu li a:hover {
+      color: #673AB7; }
+  .theme-deep-purple .nav-tabs > li > a:before {
+    border-bottom: 2px solid #673AB7; }
+  .theme-deep-purple .sidemenu-collapse i {
+    color: #fff; }
+
+/*Logo Header Background Color*/
+.logo-deep-purple .navbar-header {
+  background-color: #673AB7; }

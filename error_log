@@ -1,0 +1,85 @@
+[16-Nov-2018 16:16:57 Asia/Jakarta] PHP Fatal error:  Can't use method return value in write context in /home/yogaa209/public_html/okkpd/application/controllers/dashboard/Dashboard.php on line 111
+[16-Nov-2018 16:17:13 Asia/Jakarta] PHP Fatal error:  Can't use method return value in write context in /home/yogaa209/public_html/okkpd/application/controllers/dashboard/Dashboard.php on line 111
+[16-Nov-2018 16:17:25 Asia/Jakarta] PHP Fatal error:  Can't use method return value in write context in /home/yogaa209/public_html/okkpd/application/controllers/dashboard/Dashboard.php on line 115
+[20-Nov-2018 13:02:33 Asia/Jakarta] PHP Fatal error:  Cannot re-assign auto-global variable _FILES in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 356
+[20-Nov-2018 13:02:50 Asia/Jakarta] PHP Fatal error:  Cannot re-assign auto-global variable _FILES in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 356
+[20-Nov-2018 13:03:20 Asia/Jakarta] PHP Fatal error:  Cannot re-assign auto-global variable _FILES in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 356
+[23-Nov-2018 16:33:36 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Admin::tambah_tautan() in /home/yogaa209/public_html/okkpd/application/controllers/Admin.php on line 119
+[23-Nov-2018 18:03:03 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Admin::insert_berita() in /home/yogaa209/public_html/okkpd/application/controllers/Admin.php on line 198
+[26-Nov-2018 21:42:08 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Admin::maklumat() in /home/yogaa209/public_html/okkpd/application/controllers/Admin.php on line 487
+[26-Nov-2018 21:54:30 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Admin::insert_maklumat() in /home/yogaa209/public_html/okkpd/application/controllers/Admin.php on line 541
+[26-Nov-2018 21:54:34 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Admin::insert_maklumat() in /home/yogaa209/public_html/okkpd/application/controllers/Admin.php on line 541
+[28-Nov-2018 19:57:21 Asia/Jakarta] PHP Fatal error:  Class 'MyController' not found in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 4
+[28-Nov-2018 19:59:26 Asia/Jakarta] PHP Fatal error:  Class 'MY_Controller' not found in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 4
+[28-Nov-2018 19:59:30 Asia/Jakarta] PHP Fatal error:  Class 'MY_Controller' not found in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 4
+[04-Dec-2018 21:40:31 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/yogaa209/public_html/okkpd/system/libraries/Session/drivers/Session_files_driver.php on line 420
+[04-Dec-2018 21:41:31 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/yogaa209/public_html/okkpd/system/libraries/Session/drivers/Session_files_driver.php on line 212
+[04-Dec-2018 21:42:31 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/yogaa209/public_html/okkpd/system/libraries/Session/drivers/Session_files_driver.php on line 210
+[04-Dec-2018 21:43:32 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/yogaa209/public_html/okkpd/system/libraries/Session/drivers/Session_files_driver.php on line 212
+[04-Dec-2018 21:44:34 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/yogaa209/public_html/okkpd/system/libraries/Session/drivers/Session_files_driver.php on line 212
+[04-Dec-2018 21:45:35 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/yogaa209/public_html/okkpd/system/libraries/Session/drivers/Session_files_driver.php on line 212
+[04-Dec-2018 21:46:39 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/yogaa209/public_html/okkpd/system/libraries/Session/drivers/Session_files_driver.php on line 212
+[04-Dec-2018 23:15:28 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Dashboard::inspeksi_jenis_layanan() in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 670
+[04-Dec-2018 23:15:31 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Dashboard::inspeksi_jenis_layanan() in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 670
+[01-Jan-2019 16:35:36 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Admin::tambah_maklumat() in /home/yogaa209/public_html/okkpd/application/controllers/Admin.php on line 627
+[01-Jan-2019 16:37:21 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Admin::tambah_maklumat() in /home/yogaa209/public_html/okkpd/application/controllers/Admin.php on line 627
+[01-Jan-2019 16:37:49 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Admin::legalitas() in /home/yogaa209/public_html/okkpd/application/controllers/Admin.php on line 655
+[05-Jan-2019 22:40:30 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Dashboard::penugasan_ppc() in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 738
+[05-Jan-2019 22:40:33 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Dashboard::penugasan_ppc() in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 738
+[05-Jan-2019 22:40:36 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Dashboard::penugasan_ppc() in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 738
+[05-Jan-2019 22:57:33 Asia/Jakarta] PHP Fatal error:  Class 'Controller' not found in /home/yogaa209/public_html/okkpd/application/controllers/Email.php on line 2
+[05-Jan-2019 22:58:50 Asia/Jakarta] PHP Fatal error:  Class 'Controller' not found in /home/yogaa209/public_html/okkpd/application/controllers/Email.php on line 2
+[06-Jan-2019 00:05:19 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Home::penerbitan_hygne_sanitation() in /home/yogaa209/public_html/okkpd/application/controllers/Home.php on line 254
+[17-Jan-2019 20:53:09 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_admin::getKomoditas() in /home/yogaa209/public_html/okkpd/application/models/Model_admin.php on line 151
+[20-Jan-2019 09:58:28 Asia/Jakarta] PHP Fatal error:  Class 'MY_Controller' not found in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 4
+[23-Jan-2019 20:08:24 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Home::keluhan_saran() in /home/yogaa209/public_html/okkpd/application/controllers/Home.php on line 171
+[26-Jan-2019 17:09:51 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_user::getKelompok() in /home/yogaa209/public_html/okkpd/application/models/Model_user.php on line 640
+[26-Jan-2019 17:09:56 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_user::getKelompok() in /home/yogaa209/public_html/okkpd/application/models/Model_user.php on line 640
+[26-Jan-2019 17:09:59 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_user::getKelompok() in /home/yogaa209/public_html/okkpd/application/models/Model_user.php on line 640
+[26-Jan-2019 17:10:04 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_user::getKelompok() in /home/yogaa209/public_html/okkpd/application/models/Model_user.php on line 640
+[26-Jan-2019 17:10:07 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_user::getKelompok() in /home/yogaa209/public_html/okkpd/application/models/Model_user.php on line 640
+[26-Jan-2019 17:10:14 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_user::getKelompok() in /home/yogaa209/public_html/okkpd/application/models/Model_user.php on line 640
+[26-Jan-2019 17:10:16 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_user::getKelompok() in /home/yogaa209/public_html/okkpd/application/models/Model_user.php on line 640
+[26-Jan-2019 17:10:22 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_user::getKelompok() in /home/yogaa209/public_html/okkpd/application/models/Model_user.php on line 640
+[26-Jan-2019 17:10:23 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_user::getKelompok() in /home/yogaa209/public_html/okkpd/application/models/Model_user.php on line 640
+[26-Jan-2019 17:10:29 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_user::getKelompok() in /home/yogaa209/public_html/okkpd/application/models/Model_user.php on line 640
+[27-Jan-2019 20:56:52 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/yogaa209/public_html/okkpd/system/libraries/Session/drivers/Session_files_driver.php on line 212
+[30-Jan-2019 22:05:36 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/yogaa209/public_html/okkpd/system/libraries/Session/drivers/Session_files_driver.php on line 210
+[08-Feb-2019 23:24:42 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/yogaa209/public_html/okkpd/system/libraries/Session/drivers/Session_files_driver.php on line 212
+[10-Nov-2019 21:22:52 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:22:56 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:22:58 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:01 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:07 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:09 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:11 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:22 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:22 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:23 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:23 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:23 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:25 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:25 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:25 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:26 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:26 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:27 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:27 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:27 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:27 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:28 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[10-Nov-2019 21:23:28 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[14-Nov-2019 06:12:59 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_dokumen::getStatusLayanan() in /home/yogaa209/public_html/okkpd/application/models/Model_dokumen.php on line 49
+[14-Nov-2019 06:13:01 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Model_dokumen::getStatusLayanan() in /home/yogaa209/public_html/okkpd/application/models/Model_dokumen.php on line 49
+[14-Dec-2019 22:33:23 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[14-Dec-2019 22:33:25 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[14-Dec-2019 22:33:41 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[14-Dec-2019 23:15:43 Asia/Jakarta] PHP Fatal error:  Can't use function return value in write context in /home/yogaa209/public_html/okkpd/application/controllers/Dashboard.php on line 1065
+[22-Dec-2019 21:13:17 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[22-Dec-2019 21:13:24 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[22-Dec-2019 22:15:23 Asia/Jakarta] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/yogaa209/public_html/okkpd/system/libraries/Session/drivers/Session_files_driver.php on line 212
+[22-Dec-2019 22:50:30 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[22-Dec-2019 22:50:32 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[24-Jan-2020 08:10:41 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[24-Jan-2020 08:56:17 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291
+[24-Jan-2020 09:43:19 Asia/Jakarta] PHP Fatal error:  Cannot declare class QRcode, because the name is already in use in /home/yogaa209/public_html/okkpd/application/libraries/tcpdf/include/barcodes/qrcode.php on line 291

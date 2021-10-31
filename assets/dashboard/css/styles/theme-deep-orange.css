@@ -1,0 +1,99 @@
+.theme-deep-orange {
+  /* breadcrumb style */
+  /* card header style */
+  /* table pagination style */
+  /* primary button */
+  /* Tab selected color */ }
+  .theme-deep-orange .navbar {
+    background-color: #FF5722; }
+  .theme-deep-orange .nav > li > a {
+    color: #fff; }
+    .theme-deep-orange .nav > li > a:hover {
+      background-color: rgba(0, 0, 0, 0);
+      text-decoration: none; }
+    .theme-deep-orange .nav > li > a:focus {
+      background-color: rgba(0, 0, 0, 0);
+      text-decoration: none; }
+  .theme-deep-orange .bars {
+    color: #fff; }
+  .theme-deep-orange .sidebar .menu .list li.active {
+    background-color: rgba(0, 0, 0, 0); }
+    .theme-deep-orange .sidebar .menu .list li.active > :first-child i, .theme-deep-orange .sidebar .menu .list li.active > :first-child span {
+      color: #FF5722; }
+  .theme-deep-orange .sidebar .menu .list li a {
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s; }
+    .theme-deep-orange .sidebar .menu .list li a i, .theme-deep-orange .sidebar .menu .list li a span {
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s; }
+    .theme-deep-orange .sidebar .menu .list li a:hover {
+      color: #FF5722; }
+      .theme-deep-orange .sidebar .menu .list li a:hover i, .theme-deep-orange .sidebar .menu .list li a:hover span {
+        color: #FF5722; }
+  .theme-deep-orange .sidebar .menu .list .toggled {
+    background-color: rgba(0, 0, 0, 0); }
+  .theme-deep-orange .sidebar .menu .list .ml-menu {
+    background-color: rgba(0, 0, 0, 0); }
+    .theme-deep-orange .sidebar .menu .list .ml-menu .active a {
+      font-weight: 700; }
+  .theme-deep-orange .sidebar .legal {
+    background-color: #fff; }
+    .theme-deep-orange .sidebar .legal .copyright a {
+      color: #FF5722 !important; }
+  .theme-deep-orange .breadcrumb li a {
+    color: #FF5722 !important; }
+  .theme-deep-orange .card .header h2 strong {
+    color: #bbb !important; }
+  .theme-deep-orange .page-item.active .page-link {
+    background-color: #FF5722;
+    border-color: #FF5722;
+    color: #FFFFFF;
+    border-radius: 50%;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2); }
+  .theme-deep-orange .btn-primary {
+    background-color: #FF5722 !important;
+    color: #fff !important;
+    border-color: #FF5722 !important; }
+    .theme-deep-orange .btn-primary:hover {
+      background-color: #FF5722 !important;
+      color: #fff !important; }
+    .theme-deep-orange .btn-primary:active {
+      background-color: #FF5722 !important;
+      color: #fff !important; }
+    .theme-deep-orange .btn-primary:focus {
+      background-color: #FF5722 !important;
+      color: #fff !important; }
+    .theme-deep-orange .btn-primary:disabled {
+      background-color: #FF5722 !important;
+      color: #fff !important; }
+  .theme-deep-orange .btn-outline-primary {
+    background: 0 0 !important;
+    color: #FF5722 !important;
+    border: 1px solid #FF5722 !important; }
+    .theme-deep-orange .btn-outline-primary:hover {
+      background: #FF5722 !important;
+      color: #fff !important;
+      border: 1px solid #FF5722 !important; }
+  .theme-deep-orange .timelineLabelColor strong {
+    color: #FF5722 !important; }
+  .theme-deep-orange .top-sidebar .horizontal-menu li.active > a {
+    color: #FF5722; }
+  .theme-deep-orange .top-sidebar .horizontal-menu li a {
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s; }
+    .theme-deep-orange .top-sidebar .horizontal-menu li a:hover {
+      color: #FF5722; }
+  .theme-deep-orange .nav-tabs > li > a:before {
+    border-bottom: 2px solid #FF5722; }
+  .theme-deep-orange .sidemenu-collapse i {
+    color: #fff; }
+
+/*Logo Header Background Color*/
+.logo-deep-orange .navbar-header {
+  background-color: #FF5722; }
