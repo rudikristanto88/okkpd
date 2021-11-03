@@ -84,6 +84,7 @@ $route['dashboard/panduan'] = 'admin/panduan';
 $route['dashboard/tentang_kami'] = 'admin/tentang_kami';
 $route['dashboard/produk_hukum'] = 'admin/produk_hukum';
 $route['dashboard/kelola_komoditas'] = 'admin/kelola_komoditas';
+$route['dashboard/hasil_survey'] = 'admin/hasil_survey';
 
 
 $route['dashboard/kelola_kuesioner'] = 'admin/kelola_kuesioner';

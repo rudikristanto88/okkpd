@@ -13,7 +13,7 @@ class Dashboard extends MY_Controller
 		$this->load->model('model_user');
 		$this->load->model('model_admin');
 		$this->load->model('model_dokumen');
-		
+		$this->load->helper("data_helper");
 		$this->menu =  $this->model_user->getMenu($this->saya());
 		$this->bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 	}
@@ -22,7 +22,7 @@ class Dashboard extends MY_Controller
 		if ($this->session->userdata("dataLogin") == null) {
 			redirect("home/pendaftaran_online", "redirect");
 		}
-		
+
 
 		if ($this->saya() == "admin") {
 			$data['keluhan_saran'] = $this->model_admin->getKontakKami();
@@ -100,13 +100,13 @@ class Dashboard extends MY_Controller
 
 	public function main()
 	{
-		
+
 		$this->loadView('dashboard_view/fragment/main_fragment', $data);
 	}
 
 	public function profile($id_user)
 	{
-		
+
 		if ($id_user != $data['datalogin']['id_user']) {
 			echo '<h2>403 Forbidden</h2><br/>Anda tidak boleh mengakses halaman ini';
 		} else {
@@ -155,14 +155,14 @@ class Dashboard extends MY_Controller
 
 	public function daftar_usaha()
 	{
-		
+
 		$data['kota'] = $this->model_user->getDataKota();
 		$data['menu'] = 'tambah';
 		$this->loadView('dashboard_view/fragment/daftar_usaha_fragment', $data);
 	}
 	public function daftarkan_aktor()
 	{
-		
+
 		$data['role'] = $this->model_user->getMasterRole();
 		$data['kota'] = $this->model_user->getDataKota();
 		$this->loadView('dashboard_view/daftarkan_aktor', $data);
@@ -170,7 +170,7 @@ class Dashboard extends MY_Controller
 
 	public function registrasi_user()
 	{
-		
+
 		$this->loadView('dashboard_view/fragment/daftar_usaha_fragment', $data);
 	}
 
@@ -375,7 +375,7 @@ class Dashboard extends MY_Controller
 	// Daftar
 	public function pendaftaran($jenis = null)
 	{
-		
+
 		$data['identitas_usaha'] = $this->model_user->getDataUsaha($data['datalogin']['id_user']);
 
 
@@ -435,7 +435,7 @@ class Dashboard extends MY_Controller
 
 	public function dokumen($jenis = null, $id = 0)
 	{
-		
+
 		$identitas = $this->model_user->getDataUsaha($data['datalogin']['id_user']);
 		$data['syarat_teknis'] = $this->model_user->getDetailSyaratTeknis($jenis);
 		$data['id_layanan'] = $id;
@@ -461,7 +461,7 @@ class Dashboard extends MY_Controller
 		$isSuccess = false;
 		if ($jenis == null) {
 		} else if ($jenis == "ujimutu") {
-			
+
 			$i = $this->input;
 
 			$nama_produk = $i->post("nama_produk");
@@ -498,7 +498,7 @@ class Dashboard extends MY_Controller
 				$this->model_user->insertData("layanan_ujimutu", $dat);
 			}
 		} else if ($jenis == "psat") {
-			
+
 			$i = $this->input;
 
 			$nama_produk = $i->post("nama_produk");
@@ -523,7 +523,7 @@ class Dashboard extends MY_Controller
 				}
 			}
 		} else if ($jenis == "hc") {
-			
+
 			$i = $this->input;
 
 			$nama_produk = $i->post("nama_produk");
@@ -581,7 +581,7 @@ class Dashboard extends MY_Controller
 				}
 			}
 		} else if ($jenis == "hs") {
-			
+
 			$i = $this->input;
 
 			$kode_layanan = $i->post("kode_layanan");
@@ -591,7 +591,7 @@ class Dashboard extends MY_Controller
 				$isSuccess = true;
 			}
 		} else {
-			
+
 
 			$i = $this->input;
 
@@ -633,7 +633,7 @@ class Dashboard extends MY_Controller
 	//------------------------------------------------ Pelaku Usaha ------------------------------------
 	function identitas_usaha()
 	{
-		
+
 		$variable = $this->model_user->getDataWhere("identitas_usaha", "id_user", $data['datalogin']['id_user']);
 		foreach ($variable as $data['usaha']);
 		$data['kota'] = $this->model_user->getDataKota();
@@ -648,7 +648,7 @@ class Dashboard extends MY_Controller
 	}
 	function daftar($kode_layanan = null)
 	{
-		
+
 		if ($kode_layanan == "psat") {
 			$this->loadView('dashboard_view/pages/pelaku/daftar_psat', $data);
 		} else if ($kode_layanan == null) {
@@ -658,7 +658,7 @@ class Dashboard extends MY_Controller
 
 	function permohonan($jenis = null, $id_layanan = null)
 	{
-		
+
 		if ($jenis == "ditolak") {
 			$data['jenis'] = "Ditolak";
 			$data['permohonan'] = $this->model_user->getDataWhere("layanan", "alasan_penolakan", "is not null");
@@ -687,7 +687,7 @@ class Dashboard extends MY_Controller
 	//------------------------------------------------ Manager Administrasi ------------------------------------
 	function lihat_foto($file = null)
 	{
-		
+
 		$data['file'] = $file;
 		if ($this->post->input("file") != "") {
 			$data['file'] = $this->post->input("file");
@@ -696,7 +696,7 @@ class Dashboard extends MY_Controller
 	}
 	function dokumen_kelengkapan($id_dokumen)
 	{
-		
+
 		$file = $this->model_user->getDokumenById($id_dokumen);
 		foreach ($file as $file);
 		$data['tipe'] = $file['mime_type'];
@@ -706,7 +706,7 @@ class Dashboard extends MY_Controller
 	}
 	function lihat_surat_tugas($id_layanan)
 	{
-		
+
 		$file = $this->model_user->getDataWhere('layanan', 'uid', $id_layanan);
 		foreach ($file as $file);
 		$data['tipe'] = $file['tipe_surat_tugas'];
@@ -747,7 +747,7 @@ class Dashboard extends MY_Controller
 	}
 	function permohonan_diterima()
 	{
-		
+
 		// echo $data['datalogin']['kode_role'];
 		$data['dokumen'] = $this->model_user->getLayananDiterima($data['datalogin']['kode_role']);
 		$this->loadView('dashboard_view/pages/m_admin/permohonan_diterima', $data);
@@ -755,14 +755,14 @@ class Dashboard extends MY_Controller
 	}
 	function riwayat_permohonan()
 	{
-		
+
 		$data['dokumen'] = $this->model_user->getLayananDiterima($data['datalogin']['kode_role'], $data['datalogin']['id_user']);
 		$this->loadView('dashboard_view/pages/m_admin/permohonan_diterima', $data);
 		// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
 	}
 	function permohonan_ditolak()
 	{
-		
+
 		$data['dokumen'] = $this->model_user->getDokumenDitolakOleh($this->id_saya());
 		$this->loadView('dashboard_view/permohonan_ditolak', $data);
 		// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
@@ -770,7 +770,7 @@ class Dashboard extends MY_Controller
 
 	function penilaian_dokumen()
 	{
-		
+
 		$data['dokumen'] = $this->model_user->getDokumenLevel(1);
 		$data['id_saya'] = $this->id_saya();
 
@@ -781,7 +781,7 @@ class Dashboard extends MY_Controller
 	function cetak_sertifikat($menu = null, $kode_layanan = null)
 	{
 		$data['layanan'] = $menu;
-		
+
 		if ($menu == null) {
 			$data['layanan'] = $this->model_user->getDataWhere("master_layanan", "status", 1);
 			$this->loadView("dashboard_view/pages/m_admin/pilih_layanan_cetak", $data);
@@ -865,7 +865,7 @@ class Dashboard extends MY_Controller
 	// ========================
 	function daftar_sertifikat($menu = null)
 	{
-		
+
 		if ($menu == null) {
 			$data['layanan'] = $this->model_user->getDataWhere("master_layanan", "status", 1);
 			$data['jumlah_sertifikat'] = $this->model_user->getCountSertifikat();
@@ -941,7 +941,7 @@ class Dashboard extends MY_Controller
 		$syarat_teknis = $this->model_dokumen->getSyaratTeknis($id_layanan);
 		$identitas = $this->model_user->getDataUsahaByLayanan($id_layanan);
 
-		
+
 
 		echo "<div class='row'>";
 
@@ -1145,21 +1145,21 @@ class Dashboard extends MY_Controller
 
 	function penugasan_petugas_inspeksi()
 	{
-		
+
 		$data['inspeksi'] = $this->model_user->getDataInspeksi();
 		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
 		$this->loadView('dashboard_view/pages/m_teknis/penugasan_petugas_inspeksi', $data);
 	}
 	function penugasan_inspektor()
 	{
-		
+
 		$data['inspeksi'] = $this->model_user->getPenugasanInspeksi();
 		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
 		$this->loadView("dashboard_view/penugasan_inspeksi", $data, $this->bulan);
 	}
 	function penugasan_ppc()
 	{
-		
+
 		$data['ppc'] = $this->model_user->getPenugasanPPC();
 		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
 		$this->loadView("dashboard_view/penugasan_ppc", $data);
@@ -1167,7 +1167,7 @@ class Dashboard extends MY_Controller
 
 	function produk($kode_layanan, $id)
 	{
-		
+
 		$surat = $this->model_dokumen->getDataDokumen($id);
 		foreach ($surat as $surat);
 		$dir = $this->getDirectoryLayanan($id);
@@ -1197,7 +1197,7 @@ class Dashboard extends MY_Controller
 
 	function kelola_form($jenis = null, $menu = null)
 	{
-		
+
 		$data['jenis'] = $jenis;
 		$data['kode_layanan'] = $menu;
 		$data['dokumen_inspeksi'] = $this->model_user->getMasterForm($jenis, $menu);
@@ -1321,7 +1321,7 @@ class Dashboard extends MY_Controller
 	}
 	function hasil_laboratorium()
 	{
-		
+
 		$data['uji_sampel'] = $this->model_user->getDataUjiSampel();
 		$this->loadView("dashboard_view/pages/m_teknis/hasil_laboratorium", $data);
 	}
@@ -1427,7 +1427,7 @@ class Dashboard extends MY_Controller
 			$redirect = "dashboard";
 			//$arr = array("dari"=>$id_saya,"kepada"=>$id_user,"title"=>"Pengajuan Diterima","body"=>"Pengajuan Layanan Diterima, Silahkan datang ke kantor untuk dapat mencetak sertifikat");
 			//$this->model_user->insertData("notification",$arr);
-			
+
 
 			$email_to = $email;
 			$subject = "Pengajuan Diterima";
@@ -1483,13 +1483,13 @@ class Dashboard extends MY_Controller
 	//------------------------------------------------ INSPEKTOR ------------------------------------
 	function inspeksi_jenis_layanan()
 	{
-		
+
 		$data['inspeksi'] = $this->model_user->getDataJenisInspeksi("inspektor");
 		$this->loadView('dashboard_view/pages/inspektor/inspeksi_jenis_layanan', $data);
 	}
 	function form_inspeksi($id)
 	{
-		
+
 		$ins = $this->model_user->getDataWhere("layanan", 'uid', $id);
 		$data['data_form'] = $this->get_data($ins)['hasil_inspeksi'];
 		$data['jenis_layanan'] = $this->model_user->getJenisLayanan($id);
@@ -1596,7 +1596,7 @@ class Dashboard extends MY_Controller
 
 	function pelaksanaan_jenis_layanan()
 	{
-		
+
 		$data['pelaksana'] = $this->model_user->getDataJenisInspeksi("pelaksana");
 		$this->loadView('dashboard_view/pages/pelaksana/pelaksanaan_jenis_layanan', $data);
 	}
@@ -1654,7 +1654,7 @@ class Dashboard extends MY_Controller
 				$this->session->set_flashdata("status", "<div class='alert alert-warning'>Tidak ada gambar yang diunggah</div>");
 			}
 		}
-		
+
 		$data['id_layanan'] = $uid;
 		$data['gambar'] = $this->model_user->getGambarHasilInspeksi($uid);
 		$this->loadView('dashboard_view/pages/pelaksana/form_hasil_pelaksana', $data);
@@ -1673,7 +1673,7 @@ class Dashboard extends MY_Controller
 				$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
 			}
 		}
-		
+
 		$data['ppc'] = $this->model_user->getDataJenisInspeksi("ppc");
 		$this->loadView('dashboard_view/pages/ppc/pc_jenis_layanan', $data);
 	}
@@ -1706,7 +1706,7 @@ class Dashboard extends MY_Controller
 	}
 	function form_ppc($id)
 	{
-		
+
 		$ins = $this->model_user->getDataWhere("layanan", 'uid', $id);
 		$data['data_form'] = $this->get_data($ins)['hasil_ppc'];
 		$data['jenis_layanan'] = $this->model_user->getJenisLayanan($id);
@@ -1741,7 +1741,7 @@ class Dashboard extends MY_Controller
 	//------------------------------------------------ ADMIN ------------------------------------
 	function kelola_user()
 	{
-		
+
 		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
 		$this->loadView('dashboard_view/kelola_user', $data);
 	}
@@ -1823,7 +1823,7 @@ class Dashboard extends MY_Controller
 	public function uploadDokumen()
 	{
 		$this->load->library('upload');
-		
+
 
 		$identitas = $this->model_user->getDataUsaha($data['datalogin']['id_user']);
 		foreach ($identitas as $identitas);
@@ -1891,7 +1891,6 @@ class Dashboard extends MY_Controller
 						$isGagal = true;
 						$uploadData[$i]['file_name'] = null;
 					}
-
 				} else {
 
 					$fileData = $this->upload->data();
@@ -1917,7 +1916,7 @@ class Dashboard extends MY_Controller
 
 			// $kode = $this->getKodePendaftaran($id_prima_tiga);
 			$dat = array("syarat_teknis" => $str, 'kode_pendaftaran' => $kode);
-			
+
 
 			$email_to = $data['datalogin']['username'];
 			$subject = "Pendaftaran Layanan - Kode Pendaftaran";
@@ -2098,7 +2097,7 @@ class Dashboard extends MY_Controller
 
 	public function keluhan_saran()
 	{
-		
+
 		$data['keluhan'] = $this->model_user->getAllData("keluhan_saran");
 		$this->loadView('dashboard_view/admin/keluhan_saran', $data);
 	}
@@ -2153,13 +2152,66 @@ class Dashboard extends MY_Controller
 		}
 
 		redirect("dashboard/valid_sample");
-
-		// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
 	}
 
-	function survey(){
-		$data['list_survey'] = $this->model_admin->getDataWhere("master_kuesioner",'jenis', "okkpd");
+	function survey()
+	{
+		$id_layanan = $this->input->get("layanan") ?? 0;
+		$userdata = $this->session->userdata("dataLogin");
+		$layanan = $this->model_admin->getDataWhere("layanan","uid",$id_layanan);
+		$identitas_usaha = $this->model_admin->getDataWhere("identitas_usaha","id_user",$userdata['id_user']);
+		if(sizeof($identitas_usaha) == 0){
+			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Anda tidak memiliki akses ke halaman ini</div>");
+			redirect("dashboard");
+		}
+		
+		if($layanan[0]["kode_layanan"] == "prima_2" || $layanan[0]["kode_layanan"] == "prima_3")
+			$jenis = "okkpd";
+		else
+			$jenis = "uji_mutu";
+		$data["properties"] = array(
+			"jenis_kelamin" => data_jenis_kelamin(),
+			"pendidikan" => data_pendidikan(), "pekerjaan" => data_pekerjaan(), "pelayanan" => data_pelayanan($jenis)
+		);
+		$data['id_layanan'] = $id_layanan;
+		$data['jenis'] = $jenis;
+		$data["identitas"] = data_identitas_survey($jenis);
+		$surveyData = $this->model_admin->getDataWhere("master_kuesioner", 'jenis', $jenis);
+		$data['list_survey'] = array_filter($surveyData, function ($k) { return $k["deleted"] == 0; });
+		
 		$this->loadView("dashboard_view/survey/index", $data);
-
 	}
+
+
+	function getSurvey()
+	{
+		$input = $this->input;
+
+		$jenis = $input->post("jenis");
+		$param = array();
+		foreach(data_identitas_survey($jenis) as $element){
+			if($element[0] != "tanggal_survey" && $element[0] != "kecamatan" && $element[0] != "kota" && $element[0] != "provinsi"){
+				if($element[0] == "alamat" && $jenis == "okkpd"){
+					$param[$element[0]] = $input->post($element[0])." Kec. ".$input->post("kecamatan")." Kota/Kab ".$input->post("kota").", ".$input->post("provinsi");
+				}else{
+					$param[$element[0]] = $input->post($element[0]);
+				}
+			}
+		}
+		$param["saran"] = $input->post("saran");
+		$answers = $input->post("kuesioner");
+		$id_survey = $this->model_admin->insertGetID("survey_data",$param);
+		$this->model_admin->updateData("layanan",$input->post("layanan"),"uid", array("id_survey"=>$id_survey));
+		foreach ($answers as $element) {
+			$param_survey = array();
+			$param_survey["id_kuesioner"] = $element['pertanyaan'][1];
+			$param_survey["id_survey"] = $id_survey;
+			$param_survey["nilai"] = $element['pertanyaan'][0];
+			$param_survey["kepentingan"] = $element['kepentingan'][0];
+			$this->model_admin->insertData("survey_kuesioner",$param_survey);
+		}
+		$this->session->set_flashdata("status", "<div class='alert alert-success'>Data survey berhasil disimpan</div>");
+		redirect("dashboard");
+	}
+
 }

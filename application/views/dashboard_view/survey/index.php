@@ -1,5 +1,8 @@
-<!-- <link rel="stylesheet" type="text/css" href="rating_style.css"> -->
+<?php
 
+?>
+<!-- <link rel="stylesheet" type="text/css" href="rating_style.css"> -->
+<link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/dashboard/css/starability-minified/starability-all.min.css" />
 <section class="content">
     <div class="container-fluid">
         <div class="block-header" id="konten">
@@ -11,7 +14,7 @@
                                 <i class="material-icons">home</i>
                                 Home</a>
                         </li>
-                        <li class="breadcrumb-item active">Kelola Kuesioner</li>
+                        <li class="breadcrumb-item active">Survey Kepuasan Masyarakat</li>
                     </ul>
                 </div>
             </div>
@@ -30,46 +33,117 @@
                                     }
                                     ?>
                                     <div class="header">
-                                        <h2>
-                                            <strong>Kelola</strong> Kuesioner
-                                        </h2>
-                                        <ul class="header-dropdown m-r--5">
-                                            <li class="dropdown">
-                                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="material-icons">more_vert</i>
-                                                </a>
-                                                <ul class="dropdown-menu pull-right">
-                                                    <li>
-                                                        <a style="cursor:pointer;" data-toggle="modal" onclick="tambahData()" data-target="#update">Tambah</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="table-responsive">
-                                        <form method="post" action="insert_rating.php">
-                                            <?php $index = 1;
-                                            foreach ($list_survey as $element) : ?>
-                                                <div class="div">
-                                                    <p><?= $element['pertanyaan'] ?></p>
-                                                    <?php for ($i = 1; $i <= 5; $i++) : ?>
-                                                        <input type="hidden" id="<?= "question-" . $index . '-' . $i . '_hidden' ?>" value="<?= $i ?>">
-                                                        <img src="<?= base_url() ?>assets/image/star1.png" onmouseover="change(this.id);" id="<?= "question-" . $index . '-' . $i ?>" class="php">
-                                                    <?php endfor; ?>
-                                                </div>
-                                            <?php $index += 1;
-                                            endforeach; ?>
-
-
-
-                                            <input type="hidden" name="phprating" id="phprating" value="0">
-                                            <input type="hidden" name="asprating" id="asprating" value="0">
-                                            <input type="hidden" name="jsprating" id="jsprating" value="0">
-                                            <input type="submit" value="Submit" name="submit_rating">
-
-                                        </form>
+                                        <!-- <h2>
+                                            <strong>Survey</strong> Kepuasan Masyarakat
+                                        </h2> -->
 
                                     </div>
+                                    <form method="post" action="<?= base_url() ?>dashboard/getSurvey">
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <td colspan="3">SURVEY KEPUASAN MASYARAKAT DI BALAI PENINGKATAN MUTU DAN KEAMANAN PANGAN DISHANPAN JAWA TENGAH</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">IDENTITAS RESPONDEN</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $no = 1;
+                                                foreach ($identitas as $element) : ?>
+                                                    <tr>
+                                                        <td width="50"><?= $no ?>.</td>
+                                                        <td width="200"><?= $element[1] ?></td>
+                                                        <td>
+                                                            <?php if ($element[2] == "pendidikan" || $element[2] == "jenis_kelamin" || $element[2] == "pelayanan") : ?>
+                                                                <div class="form-group">
+                                                                    <label class="text-small"><?= $element[1] ?></label>
+                                                                    <select required class="form-control text-white" id="<?= $element[0] ?>" name="<?= $element[0] ?>">
+                                                                        <?php foreach ($properties[$element[2]] as $arr) : ?>
+                                                                            <option value="<?= $arr["key"] ?>"><?= $arr["value"] ?></option>
+                                                                        <?php endforeach; ?>
+                                                                    </select>
+                                                                </div>
+                                                            <?php elseif ($element[2] == "pekerjaan") : ?>
+                                                                <div class="form-group">
+                                                                    <label class="text-small"><?= $element[1] ?></label>
+                                                                    <select required class="form-control text-white" id="<?= $element[0] ?>" name="<?= $element[0] ?>" onchange="selectPekerjaan(this)">
+                                                                        <?php foreach ($properties[$element[2]] as $pekerjaan) : ?>
+                                                                            <option value="<?= $pekerjaan ?>"><?= $pekerjaan ?></option>
+                                                                        <?php endforeach; ?>
+                                                                    </select>
+
+                                                                </div>
+                                                                <div id="lainnya" style="display: none;">
+                                                                    <label for="pekerjaan_lainnya">Sebutkan</label>
+                                                                    <input id="pekerjaan_lainnya" type="text" name="pekerjaan_lainnya" class="text-white">
+                                                                </div>
+                                                            <?php else : ?>
+                                                                <div class="input-field">
+                                                                    <input required id="<?= $element[0] ?>" type="<?= $element[2] ?>" name="<?= $element[0] ?>" class="text-white" value="<?php if ($element[1] == "Tanggal Survey") {
+                                                                                                                                                                                                echo date("d/m/Y");
+                                                                                                                                                                                            } ?>" <?php if ($element[1] == "Tanggal Survey") {
+                                                                                                                                                                                                echo "readonly";
+                                                                                                                                                                                            } ?>>
+                                                                    <label for="<?= $element[0] ?>"><?= $element[1] ?></label>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php $no += 1;
+                                                endforeach; ?>
+
+                                            </tbody>
+                                        </table>
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="4">Pendapat Responden Tentang Kualitas Pelayanan dan Tingkat Kepentingannya</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>No</td>
+                                                    <td>Pertanyaan</td>
+                                                    <td width="300">Kinerja</td>
+                                                    <td width="300">Tingkat Kepuasan</td>
+                                                </tr>
+                                                <?php $index = 1;
+                                                foreach ($list_survey as $element) : ?>
+                                                    <tr>
+                                                        <td><?= $index; ?>.</td>
+                                                        <td><?= $element['pertanyaan']; ?></td>
+                                                        <?php for ($a = 0; $a < 2; $a++) :
+                                                            $prop = $a == 0 ? "pertanyaan" : "kepentingan"; ?>
+                                                            <td>
+                                                                <fieldset class="starability-basic">
+                                                                    <?php for ($x = 0; $x <= 5; $x++) :
+                                                                        $name = "kuesioner[soal-" . $index . "][" . $prop . "][]";
+                                                                        $id = $prop . "-" . $index . "-" . $x ?>
+                                                                        <?php if ($x == 0) : ?>
+                                                                            <input type="radio" id="no-rate" class="input-no-rate" name="<?= $name ?>" value="0" checked aria-label="No rating." />
+                                                                        <?php else : ?>
+                                                                            <input type="radio" id="<?= $id ?>" name="<?= $name ?>" value="<?= $x ?>" />
+                                                                            <label for="<?= $id ?>"></label>
+                                                                        <?php endif; ?>
+                                                                    <?php endfor; ?>
+                                                                    <input type="text" name="<?= $name ?>" value="<?= $element["id"] ?>" />
+                                                                </fieldset>
+                                                            </td>
+                                                        <?php endfor; ?>
+
+                                                    </tr>
+                                                <?php $index += 1;
+                                                endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                        <input type="hidden" name="layanan" value=<?= $id_layanan ?>>
+                                        <input type="hidden" name="jenis" value=<?= $jenis ?>>
+                                        <label for="saran">Masukkan / Saran untuk perbaikan pelayanan (Jika terdapat jawaban yang kurang, isikan saran / masukan.)</label>
+                                        <input id="saran" type="text" name="saran" class="text-white">
+                                        <button type="submit">OK</button>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
@@ -83,58 +157,12 @@
 
 </section>
 
-
-<script type="text/javascript">
-    var action = "Tambah";
-    var defaultKuesioner = {
-        id: 0,
-        pertanyaan: '',
-        jenis: 'okkpd',
-        tipe: 'Skor',
-    }
-
-    function deleteData(data) {
-        $("#id_hapus").val(data);
-    }
-
-    function setModalUpdate(data) {
-        $("#id").val(data.id);
-        $("#pertanyaan").val(data.pertanyaan);
-        $("#jenis").val(data.jenis);
-        $("#tipe").val(data.tipe);
-        console.log(data);
-        $("#action").val(action);
-    }
-
-    function updateData(id, pertanyaan, jenis, tipe, aspek) {
-        action = "Ubah";
-        setModalUpdate({
-            id: id,
-            pertanyaan: pertanyaan,
-            jenis: jenis,
-            tipe: tipe,
-        })
-    }
-
-    function tambahData() {
-        action = "Tambah";
-        setModalUpdate(defaultKuesioner);
-    }
-</script>
-
-
-
-<script type="text/javascript">
-    function change(id) {
-        var cname = document.getElementById(id).className;
-        var ab = document.getElementById(id + "_hidden").value;
-        document.getElementById(cname + "rating").innerHTML = ab;
-        for (var i = ab; i >= 1; i--) {
-            document.getElementById(id).src = "<?= base_url().'assets/image/'?>star2.png";
-        }
-        var id = parseInt(ab) + 1;
-        for (var j = id; j <= 5; j++) {
-            document.getElementById(id).src = "<?= base_url().'assets/image/'?>star1.png";
+<script>
+    function selectPekerjaan(e) {
+        if (e.value === "Lainnya") {
+            $("#lainnya").css("display", "block");
+        } else {
+            $("#lainnya").css("display", "none");
         }
     }
 </script>

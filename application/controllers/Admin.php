@@ -1275,14 +1275,15 @@ class Admin extends MY_Controller
     $data['jenis'] = array(array("key" => "okkpd", "value" => "OKKPD"), array("key" => "uji_mutu", "value" => "Uji Mutu"));
     $data['tipe'] = array("Skor", "Yes/No");
     $data['aspek'] = array("Mudah", "Cepat", "Berkualitas", "Kompeten", "Sopan", "Lengkap");;
-    $data['kuesioner'] = $this->model_admin->getAllData("master_kuesioner");
+    $data['kuesioner'] = $this->model_admin->getDataWhere("master_kuesioner", "deleted", "0");
     $this->loadView('dashboard_view/admin/kelola_kuesioner', $data);
   }
 
   public function hapus_kuesioner()
   {
     $id = $this->input->post('id');
-    $this->model_admin->deleteData("master_kuesioner", $id, "id");
+    $param["deleted"] = 1;
+    $this->model_admin->updateData("master_kuesioner", $id, "id", $param);
     $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil dihapus</div>");
     redirect('admin/kelola_kuesioner');
   }
@@ -1291,7 +1292,7 @@ class Admin extends MY_Controller
   {
     $input = $this->input;
     $id = $input->post('id');
-    $data = array("pertanyaan" => $input->post("pertanyaan"), "jenis" => $input->post("jenis"), "tipe" => $input->post("tipe"), "aspek" => $input->post("aspek"));
+    $data = array("pertanyaan" => $input->post("pertanyaan"), "jenis" => $input->post("jenis"), "tipe" => $input->post("tipe"));
     if ($input->post('action') == "Tambah") {
       $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambah</div>");
       $this->model_admin->insertData("master_kuesioner", $data);
@@ -1300,5 +1301,10 @@ class Admin extends MY_Controller
       $this->model_admin->updateData("master_kuesioner", $id, "id", $data);
     }
     redirect('admin/kelola_kuesioner');
+  }
+  function hasil_survey()
+  {
+    
+    $this->loadView('dashboard_view/admin/hasil_survey');
   }
 }

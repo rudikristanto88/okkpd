@@ -7341,6 +7341,10 @@ readers do not read off random characters that represent icons */
 
 .select-wrapper input.select-dropdown {
   color: #fff; }
+select.text-white > option{
+  color:black;
+
+}
 
 /*
  *  Document   : _breadscrumbs.scss
@@ -8017,15 +8021,15 @@ readers do not read off random characters that represent icons */
 
 [type="radio"]:not(:checked) + label {
   padding-left: 26px;
-  height: 25px;
-  line-height: 25px;
+  /* height: 25px; */
+  /* line-height: 25px; */
   font-size: 13px;
   font-weight: normal; }
 
 [type="radio"]:checked + label {
   padding-left: 26px;
-  height: 25px;
-  line-height: 25px;
+  /* height: 25px; */
+  /* line-height: 25px; */
   font-size: 13px;
   font-weight: normal; }
 

@@ -42,7 +42,6 @@ class Home extends MY_Controller
 		$data['link'] = $this->model_user->getAllData('tautan');
 		$data['panduan'] = $this->model_user->getAllData('panduan');
 
-
 		$this->load->view('default/template/header', $data);
 		$this->load->view('default/template/navigation');
 		$this->load->view('default/index', $data);
@@ -59,9 +58,9 @@ class Home extends MY_Controller
 		}
 
 		if ($status != null && $status == "success") {
-			$this->loadView('default/sign_up_success', $data);
+			$this->loadViewHome('default/sign_up_success', $data);
 		} else {
-			$this->loadView('default/sign_up', $data);
+			$this->loadViewHome('default/sign_up', $data);
 		}
 	}
 
@@ -130,22 +129,6 @@ class Home extends MY_Controller
 	}
 
 
-	public function loadView($halaman, $data)
-	{
-		$data['islogin'] = false;
-
-		if ($this->session->userdata("dataLogin") != null) {
-			$data['islogin'] = true;
-		}
-		$data['footer'] = $this->model_user->getAllData('kontak_kami');
-		$data['link'] = $this->model_user->getAllData('tautan');
-		$data['panduan'] = $this->model_user->getAllData('panduan');
-		$this->load->view('default/template/header', $data);
-		$this->load->view('default/template/navigation-small');
-		$this->load->view($halaman, $data);
-		$this->load->view('default/template/footer', $data);
-	}
-
 	public function kirim()
 	{
 		$this->kirim_email("coba", 'yogaadidr@gmail.com', 'ini pesan coba cona');
@@ -158,7 +141,7 @@ class Home extends MY_Controller
 		} else {
 			$berita = $this->model_user->getDataWhere('berita', 'slug', $slug);
 			foreach ($berita as $data['berita']);
-			$this->loadView('default/berita', $data);
+			$this->loadViewHome('default/berita', $data);
 		}
 	}
 
@@ -167,14 +150,14 @@ class Home extends MY_Controller
 		$data['menu'] = 'Visi Misi';
 
 		$data['visi'] = $this->model_admin->getAllData("tentang_kami");
-		$this->loadView('default/about', $data);
+		$this->loadViewHome('default/about', $data);
 	}
 
 	public function struktur_organisasi()
 	{
 		$data['menu'] = 'Struktur Organisasi';
 		$data['about'] = $this->model_admin->getAllData("tentang_kami");
-		$this->loadView('default/struktur', $data);
+		$this->loadViewHome('default/struktur', $data);
 	}
 
 
@@ -182,33 +165,33 @@ class Home extends MY_Controller
 	{
 		$data['menu'] = 'Maklumat';
 		$data['maklumat'] = $this->model_admin->getAllData("tentang_kami");
-		$this->loadView('default/maklumat', $data);
+		$this->loadViewHome('default/maklumat', $data);
 	}
 
 	public function tugas_fungsi()
 	{
 		$data['menu'] = 'Tugas dan Fungsi';
 		$data['tugas_fungsi'] = $this->model_admin->getAllData("tentang_kami");
-		$this->loadView('default/tugas', $data);
+		$this->loadViewHome('default/tugas', $data);
 	}
 
 	public function legalitas()
 	{
 		$data['menu'] = 'Legalitas';
 		$data['legalitas'] = $this->model_admin->getAllData("tentang_kami");
-		$this->loadView('default/legalitas', $data);
+		$this->loadViewHome('default/legalitas', $data);
 	}
 
 	public function pendaftaran_online()
 	{
 		$data['menu'] = 'Pendaftaran Online';
-		$this->loadView('default/pendaftaran_online', $data);
+		$this->loadViewHome('default/pendaftaran_online', $data);
 	}
 
 	public function lupa_sandi()
 	{
 		$data['menu'] = 'Lupa Sandi';
-		$this->loadView('default/lupa_sandi', $data);
+		$this->loadViewHome('default/lupa_sandi', $data);
 	}
 	public function notifikasi_reset_password($berhasil = false)
 	{
@@ -226,7 +209,7 @@ class Home extends MY_Controller
 			$data['kata'] = "Kata sandi telah diubah";
 		}
 
-		$this->loadView('default/reset_password', $data);
+		$this->loadViewHome('default/reset_password', $data);
 	}
 
 	public function reset_password($menu = null)
@@ -235,7 +218,7 @@ class Home extends MY_Controller
 		if ($menu == null) {
 			$data['verify'] = $_GET['reset'];
 			$data['send'] = false;
-			$this->loadView('default/reset_password', $data);
+			$this->loadViewHome('default/reset_password', $data);
 		} else if ($menu == 'send') {
 			$password_baru = $this->input->post('password_baru');
 			$ulang_password = $this->input->post('ulang_password');
@@ -260,7 +243,7 @@ class Home extends MY_Controller
 	public function hubungi_kami()
 	{
 		$data['menu'] = 'Hubungi Kami';
-		$this->loadView('default/kontak', $data);
+		$this->loadViewHome('default/kontak', $data);
 	}
 
 
@@ -291,7 +274,7 @@ class Home extends MY_Controller
 	{
 		$data['menu'] = 'Keluhan dan Saran';
 		if ($menu == null || $menu != "kirim") {
-			$this->loadView('default/saran', $data);
+			$this->loadViewHome('default/saran', $data);
 		} else {
 			if ($this->input->post('nama') == '' || $menu != 'kirim') {
 				redirect("home/keluhan_saran", "redirect");
@@ -327,14 +310,14 @@ class Home extends MY_Controller
 	public function status_perizinan()
 	{
 		$data['menu'] = 'Status Perizinan';
-		$this->loadView('default/status', $data);
+		$this->loadViewHome('default/status', $data);
 	}
 
 	public function regulasi()
 	{
 		$data['menu'] = 'Regulasi';
 		$data['produk_hukum'] = $this->model_user->getAllData('produk_hukum');
-		$this->loadView('default/regulasi', $data);
+		$this->loadViewHome('default/regulasi', $data);
 	}
 
 	public function info_layanan($jenis = null)
@@ -359,41 +342,41 @@ class Home extends MY_Controller
 	public function sertifikasi_prima_2()
 	{
 		$data['menu'] = 'Info Layanan';
-		$this->loadView('default/prima2', $data);
+		$this->loadViewHome('default/prima2', $data);
 	}
 
 	public function sertifikasi_prima_3()
 	{
 		$data['menu'] = 'Info Layanan';
-		$this->loadView('default/prima3', $data);
+		$this->loadViewHome('default/prima3', $data);
 	}
 
 	public function pendaftaran_psat()
 	{
 		$data['menu'] = 'Info Layanan';
 
-		$this->loadView('default/psat', $data);
+		$this->loadViewHome('default/psat', $data);
 	}
 
 	public function pendaftaran_rumah_kemas()
 	{
 		$data['menu'] = 'Info Layanan';
 
-		$this->loadView('default/rumah_kemas', $data);
+		$this->loadViewHome('default/rumah_kemas', $data);
 	}
 
 	public function penerbitan_health_certificate()
 	{
 		$data['menu'] = 'Info Layanan';
 
-		$this->loadView('default/hc', $data);
+		$this->loadViewHome('default/hc', $data);
 	}
 
 	public function penerbitan_hygne_sanitation()
 	{
 		$data['menu'] = 'Info Layanan';
 
-		$this->loadView('default/hs', $data);
+		$this->loadViewHome('default/hs', $data);
 	}
 	//
 	// public function penerbitan_hygne_sanitation()

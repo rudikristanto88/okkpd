@@ -144,7 +144,7 @@
                   <div class="col-sm-12">
                     <div class="form-group form-responsive form-white">
                       <label for="">Pelaksana</label>
-                      <select name="pelaksana" style="text-color:black" class="form-control text-dark">
+                      <select name="pelaksana" style="color:black" class="form-control text-dark">
                         <?php foreach ($user as $pelaksana):
                           if($pelaksana['kode_role'] == 'pelaksana'){?>
                             <option value="<?= $pelaksana['id_user'].";".$inspektor['nama_lengkap'] ?> "><?= $pelaksana['nama_lengkap']." (".$inspektor['nama_role'].")" ?></option>
