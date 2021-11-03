@@ -1,36 +1,6 @@
 <?php
-class Model_admin extends CI_Model {
-  public function insertData($table,$data)
-  {
-    return $this->db->insert($table, $data);
-  }
-
-  public function insertGetID($table,$data)
-  {
-    $this->db->insert($table, $data);
-    $insert_id = $this->db->insert_id();
-    return  $insert_id;
-  }
-
-
-  public function updateData($table,$valId,$idName,$data){
-    $this->db->where($idName, $valId);
-    return $this->db->update($table, $data);
-  }
-
-  public function getAllData($table){
-    $this->db->select("*");
-    $this->db->from($table);
-    $query = $this->db->get();
-    return $query->result_array();
-  }
-  public function getDataWhere($table,$where,$value){
-    $this->db->select("*");
-    $this->db->from($table);
-    $this->db->where($where,$value);
-    $query = $this->db->get();
-    return $query->result_array();
-  }
+class Model_admin extends MY_Model {
+  
   public function getMenu($role)
   {
     $this->db->select("*");
@@ -225,38 +195,52 @@ public function getDataDetailKomoditas($id_layanan)
 
   }
 
-  function getsertifikat($id,$unduh = false){
-    $this->db->select("layanan.kode_layanan,detail_komoditas.id_layanan,detail_komoditas.nomor_sertifikat,detail_komoditas.nama_latin,identitas_usaha.nama_usaha,identitas_usaha.alamat_usaha,master_komoditas.deskripsi,detail_komoditas.nama_jenis_komoditas nama_jenis, detail_komoditas.nama_jenis_komoditas, detail_komoditas.luas_lahan as luas_lahan_detail,detail_komoditas.tanggal_unggah,detail_komoditas.sertifikat as sertifikat_produk,detail_komoditas.mime_type as tipe_sertifikat_produk");
-    $this->db->from('detail_komoditas');
-    $this->db->join('layanan',"detail_komoditas.id_layanan = layanan.uid");
-    $this->db->join('identitas_usaha',"layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
-    $this->db->join('master_komoditas',"detail_komoditas.id_komoditas = master_komoditas.kode_komoditas");
-    $this->db->where("detail_komoditas.id_detail",$id);
-    $query = $this->db->get();
-    return $query->result_array();
-  }
-  function getsertifikatPSAT($id,$unduh = false){
-    if($unduh == true){
-      $this->db->select("*,detail_identitas_produk.nomor_sertifikat,detail_identitas_produk.sertifikat as sertifikat_produk, detail_identitas_produk.mime_type as tipe_sertifikat_produk");
-    }else{
-      $this->db->select("*");
-    }
-    $this->db->from('detail_identitas_produk');
-    $this->db->join('layanan',"detail_identitas_produk.id_layanan = layanan.uid");
-    $this->db->join('identitas_usaha',"layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
-    $this->db->where("id",$id);
-    $query = $this->db->get();
-    return $query->result_array();
-  }
-  function getsertifikatHC($id,$unduh = false){
-    $this->db->select("layanan.kode_layanan,identitas_usaha.nama_usaha, detail_identitas_ekspor.*, detail_identitas_ekspor.sertifikat as sertifikat_produk,detail_identitas_ekspor.mime_type as tipe_sertifikat_produk");
-    $this->db->from('detail_identitas_ekspor');
-    $this->db->join('layanan',"detail_identitas_ekspor.id_layanan = layanan.uid");
-    $this->db->join('identitas_usaha',"layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
-    $this->db->where("id",$id);
-    $query = $this->db->get();
-    return $query->result_array();
-  }
+   /// function to fetch sertifikat of layanan Prima 3 and Prima 2 
+   function getsertifikat($id = null, $unduh = false)
+   {
+     $this->db->select("layanan.kode_layanan,detail_komoditas.id_layanan,detail_komoditas.nomor_sertifikat,detail_komoditas.nama_latin,identitas_usaha.nama_usaha,identitas_usaha.alamat_usaha,master_komoditas.deskripsi,detail_komoditas.nama_jenis_komoditas nama_jenis, detail_komoditas.nama_jenis_komoditas, detail_komoditas.luas_lahan as luas_lahan_detail,detail_komoditas.tanggal_unggah,detail_komoditas.sertifikat as sertifikat_produk,detail_komoditas.mime_type as tipe_sertifikat_produk");
+     $this->db->from('detail_komoditas');
+     $this->db->join('layanan', "detail_komoditas.id_layanan = layanan.uid");
+     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
+     $this->db->join('master_komoditas', "detail_komoditas.id_komoditas = master_komoditas.kode_komoditas");
+     if ($id != null) {
+       $this->db->where("detail_komoditas.id_detail", $id);
+     }
+     $query = $this->db->get();
+     return $query->result_array();
+   }
+ 
+   /// function to fetch sertifikat of layanan PSAT
+   function getsertifikatPSAT($id = null, $unduh = false)
+   {
+     if ($unduh == true) {
+       $this->db->select("*,detail_identitas_produk.nomor_sertifikat,detail_identitas_produk.sertifikat as sertifikat_produk, detail_identitas_produk.mime_type as tipe_sertifikat_produk");
+     } else {
+       $this->db->select("*");
+     }
+     $this->db->from('detail_identitas_produk');
+     $this->db->join('layanan', "detail_identitas_produk.id_layanan = layanan.uid");
+     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
+     if ($id != null) {
+       $this->db->where("id", $id);
+     }
+     $query = $this->db->get();
+     return $query->result_array();
+   }
+ 
+   /// function to fetch sertifikat of layanan HC
+   function getsertifikatHC($id = null, $unduh = false)
+   {
+     $this->db->select("layanan.kode_layanan,identitas_usaha.nama_usaha, detail_identitas_ekspor.*, detail_identitas_ekspor.sertifikat as sertifikat_produk,detail_identitas_ekspor.mime_type as tipe_sertifikat_produk");
+     $this->db->from('detail_identitas_ekspor');
+     $this->db->join('layanan', "detail_identitas_ekspor.id_layanan = layanan.uid");
+     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
+     if ($id != null) {
+       $this->db->where("id", $id);
+     }
+     $query = $this->db->get();
+     return $query->result_array();
+   }
 
   function getKeluhanSaran($jenis){
       $this->db->select("*");

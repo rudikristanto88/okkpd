@@ -1,13 +1,6 @@
 <?php
-class Model_dokumen extends CI_Model {
-  public function insertData($table,$data)
-  {
-    return $this->db->insert($table, $data);
-  }
-  public function replaceData($table,$data)
-  {
-    return $this->db->replace($table, $data);
-  }
+class Model_dokumen extends MY_Model {
+ 
   public function getSyaratTeknis($id_layanan){
     $this->db->select("syarat_teknis");
     $this->db->from('layanan');

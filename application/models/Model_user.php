@@ -1,31 +1,5 @@
 <?php
-class Model_user extends CI_Model {
-  public function insertData($table,$data)
-  {
-    return $this->db->insert($table, $data);
-  }
-  public function replaceData($table,$data)
-  {
-    return $this->db->replace($table, $data);
-  }
-
-  public function updateData($table,$valId,$idName,$data){
-    $this->db->where($idName, $valId);
-    return $this->db->update($table, $data);
-  }
-
-  public function deleteData($table,$valId,$idName){
-    $this->db->where($idName, $valId);
-    return $this->db->delete($table);
-  }
-  public function deleteDataParam($table,$where1,$where2,$where3=null){
-    $this->db->where($where1);
-    $this->db->where($where2);
-    if($where3 != null){
-      $this->db->where($where3);
-    }
-    return $this->db->delete($table);
-  }
+class Model_user extends MY_Model {
 
   public function cek_username($username, $role = null){
     $this->db->select("count(*) jumlah");
@@ -791,8 +765,6 @@ class Model_user extends CI_Model {
     return $jumlah;
   }
 
-
-
   public function getKomoditas()
   {
     $this->db->select("*");
@@ -801,7 +773,6 @@ class Model_user extends CI_Model {
     $query = $this->db->get();
     return $query->result_array();
   }
-
 
   public function getJenisKomoditas()
   {
@@ -1068,4 +1039,3 @@ class Model_user extends CI_Model {
   }
 
 }
-?>

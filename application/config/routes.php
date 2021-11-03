@@ -50,6 +50,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home';
+
+//=============== HOME ==================
+$route['home/basis_data'] = "home/basis_data";
+$route['home/basis_data/okkpd'] = "home/basis_data_okkpd";
+$route['home/basis_data/okkpd/(:any)'] = "home/basis_data_okkpd/$1";
+$route['home/basis_data/uji_mutu'] = "home/basis_data_okkpd/mutupangan";
+
+
+//============================
+
 $route['404_override'] = '';
 $route['dashboard'] = 'dashboard/index';
 $route['dashboard/sign_in'] = 'dashboard/sign_in';
@@ -75,6 +85,10 @@ $route['dashboard/tentang_kami'] = 'admin/tentang_kami';
 $route['dashboard/produk_hukum'] = 'admin/produk_hukum';
 $route['dashboard/kelola_komoditas'] = 'admin/kelola_komoditas';
 
+
+$route['dashboard/kelola_kuesioner'] = 'admin/kelola_kuesioner';
+$route['dashboard/kelola_kuesioner/hapus'] = 'admin/hapus_kuesioner';
+$route['dashboard/kelola_kuesioner/proses'] = 'admin/proses_kuesioner';
 
 //================ manager Teknis
 $route['dashboard/kelola_form/(:any)/(:any)'] = 'dashboard/kelola_form/$1/$2';
