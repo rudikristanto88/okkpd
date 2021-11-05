@@ -38,14 +38,18 @@
                                         </h2> -->
 
                                     </div>
-                                    <form method="post" action="<?= base_url() ?>dashboard/getSurvey">
+                                    <form method="post" action="<?= base_url() ?>dashboard/simpan_survey">
                                         <table width="100%">
                                             <thead>
                                                 <tr>
-                                                    <td colspan="3">SURVEY KEPUASAN MASYARAKAT DI BALAI PENINGKATAN MUTU DAN KEAMANAN PANGAN DISHANPAN JAWA TENGAH</td>
+                                                    <td colspan="3" class="text-center">
+                                                        <h3>SURVEY KEPUASAN MASYARAKAT DI BALAI PENINGKATAN MUTU DAN KEAMANAN PANGAN DISHANPAN JAWA TENGAH<h3>
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="3">IDENTITAS RESPONDEN</td>
+                                                    <td colspan="3" class="text-center">
+                                                        <h4>IDENTITAS RESPONDEN</h4>
+                                                    </td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -83,8 +87,8 @@
                                                                     <input required id="<?= $element[0] ?>" type="<?= $element[2] ?>" name="<?= $element[0] ?>" class="text-white" value="<?php if ($element[1] == "Tanggal Survey") {
                                                                                                                                                                                                 echo date("d/m/Y");
                                                                                                                                                                                             } ?>" <?php if ($element[1] == "Tanggal Survey") {
-                                                                                                                                                                                                echo "readonly";
-                                                                                                                                                                                            } ?>>
+                                                                                                                                                                                                        echo "readonly";
+                                                                                                                                                                                                    } ?>>
                                                                     <label for="<?= $element[0] ?>"><?= $element[1] ?></label>
                                                                 </div>
                                                             <?php endif; ?>
@@ -95,43 +99,55 @@
 
                                             </tbody>
                                         </table>
-                                        <table width="100%">
+                                        <table width="100%" class="table table-hover" style="margin-top:50px">
                                             <thead>
                                                 <tr>
-                                                    <th colspan="4">Pendapat Responden Tentang Kualitas Pelayanan dan Tingkat Kepentingannya</th>
+                                                    <th colspan="4" class="text-center">
+                                                        <h4>Pendapat Responden Tentang Kualitas Pelayanan dan Tingkat Kepentingannya</h4>
+                                                        </td>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
                                                     <td>No</td>
                                                     <td>Pertanyaan</td>
-                                                    <td width="300">Kinerja</td>
-                                                    <td width="300">Tingkat Kepuasan</td>
+                                                    <td width="250">Kinerja</td>
+                                                    <td width="250">Tingkat Kepuasan</td>
                                                 </tr>
                                                 <?php $index = 1;
                                                 foreach ($list_survey as $element) : ?>
                                                     <tr>
                                                         <td><?= $index; ?>.</td>
                                                         <td><?= $element['pertanyaan']; ?></td>
-                                                        <?php for ($a = 0; $a < 2; $a++) :
-                                                            $prop = $a == 0 ? "pertanyaan" : "kepentingan"; ?>
-                                                            <td>
-                                                                <fieldset class="starability-basic">
-                                                                    <?php for ($x = 0; $x <= 5; $x++) :
-                                                                        $name = "kuesioner[soal-" . $index . "][" . $prop . "][]";
-                                                                        $id = $prop . "-" . $index . "-" . $x ?>
-                                                                        <?php if ($x == 0) : ?>
-                                                                            <input type="radio" id="no-rate" class="input-no-rate" name="<?= $name ?>" value="0" checked aria-label="No rating." />
-                                                                        <?php else : ?>
-                                                                            <input type="radio" id="<?= $id ?>" name="<?= $name ?>" value="<?= $x ?>" />
-                                                                            <label for="<?= $id ?>"></label>
-                                                                        <?php endif; ?>
-                                                                    <?php endfor; ?>
-                                                                    <input type="text" name="<?= $name ?>" value="<?= $element["id"] ?>" />
-                                                                </fieldset>
+                                                        <?php if ($element['tipe'] === "Yes/No") : ?>
+                                                            <?php $name = "kuesioner[soal-" . $index . "][pertanyaan][]"; ?>
+                                                            <td colspan="2">
+                                                                <input style="opacity: 100;" type="radio" id="<?= $index . "-1" ?>" name="<?= $name ?>" value="1">
+                                                                <label for="<?= $index . "-1" ?>">Ya</label>
+                                                                <input style="opacity: 100;" type="radio" id="<?= $index . "-2" ?>" name="<?= $name ?>" value="0">
+                                                                <label for="<?= $index . "-2" ?>">Tidak</label>
+                                                                <input type="hidden" name="<?= $name ?>" value="<?= $element["id"] ?>" />
                                                             </td>
-                                                        <?php endfor; ?>
-
+                                                        <?php else : ?>
+                                                            <?php for ($a = 0; $a < 2; $a++) :
+                                                                $prop = $a == 0 ? "pertanyaan" : "kepentingan"; ?>
+                                                                <td>
+                                                                    <fieldset class="starability-basic">
+                                                                        <?php for ($x = 0; $x <= 5; $x++) :
+                                                                            $name = "kuesioner[soal-" . $index . "][" . $prop . "][]";
+                                                                            $id = $prop . "-" . $index . "-" . $x ?>
+                                                                            <?php if ($x == 0) : ?>
+                                                                                <input type="radio" id="no-rate" class="input-no-rate" name="<?= $name ?>" value="0" checked aria-label="No rating." />
+                                                                            <?php else : ?>
+                                                                                <input type="radio" id="<?= $id ?>" name="<?= $name ?>" value="<?= $x ?>" />
+                                                                                <label for="<?= $id ?>"></label>
+                                                                            <?php endif; ?>
+                                                                        <?php endfor; ?>
+                                                                        <input type="hidden" name="<?= $name ?>" value="<?= $element["id"] ?>" />
+                                                                    </fieldset>
+                                                                </td>
+                                                            <?php endfor; ?>
+                                                        <?php endif; ?>
                                                     </tr>
                                                 <?php $index += 1;
                                                 endforeach; ?>
@@ -139,9 +155,9 @@
                                         </table>
                                         <input type="hidden" name="layanan" value=<?= $id_layanan ?>>
                                         <input type="hidden" name="jenis" value=<?= $jenis ?>>
-                                        <label for="saran">Masukkan / Saran untuk perbaikan pelayanan (Jika terdapat jawaban yang kurang, isikan saran / masukan.)</label>
-                                        <input id="saran" type="text" name="saran" class="text-white">
-                                        <button type="submit">OK</button>
+                                        <label for="saran" style="margin-top:50px">Masukkan / Saran untuk perbaikan pelayanan (Jika terdapat jawaban yang kurang, isikan saran / masukan.)</label>
+                                        <input id="saran" type="text" height="300" name="saran" class="form-control text-white">
+                                        <button type="submit" class="btn btn-primary" style="margin-top:20px;width:200px">Simpan Kuesioner</button>
                                     </form>
 
                                 </div>

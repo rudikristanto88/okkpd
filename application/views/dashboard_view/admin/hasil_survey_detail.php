@@ -11,7 +11,11 @@
                 <i class="material-icons">home</i>
                 Home</a>
             </li>
-            <li class="breadcrumb-item active">Hasil Survey</li>
+            <li class="breadcrumb-item">
+              <a href="<?= base_url() ?>dashboard/hasil_survey">
+                Hasil Survey</a>
+            </li>
+            <li class="breadcrumb-item active">Detail</li>
           </ul>
         </div>
       </div>
@@ -33,35 +37,61 @@
                     <h2><strong>Hasil</strong> Survey</h2>
                   </div>
                   <div class="body table-responsive">
-                    <table class="table table-hover" id="table-datatable">
+                    <table class="table table-hover">
                       <thead>
+                        <tr>
+                          <th colspan="2">
+                            <h4>IDENTITAS RESPONDEN</h4>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php foreach ($identitas as $element) :
+                          if ($element[0] != "kecamatan" && $element[0] != "kota" && $element[0] != "provinsi") : ?>
+                            <tr>
+                              <td width="300"><?= $element[1] ?></td>
+                              <td>: <?= $data_survey[$element[0]] ?></td>
+                            </tr>
+                          <?php endif; ?>
+                        <?php endforeach; ?>
+
+                      </tbody>
+                    </table>
+
+                    <table class="table table-hover" style="margin-top:50px">
+                      <thead>
+                        <tr>
+                          <th colspan="4">
+                            <h4> Pendapat Responden Tentang Kualitas Pelayanan dan Tingkat Kepentingannya</h4>
+                          </th>
+                        </tr>
+
                         <tr>
                           <th style="vertical-align: middle;">No</th>
                           <th width="auto" style="vertical-align: middle;">Pertnyaan</th>
-                          <td width="250">Kinerja</td>
-                          <td width="250">Tingkat Kepuasan</td>
+                          <th width="250">Kinerja</th>
+                          <th width="250">Tingkat Kepuasan</th>
                         </tr>
-
                       </thead>
                       <tbody>
                         <?php $i = 1;
-                        foreach ($report_survey as $element) : ?>
+                        foreach ($detail_survey as $element) : ?>
                           <tr>
                             <td><?= $i ?>.</td>
                             <td><?= $element['pertanyaan'] ?></td>
                             <?php if ($element['tipe'] == "Skor") : ?>
                               <td>
-                                <div id="star-rating" class="rating" data-rate-value=<?= $element["avg_nilai"] ?>>
-                                  <span><?= $element["avg_nilai"] ?></span>
+                                <div id="star-rating" class="rating" data-rate-value=<?= $element["nilai"] ?>>
+                                  <span><?= $element["nilai"] ?></span>
                                 </div>
                               </td>
                               <td>
-                                <div id="star-rating" class="rating" data-rate-value=<?= $element["avg_kepentingan"] ?>>
-                                  <span><?= $element["avg_kepentingan"] ?></span>
+                                <div id="star-rating" class="rating" data-rate-value=<?= $element["kepentingan"] ?>>
+                                  <span><?= $element["kepentingan"] ?></span>
                                 </div>
                               </td>
                             <?php else :
-                              $progressYa = $element['avg_nilai'] * 100;
+                              $progressYa = $element['nilai'] * 100;
                               $progressTidak = 100 - ($progressYa); ?>
                               <td>
                                 <div class="row">
@@ -69,7 +99,7 @@
                                   <div class="col-md-9">
                                     <div class="progress">
                                       <div class="progress-bar" role="progressbar" aria-valuenow="<?= $progressYa  ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $progressYa ?>%">
-                                      <?= $progressYa  ?>%</div>
+                                        <?= $progressYa  ?>%</div>
                                     </div>
                                   </div>
                                 </div>
@@ -78,7 +108,7 @@
                                   <div class="col-md-9">
                                     <div class="progress">
                                       <div class="progress-bar" role="progressbar" aria-valuenow="<?= $progressTidak  ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $progressTidak ?>%">
-                                      <?= $progressTidak  ?>%</div>
+                                        <?= $progressTidak  ?>%</div>
                                     </div>
                                   </div>
                                 </div>
@@ -87,42 +117,6 @@
                               <td></td>
                             <?php endif; ?>
 
-                          </tr>
-
-                        <?php $i++;
-                        endforeach; ?>
-                      </tbody>
-                    </table>
-
-                    <table class="table table-hover" id="table-datatable2">
-                      <thead>
-                        <tr>
-                          <th style="vertical-align: middle;">No</th>
-                          <th style="vertical-align: middle;">Nama</th>
-                          <th style="vertical-align: middle;">Email</th>
-                          <th style="vertical-align: middle;">Usia</th>
-                          <th style="vertical-align: middle;">No Telp</th>
-                          <th style="vertical-align: middle;">Alamat</th>
-                          <th style="vertical-align: middle;">Pendidikan</th>
-                          <th style="vertical-align: middle;">Layanan</th>
-                          <th style="vertical-align: middle;">Tanggal</th>
-                          <th style="vertical-align: middle;"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php $i = 1;
-                        foreach ($hasil_survey as $element) : ?>
-                          <tr>
-                            <td><?= $i ?>.</td>
-                            <td><?= $element['nama'] ?></td>
-                            <td><?= $element['email'] ?></td>
-                            <td><?= $element['umur'] ?></td>
-                            <td><?= $element['no_telp'] ?></td>
-                            <td><?= $element['alamat'] ?></td>
-                            <td><?= $element['pendidikan'] ?></td>
-                            <td><?= $element['kode_layanan'] ?></td>
-                            <td><?= $element['tanggal_survey'] ?></td>
-                            <td><a href="<?= base_url() ?>dashboard/hasil_survey/detail?id=<?= $element["id"] ?>" class="btn btn-primary">Detail</a></td>
                           </tr>
 
                         <?php $i++;

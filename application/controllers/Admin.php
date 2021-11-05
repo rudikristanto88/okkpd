@@ -12,6 +12,7 @@ class Admin extends MY_Controller
     $this->load->library('session');
     $this->load->model('model_user');
     $this->load->model('model_admin');
+		$this->load->helper("data_helper");
     $data['datalogin'] = $this->session->userdata("dataLogin");
     $this->menu =  $this->model_user->getMenu($this->saya());
   }
@@ -1285,7 +1286,7 @@ class Admin extends MY_Controller
     $param["deleted"] = 1;
     $this->model_admin->updateData("master_kuesioner", $id, "id", $param);
     $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil dihapus</div>");
-    redirect('admin/kelola_kuesioner');
+    redirect('dashboard/kelola_kuesioner');
   }
 
   public function proses_kuesioner()
@@ -1300,11 +1301,39 @@ class Admin extends MY_Controller
       $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil diubah</div>");
       $this->model_admin->updateData("master_kuesioner", $id, "id", $data);
     }
-    redirect('admin/kelola_kuesioner');
+    redirect('dashboard/kelola_kuesioner');
   }
   function hasil_survey()
   {
+    $jenis = $this->input->get("jenis") ?? "okkpd";
+    $data['report_survey'] = $this->model_admin->getReportSurvey($jenis);
+    $data['hasil_survey'] = $this->model_admin->getAllData("survey_data");
+    $this->loadView('dashboard_view/admin/hasil_survey', $data);
+  }
+
+  function hasil_survey_detail()
+  {
+    $id = $this->input->get("id") ?? 0;
+    if ($id == 0) {
+      redirect('dashboard/kelola_kuesioner');
+    }
+
+    $data['data_survey'] = $this->model_admin->getDataWhere("survey_data","id",$id)[0];
+    $data['detail_survey'] = $this->model_admin->getDetailSurvey($id);
+
+    if($data['data_survey']["kode_layanan"] == "prima_2" || $data['data_survey']["kode_layanan"] == "prima_3")
+			$jenis = "okkpd";
+		else
+			$jenis = "uji_mutu";
+
+		$data["properties"] = array(
+			"jenis_kelamin" => data_jenis_kelamin(),
+			"pendidikan" => data_pendidikan(), "pekerjaan" => data_pekerjaan(), "pelayanan" => data_pelayanan($jenis)
+		);
     
-    $this->loadView('dashboard_view/admin/hasil_survey');
+		$data['jenis'] = $jenis;
+		$data["identitas"] = data_identitas_survey($jenis);
+    
+    $this->loadView('dashboard_view/admin/hasil_survey_detail', $data);
   }
 }
