@@ -167,31 +167,6 @@ class Model_user extends CI_Model {
   }
 
   
-  public function getDataUjiMutuSample()
-  {
-    $this->db->select("a.nama_usaha,b.kode_layanan,b.uid,c.nama_layanan,a.kota ");
-    $this->db->from('identitas_usaha as a');
-    $this->db->join('layanan_ujimutu as b',"a.id_identitas_usaha=b.id_identitas_usaha");
-    $this->db->join('master_layanan as c',"b.kode_layanan=c.kode_layanan");  
-    $this->db->where('b.samplelab',"0"); 
-    $this->db->order_by('b.kode_pendaftaran','desc');
-    $query = $this->db->get();
-    return $query->result_array();
-  }
-
-  
-  public function getDataUjiMutuBlmValid()
-  {
-    $this->db->select("a.nama_usaha,b.kode_layanan,b.uid,c.nama_layanan,a.kota ");
-    $this->db->from('identitas_usaha as a');
-    $this->db->join('layanan_ujimutu as b',"a.id_identitas_usaha=b.id_identitas_usaha");
-    $this->db->join('master_layanan as c',"b.kode_layanan=c.kode_layanan");  
-    $this->db->where('b.samplelab',"1"); 
-    $this->db->where('b.validlab',"0"); 
-    $this->db->order_by('b.kode_pendaftaran','desc');
-    $query = $this->db->get();
-    return $query->result_array();
-  }
 
   public function getDataJenisInspeksi($role)
   {
@@ -443,19 +418,6 @@ class Model_user extends CI_Model {
     return $query->result_array();
   }
 
-  public function getValidPengujian()
-  {
-    $this->db->select("identitas_usaha.*,layanan_ujimutu.*,master_layanan.*");
-    $this->db->from('identitas_usaha');
-    $this->db->join('layanan_ujimutu',"identitas_usaha.id_identitas_usaha=layanan_ujimutu.id_identitas_usaha");
-    $this->db->join('master_layanan',"layanan_ujimutu.kode_layanan=master_layanan.kode_layanan"); 
-     
-    $this->db->where("samplelab",1); 
-    $this->db->where("validLab",0); 
-    $this->db->order_by('layanan_ujimutu.kode_pendaftaran','desc');
-    $query = $this->db->get();
-    return $query->result_array();
-  }
 
   public function getDataLayanan($value){
     if($value != null){

@@ -23,7 +23,7 @@
                   echo $this->session->flashdata('status');
                 } ?>
               </div> 
-                <div class="col-lg-3 col-sm-6">
+              <!--  <div class="col-lg-3 col-sm-6">
                   <a href="<?= base_url() ?>dashboard/valid_sample">
                     <div class="support-box text-center blue">
                     <div class="icon m-b-10">
@@ -36,7 +36,7 @@
                         <small class="displayblock">Menunggu Sample <i class="fas fa-chevron-right"></i></small>
                     </div>
                   </a>
-                </div>
+                </div>-->
                 <div class="col-lg-3 col-sm-6">
                   <a href="<?= base_url() ?>dashboard/valid_hasilpengujian">
                     <div class="support-box text-center green">

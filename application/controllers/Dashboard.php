@@ -12,6 +12,7 @@ class Dashboard extends MY_Controller {
 		$this->load->model('model_user');
 		$this->load->model('model_admin');
 		$this->load->model('model_dokumen');
+		$this->load->model('model_ujimutu');
 		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$this->menu =  $this->model_user->getMenu($this->saya());
 		$this->bulan = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
@@ -40,7 +41,9 @@ class Dashboard extends MY_Controller {
 			$data['penugasan_inspektor'] = 0;
 			$data['penugasan_ppc'] = 0;
 			$data['hasil_uji_lab'] = 0;
+			$data['hasil_uji_mutu'] = 0;
 			$data['permohonan_masuk'] = count($this->model_user->getDataInspeksi());
+			$hasil_uji_mutu = $this->model_ujimutu->getDataUjiMutuValidLab();
 			foreach($inspeksi as $ins){
 				if($ins['status_ppc'] == "0"){
 						$data['penugasan_inspektor'] ++;
@@ -56,11 +59,15 @@ class Dashboard extends MY_Controller {
 						$data['hasil_uji_lab'] ++;
 				}
 			}
+			foreach($hasil_uji_mutu as $uji){ 
+						$data['hasil_uji_mutu'] ++; 
+			}
+
 
 			$this->loadView('dashboard_view/pages/m_teknis/dashboard_mt',$data);
 		}else if($this->saya() == "analislab"){ 
-			$uji_sampel = $this->model_user->getDataUjiMutuSample();
-			$hasil_uji_lab = $this->model_user->getDataUjiMutuBlmValid();
+			$uji_sampel = $this->model_ujimutu->getDataUjiMutuSample();
+			$hasil_uji_lab = $this->model_ujimutu->getDataUjiMutuBlmValid();
 			
 			$data['hasil_sample'] = 0;
 			$data['hasil_uji_lab'] = 0;
@@ -73,6 +80,21 @@ class Dashboard extends MY_Controller {
 			}
 
 			$this->loadView('dashboard_view/pages/analislab/dashboard_mt',$data);
+		}else if($this->saya() == "u_layanan"){ 
+			$uji_sampel = $this->model_ujimutu->getDataUjiMutuSample();
+			$siap_lhu = $this->model_ujimutu->getDataUjiMutuLHU();
+			
+			$data['hasil_sample'] = 0;
+			$data['siap_lhu'] = 0;
+			$data['permohonan_masuk'] = count($this->model_user->getDataInspeksi()); 
+			foreach($uji_sampel as $uji){ 
+						$data['hasil_sample'] ++; 
+			}
+			foreach($siap_lhu as $uji){ 
+						$data['siap_lhu'] ++; 
+			}
+
+			$this->loadView('dashboard_view/pages/u_layanan/dashboard_mt',$data);
 		}else if($this->saya() == "komtek"){
 			$data['rekomendasi'] = $this->model_user->getDataRekomendasi();
 			$this->loadView('dashboard_view/pages/komtek/dashboard_komtek',$data);
@@ -2108,9 +2130,278 @@ class Dashboard extends MY_Controller {
 				
 				function valid_hasilpengujian(){
 					$data['datalogin'] = $this->session->userdata("dataLogin");
-					$data['sample'] = $this->model_user->getValidPengujian();
+					$data['sample'] = $this->model_ujimutu->getValidPengujian();
 					$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
 					$this->loadView("dashboard_view/analislabvalidmutu",$data);
+				}
+				
+				function mteklist_validujimutu(){
+					$data['datalogin'] = $this->session->userdata("dataLogin");
+					$data['sample'] = $this->model_ujimutu->getDataUjiMutuValidLab();
+					$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
+					$this->loadView("dashboard_view/mteklabvalidmutu",$data);
+				}
+
+				
+				function update_valid_uji(){
+					
+					$i = $this->input; 
+					$id_layanan = $i->post("id_layanan");
+					$kode_pendaftaran = $i->post("kode_pendaftaran");
+					$idjenis = $i->post("idjenis");
+					$idjenisdetail = $i->post("idjenisdetail");
+					$data['id_layanan'] = $id_layanan;
+					$data['kode_pendaftaran'] = $kode_pendaftaran;
+					$data['idjenis'] = $idjenis;
+					$data['idjenisdetail'] = $idjenisdetail;
+					$data['namajenis'] = $i->post("namajenis");
+					$data['datalogin'] = $this->session->userdata("dataLogin");  
+					if($idjenisdetail == "1"){
+						//gabah
+					
+						$this->loadView("dashboard_view/pages/analislab/prosesgabah",$data);
+					}elseif($idjenisdetail == "2"){
+						//padi
+					
+						$this->loadView("dashboard_view/pages/analislab/prosespadi",$data);
+					}else{
+						$this->session->set_flashdata("status","<div class='alert alert-success'>Laporan Pengujian jenis tersebut belum tersedia.</div>");
+						
+						redirect("dashboard/valid_hasilpengujian");
+					}
+	
+							// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
+				}
+
+				function proses_valid_ujilab(){
+
+					$i = $this->input;
+					$id_layanan = $i->post("id_layanan");
+					$kode_pendaftaran = $i->post("kode_pendaftaran");
+					$idjenis = $i->post("idjenis");
+					$idjenisdetail = $i->post("idjenisdetail");
+					$data['id_layanan'] = $id_layanan;
+					$data['kode_pendaftaran'] = $kode_pendaftaran;
+					$data['idjenis'] = $idjenis;
+					$data['idjenisdetail'] = $idjenisdetail;
+
+					if($idjenisdetail == "1"){
+						$jenisuji = $i->post("jenisuji1");
+						$satuan = $i->post("satuan1");
+						$metodeuji = $i->post("metodeuji1");
+						$hasiluji = $i->post("hasiluji1");
+						$kelasmutu = $i->post("kelasmutu1");
+
+						
+						$arr = array(); 
+						$arr = array(
+							"idlayanan_ujimutu"=>$id_layanan,
+							"jenisuji"=>$jenisuji,
+							"satuan"=>$satuan,
+							"metodeuji"=>$metodeuji,
+							"hasiluji"=>$hasiluji,
+							"kelasmutu"=>$kelasmutu); 
+						$this->model_user->insertData("layanan_ujimutu_hasil",$arr);
+
+						
+						$jenisuji = $i->post("jenisuji2");
+						$satuan = $i->post("satuan2");
+						$metodeuji = $i->post("metodeuji2");
+						$hasiluji = $i->post("hasiluji2");
+						$kelasmutu = $i->post("kelasmutu2");
+
+						
+						$arr = array(); 
+						$arr = array(
+							"idlayanan_ujimutu"=>$id_layanan,
+							"jenisuji"=>$jenisuji,
+							"satuan"=>$satuan,
+							"metodeuji"=>$metodeuji,
+							"hasiluji"=>$hasiluji,
+							"kelasmutu"=>$kelasmutu); 
+						$this->model_user->insertData("layanan_ujimutu_hasil",$arr);
+
+						$jenisuji = $i->post("jenisuji3");
+						$satuan = $i->post("satuan3");
+						$metodeuji = $i->post("metodeuji3");
+						$hasiluji = $i->post("hasiluji3");
+						$kelasmutu = $i->post("kelasmutu3");
+
+						
+						$arr = array(); 
+						$arr = array(
+							"idlayanan_ujimutu"=>$id_layanan,
+							"jenisuji"=>$jenisuji,
+							"satuan"=>$satuan,
+							"metodeuji"=>$metodeuji,
+							"hasiluji"=>$hasiluji,
+							"kelasmutu"=>$kelasmutu); 
+						$this->model_user->insertData("layanan_ujimutu_hasil",$arr);
+					}elseif($idjenisdetail == "2"){
+						//padi
+						$jenisuji = $i->post("jenisuji1");
+						$satuan = $i->post("satuan1");
+						$metodeuji = $i->post("metodeuji1");
+						$hasiluji = $i->post("hasiluji1");
+						$kelasmutu = $i->post("kelasmutu1");
+
+						
+						$arr = array(); 
+						$arr = array(
+							"idlayanan_ujimutu"=>$id_layanan,
+							"jenisuji"=>$jenisuji,
+							"satuan"=>$satuan,
+							"metodeuji"=>$metodeuji,
+							"hasiluji"=>$hasiluji,
+							"kelasmutu"=>$kelasmutu); 
+						$this->model_user->insertData("layanan_ujimutu_hasil",$arr);
+
+						
+						$jenisuji = $i->post("jenisuji2");
+						$satuan = $i->post("satuan2");
+						$metodeuji = $i->post("metodeuji2");
+						$hasiluji = $i->post("hasiluji2");
+						$kelasmutu = $i->post("kelasmutu2");
+
+						
+						$arr = array(); 
+						$arr = array(
+							"idlayanan_ujimutu"=>$id_layanan,
+							"jenisuji"=>$jenisuji,
+							"satuan"=>$satuan,
+							"metodeuji"=>$metodeuji,
+							"hasiluji"=>$hasiluji,
+							"kelasmutu"=>$kelasmutu); 
+						$this->model_user->insertData("layanan_ujimutu_hasil",$arr);
+
+						$jenisuji = $i->post("jenisuji3");
+						$satuan = $i->post("satuan3");
+						$metodeuji = $i->post("metodeuji3");
+						$hasiluji = $i->post("hasiluji3");
+						$kelasmutu = $i->post("kelasmutu3");
+
+						
+						$arr = array(); 
+						$arr = array(
+							"idlayanan_ujimutu"=>$id_layanan,
+							"jenisuji"=>$jenisuji,
+							"satuan"=>$satuan,
+							"metodeuji"=>$metodeuji,
+							"hasiluji"=>$hasiluji,
+							"kelasmutu"=>$kelasmutu); 
+						$this->model_user->insertData("layanan_ujimutu_hasil",$arr);
+
+						$jenisuji = $i->post("jenisuji4");
+						$satuan = $i->post("satuan4");
+						$metodeuji = $i->post("metodeuji4");
+						$hasiluji = $i->post("hasiluji4");
+						$kelasmutu = $i->post("kelasmutu4");
+
+						
+						$arr = array(); 
+						$arr = array(
+							"idlayanan_ujimutu"=>$id_layanan,
+							"jenisuji"=>$jenisuji,
+							"satuan"=>$satuan,
+							"metodeuji"=>$metodeuji,
+							"hasiluji"=>$hasiluji,
+							"kelasmutu"=>$kelasmutu); 
+						$this->model_user->insertData("layanan_ujimutu_hasil",$arr);
+
+						$jenisuji = $i->post("jenisuji5");
+						$satuan = $i->post("satuan5");
+						$metodeuji = $i->post("metodeuji5");
+						$hasiluji = $i->post("hasiluji5");
+						$kelasmutu = $i->post("kelasmutu5");
+
+						
+						$arr = array(); 
+						$arr = array(
+							"idlayanan_ujimutu"=>$id_layanan,
+							"jenisuji"=>$jenisuji,
+							"satuan"=>$satuan,
+							"metodeuji"=>$metodeuji,
+							"hasiluji"=>$hasiluji,
+							"kelasmutu"=>$kelasmutu); 
+						$this->model_user->insertData("layanan_ujimutu_hasil",$arr);
+
+						$jenisuji = $i->post("jenisuji6");
+						$satuan = $i->post("satuan6");
+						$metodeuji = $i->post("metodeuji6");
+						$hasiluji = $i->post("hasiluji6");
+						$kelasmutu = $i->post("kelasmutu6");
+
+						
+						$arr = array(); 
+						$arr = array(
+							"idlayanan_ujimutu"=>$id_layanan,
+							"jenisuji"=>$jenisuji,
+							"satuan"=>$satuan,
+							"metodeuji"=>$metodeuji,
+							"hasiluji"=>$hasiluji,
+							"kelasmutu"=>$kelasmutu); 
+						$this->model_user->insertData("layanan_ujimutu_hasil",$arr);
+
+						$jenisuji = $i->post("jenisuji7");
+						$satuan = $i->post("satuan7");
+						$metodeuji = $i->post("metodeuji7");
+						$hasiluji = $i->post("hasiluji7");
+						$kelasmutu = $i->post("kelasmutu7");
+
+						
+						$arr = array(); 
+						$arr = array(
+							"idlayanan_ujimutu"=>$id_layanan,
+							"jenisuji"=>$jenisuji,
+							"satuan"=>$satuan,
+							"metodeuji"=>$metodeuji,
+							"hasiluji"=>$hasiluji,
+							"kelasmutu"=>$kelasmutu); 
+						$this->model_user->insertData("layanan_ujimutu_hasil",$arr);
+					}
+					$data['datalogin'] = $this->session->userdata("dataLogin");
+					$arr = array(); 
+					$arr = array(
+						"tanggalValidLab"=>date("Y-m-d h:i"),
+						"validLab"=>1,
+						"userValidLab"=>$data['datalogin']['id_user']); 
+	
+							if($this->model_user->updateData('layanan_ujimutu',$id_layanan,'uid',$arr)){
+								$this->session->set_flashdata("status","<div class='alert alert-success'>Data berhasil disimpan</div>");
+							}else{
+								$this->session->set_flashdata("status","<div class='alert alert-success'>Gagal menyimpan data</div>");
+							}
+	
+							redirect("dashboard/valid_hasilpengujian");
+	
+							// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
+				}
+
+				function proses_valid_ujimantek(){
+
+					$i = $this->input;
+					$id_layanan = $i->post("id_layanan");
+					$kode_pendaftaran = $i->post("kode_pendaftaran");
+					$idjenis = $i->post("idjenis");
+					$idjenisdetail = $i->post("idjenisdetail");
+					$data['id_layanan'] = $id_layanan;
+					$data['kode_pendaftaran'] = $kode_pendaftaran;
+					$data['idjenis'] = $idjenis;
+					$data['idjenisdetail'] = $idjenisdetail;
+					$arr = array(); 
+					$arr = array(
+						"tanggalManTek"=>date("Y-m-d h:i"),
+						"validManTek"=>1); 
+	
+							if($this->model_user->updateData('layanan_ujimutu',$id_layanan,'uid',$arr)){
+								$this->session->set_flashdata("status","<div class='alert alert-success'>Data berhasil disimpan</div>");
+							}else{
+								$this->session->set_flashdata("status","<div class='alert alert-success'>Gagal menyimpan data</div>");
+							}
+	
+							redirect("dashboard/valid_hasilpengujian");
+	
+							// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
 				}
 
 				function update_valid_sample(){
@@ -2120,10 +2411,12 @@ class Dashboard extends MY_Controller {
 					$id_layanan = $i->post("id_layanan");
 					$level = $i->post("level");
 					$status = $i->post("status");
+					$data['datalogin'] = $this->session->userdata("dataLogin");
 					$arr = array(); 
 					$arr = array(
 						"tanggalsampleLab"=>date("Y-m-d h:i"),
-						"sampleLab"=>1); 
+						"sampleLab"=>1,
+						"userValidSample"=>$data['datalogin']['id_user']); 
 	
 							if($this->model_user->updateData('layanan_ujimutu',$id_layanan,'uid',$arr)){
 								$this->session->set_flashdata("status","<div class='alert alert-success'>Data berhasil disimpan</div>");
@@ -2136,8 +2429,101 @@ class Dashboard extends MY_Controller {
 							// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
 				}
 
-
 				function helloword(){
 					echo "Hello";
 				}
-				}
+
+				
+	function update_valid_ujimtek(){
+		
+		$i = $this->input; 
+		$id_layanan = $i->post("id_layanan");
+		$kode_pendaftaran = $i->post("kode_pendaftaran");
+		$idjenis = $i->post("idjenis");
+		$idjenisdetail = $i->post("idjenisdetail");
+		$data['id_layanan'] = $id_layanan;
+		$data['kode_pendaftaran'] = $kode_pendaftaran;
+		$data['idjenis'] = $idjenis;
+		$data['idjenisdetail'] = $idjenisdetail;
+		$data['namajenis'] = $i->post("namajenis");
+		$data['datalogin'] = $this->session->userdata("dataLogin"); 
+		$data['detail'] = $this->model_ujimutu->getDataUjiMutuValidLabByID($id_layanan); 
+		$data['hasil'] = $this->model_ujimutu->getDataHasilUjiMutuByID($id_layanan); 
+		if($idjenisdetail == "1"){
+			//gabah
+		
+			$this->loadView("dashboard_view/pages/m_teknis/prosesgabah",$data);
+		}elseif($idjenisdetail == "2"){
+			//padi
+		
+			$this->loadView("dashboard_view/pages/m_teknis/prosesgabah",$data);
+		}else{
+			$this->session->set_flashdata("status","<div class='alert alert-success'>Laporan Pengujian jenis tersebut belum tersedia.</div>");
+			
+			redirect("dashboard/valid_hasilpengujian");
+		}
+
+				// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
+	}
+
+	function mtek_validasi_ujimutu(){
+		$i = $this->input; 
+		$id_layanan = $i->post("id_layanan");
+		$arr = array("valid"=>1);
+		
+		$data['datalogin'] = $this->session->userdata("dataLogin");
+		$arr2 = array(
+			"tanggalValidLab"=>date("Y-m-d h:i"),
+			"validManTek"=>1,
+			"userValidMantek"=>$data['datalogin']['id_user']); 
+		$this->db->trans_begin();
+		if($this->model_user->updateData('layanan_ujimutu_hasil',$id_layanan,'idlayanan_ujimutu',$arr) && $this->model_user->updateData('layanan_ujimutu',$id_layanan,'uid',$arr2)){
+			$this->db->trans_commit();
+			$this->session->set_flashdata("status","<div class='alert alert-success'>Proses berhasil disimpan</div>");
+			redirect("dashboard/mteklist_validujimutu",'redirect');
+		}else{
+			$this->db->trans_rollback();
+			$this->session->set_flashdata("status","<div class='alert alert-warning'>Proses Gagal Disimpan</div>");
+			redirect("dashboard/mteklist_validujimutu",'redirect');
+		}
+	}
+
+	
+	function mtek_tolak_ujimutu(){
+		$i = $this->input; 
+		$id_layanan = $i->post("id_layanan");
+		$arr = array("valid"=>2);
+		
+		$data['datalogin'] = $this->session->userdata("dataLogin");
+		$arr2 = array( 
+			"validManTek"=>2,
+			"userValidMantek"=>$data['datalogin']['id_user']); 
+		$this->db->trans_begin();
+		if($this->model_user->updateData('layanan_ujimutu_hasil',$id_layanan,'idlayanan_ujimutu',$arr) && $this->model_user->updateData('layanan_ujimutu',$id_layanan,'uid',$arr2)){
+			$this->db->trans_commit();
+			$this->session->set_flashdata("status","<div class='alert alert-success'>Proses berhasil disimpan</div>");
+			redirect("dashboard/mteklist_validujimutu",'redirect');
+		}else{
+			$this->db->trans_rollback();
+			$this->session->set_flashdata("status","<div class='alert alert-warning'>Proses Gagal Disimpan</div>");
+			redirect("dashboard/mteklist_validujimutu",'redirect');
+		}
+	}
+
+	function u_layanan_cetakLHU(){
+		$data['datalogin'] = $this->session->userdata("dataLogin");
+		$data['sample'] = $this->model_ujimutu->getDataUjiMutuLHUDetail();
+		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
+		$this->loadView("dashboard_view/analislabvalidLHU",$data);
+	}
+
+	function cetakLHU(){
+		$i = $this->input; 
+		$id_layanan = $i->post("id_layanan"); 
+		$data['detail'] = $this->model_ujimutu->getDataUjiMutuLHUDetailByID($id_layanan); 
+		$data['hasil'] = $this->model_ujimutu->getDataHasilUjiMutuLHUByID($id_layanan); 
+		$data['datalogin'] = $this->session->userdata("dataLogin"); 
+		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
+		$this->loadView('dashboard_view/cetak/lhu',$data);
+	}
+}

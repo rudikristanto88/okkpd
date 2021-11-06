@@ -23,7 +23,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div >
             <div class="body">
-              <h4 class="card-inside-title">Daftar Valid Uji Mutu</h4>
+              <h4 class="card-inside-title">Daftar Valid Sample Uji Mutu</h4>
               <?php if($this->session->flashdata('status')!= ""){
                 echo $this->session->flashdata('status');
               } ?>
@@ -31,10 +31,16 @@
                 <table class="table table-hover" id="table-datatable" class="display">
                   <thead>
                     <tr>
-                      <th>No.</th>  
+                      <th rowspan="2">No.</th>
+                      <th rowspan="2">Nama Perusahaan / Kelompok</th> 
+                      <th rowspan="2">Kab/Kota</th>
+                      <th colspan="2" style="text-align:center">Pengajuan Mutu</th>
+                      
+                      <th rowspan="2" width="150px">Aksi <br/>Valid</th>
+                    </tr>
+                    <tr>
                       <th>Kode Pendaftaran</th>
-                      <th>Jenis Produk</th>
-                      <th>Tanggal Sample</th>
+                      <th>Tanggal</th>
                     </tr>
 
 
@@ -45,21 +51,17 @@
                       <tr>
                         <td>
                           <?= $i ?>.
-                        </td> 
+                        </td>
+                        <td><?= $ppc['nama_usaha'] ?></td> 
+                        <td><?= $ppc['kota'] ?></td>
                         <td><?= $ppc['kode_pendaftaran'] ?>
                         </td>
-                        <td><?= $ppc['namajenis'] . " - " . $ppc['namadetail'] ?></td>
-                       
-                        <td><?php $tgl =  strtotime($ppc['tanggalsampleLab']); echo date("d",$tgl)."/".(date("m",$tgl))."/".date("Y",$tgl); ?></td>
+                        <td><?php $tgl =  strtotime($ppc['tanggal_buat']); echo date("d",$tgl)."/".(date("m",$tgl))."/".date("Y",$tgl); ?></td>
                        
                         <td>
-                        <form class="inline" action="<?= base_url() ?>dashboard/update_valid_uji" method="post">
+                        <form target="_blank" class="inline" action="<?= base_url() ?>dashboard/cetakLHU" method="post">
                             <input type="hidden" name="id_layanan" value="<?= $ppc['uid'] ?>">
-                            <input type="hidden" name="kode_pendaftaran" value="<?= $ppc['kode_pendaftaran'] ?>">
-                            <input type="hidden" name="idjenis" value="<?= $ppc['idjenis'] ?>">
-                            <input type="hidden" name="idjenisdetail" value="<?= $ppc['idjenisdetail'] ?>">
-                            <input type="hidden" name="namajenis" value="<?= $ppc['namajenis'] . " - " . $ppc['namadetail'] ?>">
-                            <button type="sumbit" name="button" class="btn btn-info">Proses</button>
+                            <button type="sumbit" name="button" class="btn btn-info">Cetak</button>
                           </form>
                     </td>
                         </tr>
