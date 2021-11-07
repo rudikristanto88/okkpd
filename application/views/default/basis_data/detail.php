@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="<?= base_url()?>index.php/home/basis_data/okkpd"><i class="fas fa-arrow-left"></i></a>
-            <span class="navbar-brand" href="#"><?= $layanan[0]['nama_layanan'] ?></span>
+            <span class="navbar-brand" href="#"><?= $layanan['nama_layanan'] ?></span>
         </div>
     </div>
 </nav>
@@ -22,7 +22,7 @@
             <?php $index = 1;foreach ($data as $element) : ?>
                 <tr>
                     <td><?= $index ?></td>
-                    <td><?= $layanan[0]['nama_layanan'] ?></td>
+                    <td><?= $layanan['nama_layanan'] ?></td>
                     <td><?= $element["nomor_sertifikat"] ?></td>
                     <td><?= $element["nama_usaha"] ?></td>
                     <td>4</td>

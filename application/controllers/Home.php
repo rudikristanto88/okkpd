@@ -10,6 +10,7 @@ class Home extends MY_Controller
 		parent::__construct();
 		$this->load->model('model_admin');
 		$this->load->model('model_dokumen');
+		$this->load->model('model_ujimutu');
 	}
 
 	public function testEmail()
@@ -441,7 +442,7 @@ class Home extends MY_Controller
 	{
 		$data = [];
 		if ($menu == null) {
-			$data["menu"] = array(array("url" => "uji_mutu", "title" => "UJI MUTU PSAT"), array("url" => "okkpd", "title" => "OKKPD/SERTIFIKASI"));
+			$data["menu"] = array(array("url" => "ujimutu", "title" => "UJI MUTU PSAT"), array("url" => "okkpd", "title" => "OKKPD/SERTIFIKASI"));
 			$this->loadViewHome('default/basis_data/index', $data, false);
 		} else {
 
@@ -449,17 +450,13 @@ class Home extends MY_Controller
 				if ($menu == "okkpd") {
 					$data["menu"] = $menu;
 					$data["submenu"] = array(array("url" => "prima_3", "title" => "Sertifikasi Prima 3"), array("url" => "prima_2", "title" => "Sertifikasi Prima 2"));
+					$this->loadViewHome('default/basis_data/' . $menu, $data, false);
+				} else {
+					$data['layanan'] = $this->model_user->getDataWhere("master_layanan", "kode_layanan", $menu)[0];
+					$data['data'] = $this->model_ujimutu->getDataUjiMutuLHUDetail();
+					$this->loadViewHome('default/basis_data/detail_ujimutu', $data, false);
 				}
-				$this->loadViewHome('default/basis_data/' . $menu, $data, false);
-			} else {
-				$temp = $this->model_admin->getsertifikat();
-				$data['layanan'] = $this->model_user->getDataWhere("master_layanan", "kode_layanan", $submenu)[0];
-				$temp = array_filter($temp, function ($k) use ($submenu) {
-					return $k["kode_layanan"] == $submenu;
-				});
-				$data['data'] = $temp;
-				$data['submenu'] = $submenu;
-				$this->loadViewHome('default/basis_data/detail', $data, false);
+
 			}
 		}
 	}
@@ -475,7 +472,7 @@ class Home extends MY_Controller
 				header("location:" . base_url());
 			}
 			$temp = $this->model_admin->getsertifikat();
-			$data['layanan'] = $this->model_user->getDataWhere("master_layanan", "kode_layanan", $submenu);
+			$data['layanan'] = $this->model_user->getDataWhere("master_layanan", "kode_layanan", $submenu)[0];
 			$temp = array_filter($temp, function ($k) use ($submenu) {
 				return $k["kode_layanan"] == $submenu;
 			});
