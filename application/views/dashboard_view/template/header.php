@@ -36,6 +36,8 @@
 <script src="<?= base_url() ?>assets/dashboard/js/jquery.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
+<script src="<?= base_url() ?>assets/dashboard/js/rater.min.js"></script>
+
 
 
 <style media="screen">

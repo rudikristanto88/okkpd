@@ -20,6 +20,7 @@
     <link rel="stylesheet" id="responsive-style-css" href="<?= base_url() ?>assets/default/css/responsive.css" type="text/css" media="all">
     <link rel="stylesheet" id="responsive-style-css" href="<?= base_url() ?>assets/default/css/custom.css" type="text/css" media="all">
     <link rel="stylesheet" id="responsive-style-css" href="<?= base_url() ?>assets/dashboard/css/fonts/fontawesome/fontawesome.css" type="text/css" media="all">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/dashboard/css/datatables.min.css"/>
     <!--<link rel="stylesheet" id="customizer-style-css" href="custom_tools/css/front.customizer.css" type="text/css" media="all">-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <script type="text/javascript" src="<?= base_url() ?>assets/default/js/vendor/jquery.js"></script>

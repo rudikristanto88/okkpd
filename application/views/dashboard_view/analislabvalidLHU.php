@@ -59,10 +59,15 @@
                         <td><?php $tgl =  strtotime($ppc['tanggal_buat']); echo date("d",$tgl)."/".(date("m",$tgl))."/".date("Y",$tgl); ?></td>
                        
                         <td>
-                        <form target="_blank" class="inline" action="<?= base_url() ?>dashboard/cetakLHU" method="post">
+                          <?php if($ppc['id_survey'] == null):?>
+                            <a href="<?= base_url() ?>dashboard/survey?id=<?= $ppc['uid']?>" class="btn btn-primary">Isi Survey</a>
+                            <?php else :?>
+                              <form target="_blank" class="inline" action="<?= base_url() ?>dashboard/cetakLHU" method="post">
                             <input type="hidden" name="id_layanan" value="<?= $ppc['uid'] ?>">
                             <button type="sumbit" name="button" class="btn btn-info">Cetak</button>
                           </form>
+                              <?php endif; ?>
+                        
                     </td>
                         </tr>
                         <?php $i++; endforeach; ?>
