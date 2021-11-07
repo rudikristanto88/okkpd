@@ -217,7 +217,8 @@ var urutan = 1;
   function tambahProduk(){
     var body = '<tr id="'+urutan+'"><td>'+urutan+'.</td>';
     var jenis = document.getElementById("jenis").value;
-    var detail = document.getElementById("detail").value;
+    var detail = $('.jenisdetail:checked').val();
+    // var detail = document.getElementById("jenisdetail").value;
     var kemasan = document.getElementById("kemasan").value;
     var nama_dagang = document.getElementById("nama_dagang").value; 
     var kemasanlain = document.getElementById("txtkemasanlain").value; 

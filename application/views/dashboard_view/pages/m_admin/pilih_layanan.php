@@ -43,7 +43,7 @@
                   <div class="card">
                     <a href="<?= base_url('dashboard/daftar_sertifikat/prima_3') ?>">
                       <div class="image-180">
-                        <img class="card-img-top " src="<?= base_url() ?>assets/image/layanan/prima3.png" alt="Card image">
+                        <img class="card-img-top " src="<?= base_url() ?>assets/image/layanan/prima_3.png" alt="Card image">
                       </div>
                       <div class="card-body">
                         <div class="text-center">
@@ -58,7 +58,7 @@
                   <div class="card">
                     <a href="<?= base_url('dashboard/daftar_sertifikat/prima_2') ?>">
                       <div class="image-180">
-                        <img class="card-img-top " src="<?= base_url() ?>assets/image/layanan/prima2.png" alt="Card image">
+                        <img class="card-img-top " src="<?= base_url() ?>assets/image/layanan/prima_2.png" alt="Card image">
                       </div>
                       <div class="card-body">
                         <div class="text-center">
@@ -69,11 +69,26 @@
 
                   </div>
                 </div>
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
+                  <div class="card">
+                    <a href="<?= base_url('dashboard/daftar_sertifikat/ujimutu') ?>">
+                      <div class="image-200">
+                        <img  class="card-img-top " src="<?= base_url() ?>assets/image/layanan/ujimutu.png" alt="Card image">
+                      </div>
+                      <div class="card-body">
+                        <div class="text-center">
+                          <h4 class="card-title">Pendaftaran Uji Mutu PSAT</h4>
+                        </div>
+                      </div>
+                    </a>
+
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-4">
                   <div class="card">
                     <a href="<?= base_url('dashboard/daftar_sertifikat/psat') ?>">
                       <div class="image-180">
-                        <img class="card-img-top " src="<?= base_url() ?>assets/image/layanan/psat.png" alt="Card image">
+                        <img class="card-img-top " src="<?= base_url() ?>assets/image/layanan/ujimutu.png" alt="Card image">
                       </div>
                       <div class="card-body">
                         <div class="text-center">
@@ -83,8 +98,8 @@
                     </a>
 
                   </div>
-                </div>
-                <div class="col-md-4">
+                </div> -->
+                <!-- <div class="col-md-4">
                   <div class="card">
                     <a href="<?= base_url('dashboard/daftar_sertifikat/kemas') ?>">
                       <div class="image-180">
@@ -98,8 +113,8 @@
                     </a>
 
                   </div>
-                </div>
-                <div class="col-md-4">
+                </div> -->
+                <!-- <div class="col-md-4">
                   <div class="card">
                     <a href="<?= base_url('dashboard/daftar_sertifikat/hc') ?>">
                       <div class="image-180">
@@ -113,7 +128,7 @@
                     </a>
 
                   </div>
-                </div>
+                </div> -->
                 <!-- <div class="col-md-4">
                   <div class="card">
                     <a href="<?= base_url('dashboard/pendaftaran/hygiene_sanitation') ?>">

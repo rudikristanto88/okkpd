@@ -53,7 +53,7 @@
                         <td><?php $tgl =  strtotime($ppc['tanggalsampleLab']); echo date("d",$tgl)."/".(date("m",$tgl))."/".date("Y",$tgl); ?></td>
                        
                         <td>
-                        <form class="inline" action="<?= base_url() ?>dashboard/update_valid_uji" method="post">
+                        <form class="inline" action="<?= base_url() ?>dashboard/update_valid_ujimtek" method="post">
                             <input type="hidden" name="id_layanan" value="<?= $ppc['uid'] ?>">
                             <input type="hidden" name="kode_pendaftaran" value="<?= $ppc['kode_pendaftaran'] ?>">
                             <input type="hidden" name="idjenis" value="<?= $ppc['idjenis'] ?>">

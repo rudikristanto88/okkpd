@@ -22,86 +22,37 @@
                 <?php if($this->session->flashdata('status')!= ""){
                   echo $this->session->flashdata('status');
                 } ?>
-              </div>
+              </div> 
                 <div class="col-lg-3 col-sm-6">
-                  <a href="<?= base_url() ?>dashboard/penugasan_petugas_inspeksi">
-
-                    <div class="support-box text-center cyan">
-                        <div class="icon m-b-10">
+                  <a href="<?= base_url() ?>dashboard/valid_sample">
+                    <div class="support-box text-center blue">
+                    <div class="icon m-b-10">
                             <div class="chart chart-bar"></div>
                         </div>
-                        <div class="text m-b-10">Daftar Permohonan Baru</div>
-                        <h3 class="m-b-0"><?= $permohonan_masuk ?>
+                        <div class="text m-b-10">Menunggu Sample </div>
+                        <h3 class="m-b-0"><?= $hasil_sample ?>
 
                         </h3>
-                        <small class="displayblock">Menunggu Proses <i class="fas fa-chevron-right"></i></small>
+                        <small class="displayblock">Menunggu Sample <i class="fas fa-chevron-right"></i></small>
                     </div>
                   </a>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                  <a href="<?= base_url() ?>dashboard/penugasan_inspektor">
-                    <div class="support-box text-center purple">
-                        <div class="icon m-b-10">
-                            <span class="chart chart-line"></span>
-                        </div>
-                        <div class="text m-b-10">Penugasan Inspektor</div>
-                        <h3 class="m-b-0"><?= $penugasan_inspektor ?>
-
-                        </h3>
-                        <small class="displayblock">Menunggu Proses <i class="fas fa-chevron-right"></i></small>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                  <a href="<?= base_url() ?>dashboard/penugasan_ppc">
-                    <div class="support-box text-center blue">
-                        <div class="icon m-b-10">
-                            <div class="chart chart-pie"></div>
-                        </div>
-                        <div class="text m-b-10">Penugasan PPC</div>
-                        <h3 class="m-b-0"><?= $penugasan_ppc ?>
-
-                        </h3>
-                        <small class="displayblock">Menunggu Proses <i class="fas fa-chevron-right"></i></small>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                  <a href="<?= base_url() ?>dashboard/hasil_laboratorium">
+                  <a href="<?= base_url() ?>dashboard/u_layanan_cetakLHU">
                     <div class="support-box text-center green">
                         <div class="icon m-b-10">
                             <div class="chart chart-bar"></div>
                         </div>
-                        <div class="text m-b-10">Hasil Laboratorium</div>
-                        <h3 class="m-b-0"><?= $hasil_uji_lab ?>
+                        <div class="text m-b-10">Siap Cetak LHU</div>
+                        <h3 class="m-b-0"><?= $siap_lhu ?>
 
                         </h3>
-                        <small class="displayblock">Menunggu Proses <i class="fas fa-chevron-right"></i></small>
+                        <small class="displayblock">Cetak<i class="fas fa-chevron-right"></i></small>
                     </div>
                   </a>
                 </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-12">
-                        
-                    <div class="col-lg-3 col-sm-6">
-                    <a href="<?= base_url() ?>dashboard/mteklist_validujimutu">
-                        <div class="support-box text-center blue">
-                            <div class="icon m-b-10">
-                                <div class="chart chart-pie"></div>
-                            </div>
-                            <div class="text m-b-10">Validasi Uji Mutu</div>
-                            <h3 class="m-b-0"><?= $hasil_uji_mutu ?>
-
-                            </h3>
-                            <small class="displayblock">Menunggu Proses <i class="fas fa-chevron-right"></i></small>
-                        </div>
-                    </a>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="row">
+            <!--</div>
+             <div class="row">
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="header">
