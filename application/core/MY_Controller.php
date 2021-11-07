@@ -14,7 +14,6 @@ class MY_Controller extends CI_Controller
     $this->load->model('model_admin');
     $this->load->library('email');
 
-    $data['datalogin'] = $this->session->userdata("dataLogin");
 
     $this->menu =  $this->model_admin->getMenu($this->saya());
     $this->bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -39,6 +38,7 @@ class MY_Controller extends CI_Controller
   public function loadView($view, $data = [])
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
+
     $data['notification'] = $this->model_user->getMessage(5, $this->id_saya());
     $data['notification_unread'] = $this->model_user->getUnreadMessage($this->id_saya());
     $data['id_profile_saya'] = $this->id_saya();

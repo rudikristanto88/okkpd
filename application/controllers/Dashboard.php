@@ -15,6 +15,7 @@ class Dashboard extends MY_Controller
 		$this->load->model('model_dokumen');
 		$this->load->helper("data_helper");
 		$this->menu =  $this->model_user->getMenu($this->saya());
+		
 		$this->bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 	}
 	public function index()
@@ -23,11 +24,12 @@ class Dashboard extends MY_Controller
 			redirect("home/pendaftaran_online", "redirect");
 		}
 
-
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 		if ($this->saya() == "admin") {
 			$data['keluhan_saran'] = $this->model_admin->getKontakKami();
 			$this->loadView('dashboard_view/dashboard_view', $data);
 		} else if ($this->saya() == "pelaku") {
+			
 			$idUsaha = $this->model_user->getIdUsaha($data['datalogin']['id_user']);
 			$data['layanan'] = $this->model_user->getDataLayanan($idUsaha);
 			$data['layananujimutu'] = $this->model_user->getDataLayananUjiMutu($idUsaha);
@@ -100,12 +102,13 @@ class Dashboard extends MY_Controller
 
 	public function main()
 	{
-
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$this->loadView('dashboard_view/fragment/main_fragment', $data);
 	}
 
 	public function profile($id_user)
 	{
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 
 		if ($id_user != $data['datalogin']['id_user']) {
 			echo '<h2>403 Forbidden</h2><br/>Anda tidak boleh mengakses halaman ini';
@@ -170,7 +173,7 @@ class Dashboard extends MY_Controller
 
 	public function registrasi_user()
 	{
-
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$this->loadView('dashboard_view/fragment/daftar_usaha_fragment', $data);
 	}
 
@@ -375,10 +378,9 @@ class Dashboard extends MY_Controller
 	// Daftar
 	public function pendaftaran($jenis = null)
 	{
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 
 		$data['identitas_usaha'] = $this->model_user->getDataUsaha($data['datalogin']['id_user']);
-
-
 		if ($jenis == null) {
 			$this->loadView('dashboard_view/pendaftaran', $data);
 		} else if ($jenis == "prima_3") {
@@ -435,6 +437,7 @@ class Dashboard extends MY_Controller
 
 	public function dokumen($jenis = null, $id = 0)
 	{
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 
 		$identitas = $this->model_user->getDataUsaha($data['datalogin']['id_user']);
 		$data['syarat_teknis'] = $this->model_user->getDetailSyaratTeknis($jenis);
@@ -633,7 +636,7 @@ class Dashboard extends MY_Controller
 	//------------------------------------------------ Pelaku Usaha ------------------------------------
 	function identitas_usaha()
 	{
-
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$variable = $this->model_user->getDataWhere("identitas_usaha", "id_user", $data['datalogin']['id_user']);
 		foreach ($variable as $data['usaha']);
 		$data['kota'] = $this->model_user->getDataKota();
@@ -648,7 +651,7 @@ class Dashboard extends MY_Controller
 	}
 	function daftar($kode_layanan = null)
 	{
-
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 		if ($kode_layanan == "psat") {
 			$this->loadView('dashboard_view/pages/pelaku/daftar_psat', $data);
 		} else if ($kode_layanan == null) {
@@ -658,7 +661,7 @@ class Dashboard extends MY_Controller
 
 	function permohonan($jenis = null, $id_layanan = null)
 	{
-
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 		if ($jenis == "ditolak") {
 			$data['jenis'] = "Ditolak";
 			$data['permohonan'] = $this->model_user->getDataWhere("layanan", "alasan_penolakan", "is not null");
@@ -747,7 +750,7 @@ class Dashboard extends MY_Controller
 	}
 	function permohonan_diterima()
 	{
-
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 		// echo $data['datalogin']['kode_role'];
 		$data['dokumen'] = $this->model_user->getLayananDiterima($data['datalogin']['kode_role']);
 		$this->loadView('dashboard_view/pages/m_admin/permohonan_diterima', $data);
@@ -755,7 +758,7 @@ class Dashboard extends MY_Controller
 	}
 	function riwayat_permohonan()
 	{
-
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$data['dokumen'] = $this->model_user->getLayananDiterima($data['datalogin']['kode_role'], $data['datalogin']['id_user']);
 		$this->loadView('dashboard_view/pages/m_admin/permohonan_diterima', $data);
 		// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
@@ -1741,7 +1744,7 @@ class Dashboard extends MY_Controller
 	//------------------------------------------------ ADMIN ------------------------------------
 	function kelola_user()
 	{
-
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
 		$this->loadView('dashboard_view/kelola_user', $data);
 	}
@@ -1824,7 +1827,7 @@ class Dashboard extends MY_Controller
 	{
 		$this->load->library('upload');
 
-
+		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$identitas = $this->model_user->getDataUsaha($data['datalogin']['id_user']);
 		foreach ($identitas as $identitas);
 

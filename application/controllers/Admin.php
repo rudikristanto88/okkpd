@@ -1273,7 +1273,7 @@ class Admin extends MY_Controller
   }
   public function kelola_kuesioner()
   {
-    $data['jenis'] = array(array("key" => "okkpd", "value" => "OKKPD"), array("key" => "uji_mutu", "value" => "Uji Mutu"));
+    $data['jenis'] = array(array("key" => "okkpd", "value" => "OKKPD"), array("key" => "ujimutu", "value" => "Uji Mutu"));
     $data['tipe'] = array("Skor", "Yes/No");
     $data['aspek'] = array("Mudah", "Cepat", "Berkualitas", "Kompeten", "Sopan", "Lengkap");;
     $data['kuesioner'] = $this->model_admin->getDataWhere("master_kuesioner", "deleted", "0");
@@ -1324,7 +1324,7 @@ class Admin extends MY_Controller
     if($data['data_survey']["kode_layanan"] == "prima_2" || $data['data_survey']["kode_layanan"] == "prima_3")
 			$jenis = "okkpd";
 		else
-			$jenis = "uji_mutu";
+			$jenis = "ujimutu";
 
 		$data["properties"] = array(
 			"jenis_kelamin" => data_jenis_kelamin(),
