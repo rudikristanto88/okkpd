@@ -24,8 +24,8 @@
 
     <script type="text/javascript">
     $(document).ready(function(){
-
         $('#table-datatable').DataTable();
+        $('#table-datatable2').DataTable();
     })
     </script>
 

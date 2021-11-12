@@ -74,7 +74,7 @@ class Dokumen extends MY_Controller {
 	}
   public function cetak_sertifikat($jenis,$id)
 	{
-    $produk;
+    $produk = "";
     if($jenis == 'psat'){
       $dokumen =$this->model_admin->getsertifikatPSAT($id,true);
     }else if($jenis == 'hc'){
@@ -194,7 +194,6 @@ class Dokumen extends MY_Controller {
     $data['tipe'] = $dokumen['tipe_dokumen'];
     $data['nama'] = $dokumen['nama_dokumen'];
     $data['dokumen'] = $dokumen['dokumen'];
-    // var_dump($dokumen);
     $this->load->view('dashboard_view/dokumen/lihat_dokumen',$data);
   }
 
@@ -205,7 +204,6 @@ class Dokumen extends MY_Controller {
     $data['tipe'] = $dokumen['tipe_dokumen'];
     $data['nama'] = $dokumen['nama_produk_hukum'];
     $data['dokumen'] = $dokumen['produk_hukum'];
-    // var_dump($dokumen);
     $this->load->view('dashboard_view/dokumen/lihat_dokumen',$data);
   }
 
@@ -216,8 +214,6 @@ class Dokumen extends MY_Controller {
     $data['tipe'] = $dokumen['type'];
     $data['nama'] = $dokumen['nama_panduan'];
     $data['dokumen'] = $dokumen['panduan'];
-
-    // var_dump($dokumen);
     $this->load->view('dashboard_view/dokumen/lihat_dokumen',$data);
   }
 
@@ -225,11 +221,9 @@ class Dokumen extends MY_Controller {
   {
     $dokumen = $this->model_user->getdatawhere('master_dokumen_inspeksi','id_dokumen',$id_dokumen);
     foreach ($dokumen as $dokumen);
-    // echo $dokumen['dokumen'];
     $data['tipe'] = $dokumen['tipe_dokumen'];
     $data['nama'] = $dokumen['nama_dokumen'];
     $data['dokumen'] = $dokumen['dokumen'];
-    // var_dump($dokumen);
     $this->load->view('dashboard_view/dokumen/lihat_dokumen',$data);
   }
 
@@ -237,11 +231,9 @@ class Dokumen extends MY_Controller {
   {
     $dokumen = $this->model_user->getdatawhere('layanan','uid',$id_dokumen);
     foreach ($dokumen as $dokumen);
-    // echo $dokumen['dokumen'];
     $data['tipe'] = $dokumen['tipe_surat_pengantar'];
     $data['nama'] = 'Laporan Hasil Uji';
     $data['dokumen'] = $dokumen['surat_pengantar_lab'];
-    // var_dump($dokumen);
    $this->load->view('dashboard_view/dokumen/lihat_dokumen',$data);
   }
 
@@ -292,7 +284,6 @@ class Dokumen extends MY_Controller {
       $data['tipe'] = $dokumen['tipe_surat_pengantar'];
       $data['nama'] = "Surat Pengantar Lab";
       $data['dokumen'] = $dokumen['surat_pengantar_lab'];
-      // var_dump($dokumen);
       $this->load->view('dashboard_view/dokumen/lihat_dokumen',$data);
     }
   }else{
