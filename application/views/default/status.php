@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-<li><a href="#">Home</a></li>
+<li><a href="#">Beranda</a></li>
 <li><a href="#">Status Perizinan</a></li>
 </ol>
 <div class="page_content">

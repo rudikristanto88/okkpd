@@ -9,7 +9,7 @@
             <li class="breadcrumb-item 	bcrumb-1">
                 <a href="<?= base_url() ?>dashboard">
                 <i class="material-icons">home</i>
-                Home</a>
+                Beranda</a>
               </li>
               <li class="breadcrumb-item active">Daftar Produk Pangan</li>
               <li class="breadcrumb-item active">PSAT</li>

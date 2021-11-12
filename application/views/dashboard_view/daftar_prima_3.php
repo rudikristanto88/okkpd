@@ -11,7 +11,7 @@ foreach ($identitas_usaha as $usaha);
             <li class="breadcrumb-item 	bcrumb-1">
               <a href="<?= base_url() ?>dashboard">
                 <i class="material-icons">home</i>
-                Home</a>
+                Beranda</a>
               </li>
               <li class="breadcrumb-item active">Daftar Usaha</li>
               <li class="breadcrumb-item active">Prima 3</li>
@@ -42,7 +42,7 @@ foreach ($identitas_usaha as $usaha);
                   <div class="col-sm-12">
                     <div class="input-field">
                       <input id="nama_perusahaan" type="text" name="nama_perusahaan" class="text-white" data-length="10" value="<?= $usaha['nama_usaha'] ?>" readonly>
-                      <label for="nama_perusahaan">Nama Usaha</label>
+                      <label for="nama_perusahaan">Nama Usaha / Kelompok / Perorangan</label>
                     </div>
                   </div>
 
@@ -51,7 +51,7 @@ foreach ($identitas_usaha as $usaha);
                       <div class="form-line">
                         <div class="input-field">
                           <textarea id="alamat_perusahaan" class="materialize-textarea form-control no-resize text-white" name="alamat_perusahaan" data-length="120" readonly><?= $usaha['alamat_usaha'] ?></textarea>
-                          <label for="alamat_perusahaan">Alamat Usaha</label>
+                          <label for="alamat_perusahaan">Alamat Usaha / Kelompok / Perorangan</label>
                         </div>
                       </div>
                     </div>
@@ -71,7 +71,7 @@ foreach ($identitas_usaha as $usaha);
                   <div class="col-sm-6">
                     <div class="input-field">
                       <input id="nomor_hp_pemohon" type="text" name="nomor_hp_pemohon" class="text-white" data-length="10"  value="<?= $usaha['no_hp_pemohon'] ?>" >
-                      <label for="nomor_hp_pemohon">Nomor HP Pemohon</label>
+                      <label for="nomor_hp_pemohon">Nomor Whatsapp Aktif Telepon</label>
                     </div>
                   </div>
                   <br/>

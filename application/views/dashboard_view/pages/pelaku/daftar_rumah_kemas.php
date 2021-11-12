@@ -11,7 +11,7 @@ foreach ($identitas_usaha as $usaha);
             <li class="breadcrumb-item 	bcrumb-1">
                 <a href="<?= base_url() ?>dashboard">
                 <i class="material-icons">home</i>
-                Home</a>
+                Beranda</a>
               </li>
               <li class="breadcrumb-item active">Daftar Usaha</li>
               <li class="breadcrumb-item active">Rumah Kemas</li>
@@ -71,7 +71,7 @@ foreach ($identitas_usaha as $usaha);
                   <div class="col-sm-6">
                     <div class="input-field">
                       <input id="nomor_hp_pemohon" type="text" name="nomor_hp_pemohon" class="text-white" data-length="10"  value="<?= $usaha['no_hp_pemohon'] ?>" >
-                      <label for="nomor_hp_pemohon">Nomor HP Pemohon</label>
+                      <label for="nomor_hp_pemohon">Nomor Whatsapp Aktif Telepon</label>
                     </div>
                   </div>
                   <br/>

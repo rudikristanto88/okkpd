@@ -17,7 +17,7 @@ foreach ($info_layanan as $info) {
 ?>
 
 <ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
+  <li><a href="#">Beranda</a></li>
   <li><a href="<?= base_url() ?>home/info_layanan">Info Layanan</a></li>
   <li><?= $layanan['nama_layanan'] ?></li>
 </ol>

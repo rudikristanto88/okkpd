@@ -7,7 +7,7 @@
             <li class="breadcrumb-item 	bcrumb-1">
               <a href="<?= base_url() ?>dashboard">
                 <i class="material-icons">home</i>
-                Home</a>
+                Beranda</a>
               </li>
               <li class="breadcrumb-item active">Dashboard</li>
               <li class="breadcrumb-item active">Identitas Kepala Dinas</li>
@@ -28,10 +28,9 @@
                                 <strong>Kepala</strong> Dinas</h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
+                                    <button href="javascript:void(0);" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                    <span>Aksi</span> <i class="material-icons">more_vert</i>
+                                                </button>
                                     <ul class="dropdown-menu pull-right">
                                         <li>
                                             <a href="<?= base_url('admin/tambah_identitas_kepala_dinas') ?>">Tambah</a>

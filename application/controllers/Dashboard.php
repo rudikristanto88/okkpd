@@ -200,14 +200,15 @@ class Dashboard extends MY_Controller
 		$this->loadView('dashboard_view/fragment/daftar_usaha_fragment', $data);
 	}
 
-	function getDataKecamatan()
+	function getDataKecamatan($id_kecamatan = 0)
 	{
 		$kode_kota = $this->input->post("kode_kota");
 		$kec = $this->model_user->getDataWhere("kecamatan", "kode_kota", $kode_kota);
 		echo "<option value='X;X'>--Pilih Kecamatan--</option>";
 
 		foreach ($kec as $kec) {
-			echo "<option value='" . $kec['kode_kec'] . ';' . $kec['nama_kec'] . "'>" . $kec['nama_kec'] . "</option>";
+			$selected = $kec['nama_kec'] == $id_kecamatan ? "selected" : "";
+			echo "<option " . $selected . " value='" . $kec['kode_kec'] . ';' . $kec['nama_kec'] . "'>" . $kec['nama_kec'] . "</option>";
 		}
 	}
 	function getInstansi()
@@ -217,14 +218,15 @@ class Dashboard extends MY_Controller
 		foreach ($kota as $kota);
 		echo $kota['nama_instansi'] . '<>' . $kota['nama_ketua'];
 	}
-	function getDataKelurahan()
+	function getDataKelurahan($id_kelurahan = 0)
 	{
 		$kode_kec = $this->input->post("kode_kec");
 		$kel = $this->model_user->getDataWhere("kelurahan", "kode_kec", $kode_kec);
 		echo "<option value='X;X'>--Pilih Kelurahan--</option>";
 
 		foreach ($kel as $kel) {
-			echo "<option value='" . $kel['kode_kel'] . ';' . $kel['nama_kel'] . "'>" . $kel['nama_kel'] . "</option>";
+			$selected = $kel['nama_kel'] == $id_kelurahan ? "selected" : "";
+			echo "<option ".$selected." value='" . $kel['kode_kel'] . ';' . $kel['nama_kel'] . "'>" . $kel['nama_kel'] . "</option>";
 		}
 	}
 
@@ -244,8 +246,8 @@ class Dashboard extends MY_Controller
 			} else {
 				$checked = "";
 			}
-			echo "<input $checked style='opacity: 100;' class='jenisdetail' type='radio' id='jenisdetail-".$i."' name='jenisdetail' value='" . $kel['idjenisdetail'] . ';' . $kel['namadetail'] . "'>";
-			echo "<label style='display:inline' for='jenisdetail-".$i."'>" . $kel['namadetail'] . "</label><br/>";
+			echo "<input $checked style='opacity: 100;' class='jenisdetail' type='radio' id='jenisdetail-" . $i . "' name='jenisdetail' value='" . $kel['idjenisdetail'] . ';' . $kel['namadetail'] . "'>";
+			echo "<label style='display:inline' for='jenisdetail-" . $i . "'>" . $kel['namadetail'] . "</label><br/>";
 
 			$i++;
 		}
@@ -303,11 +305,8 @@ class Dashboard extends MY_Controller
 		$id_user = $this->session->userdata("dataLogin")['id_user'];
 
 		$arr = array(
-			"nama_pemohon" => $nama_pemohon,
-			"jabatan_pemohon" => $jabatan_pemohon,
 			"no_ktp_pemohon" => $no_ktp_pemohon,
 			"no_npwp" => $no_npwp,
-			"nama_usaha" => $nama_usaha,
 			"alamat_usaha" => $alamat_usaha,
 			"rt" => $rt,
 			"rw" => $rw,
@@ -318,9 +317,15 @@ class Dashboard extends MY_Controller
 			"no_hp_pemohon" => $no_hp_pemohon,
 			"unit_kerja" => $unit_kerja,
 			"nama_pimpinan" => $nama_pimpinan,
-			"id_user" => $id_user,
-			"jenis_usaha" => $jenis_usaha
 		);
+
+		if ($menu == "tambah") {
+			$arr["nama_pemohon"] = $nama_pemohon;
+			$arr["jabatan_pemohon"] = $jabatan_pemohon;
+			$arr["nama_usaha"] = $nama_usaha;
+			$arr["jenis_usaha"] =  $jenis_usaha;
+			$arr["id_user"] = $id_user;
+		}
 
 		if ($foto_ktp_temp != null) {
 			$foto_ktp = file_get_contents($foto_ktp_temp['full_path']);
@@ -348,13 +353,13 @@ class Dashboard extends MY_Controller
 			$ses['punya_usaha'] = 1;
 			$this->session->set_userdata("dataLogin", $ses);
 			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-
 			redirect("dashboard/identitas_usaha", "redirect");
 		} else {
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
 			redirect("dashboard/identitas_usaha", "redirect");
 		}
 	}
+
 	public function insert_aktor()
 	{
 		$i = $this->input;
@@ -2129,9 +2134,9 @@ class Dashboard extends MY_Controller
 	{
 		$id_layanan = $this->input->get("uid") ?? 0;
 		$kode_layanan = $this->input->get("layanan") ?? 0;
-		
+
 		$userdata = $this->session->userdata("dataLogin");
-		$layanan = $this->model_admin->getDataWhere($kode_layanan == "ujimutu" ? "layanan_ujimutu":"layanan", "uid", $id_layanan);
+		$layanan = $this->model_admin->getDataWhere($kode_layanan == "ujimutu" ? "layanan_ujimutu" : "layanan", "uid", $id_layanan);
 		$identitas_usaha = $this->model_admin->getDataWhere("identitas_usaha", "id_user", $userdata['id_user']);
 		if (sizeof($identitas_usaha) == 0) {
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Anda tidak memiliki akses ke halaman ini</div>");
@@ -2174,9 +2179,9 @@ class Dashboard extends MY_Controller
 		$param["saran"] = $input->post("saran");
 		$answers = $input->post("kuesioner");
 		$id_survey = $this->model_admin->insertGetID("survey_data", $param);
-		if($jenis == "ujimutu"){
+		if ($jenis == "ujimutu") {
 			$this->model_admin->updateData("layanan_ujimutu", $input->post("layanan"), "uid", array("id_survey" => $id_survey));
-		}else{
+		} else {
 			$this->model_admin->updateData("layanan", $input->post("layanan"), "uid", array("id_survey" => $id_survey));
 		}
 		foreach ($answers as $element) {

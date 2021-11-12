@@ -48,23 +48,14 @@ class Admin extends MY_Controller
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
     if ($jenis == null) {
+      $data["layanan"] = $this->model_admin->getDataWhere("master_layanan","status",1);
       $this->loadView('dashboard_view/admin/info_layanan', $data);
     } else {
       if ($data_ubah == null) {
         $data['info_layanan'] = $this->model_user->getDataWhere('info_layanan', 'kode_layanan', $jenis);
 
         $data['jenis'] = $jenis;
-        if ($jenis == 'prima_3') {
-          $data['layanan'] = 'Prima 3';
-        } else if ($jenis == 'prima_2') {
-          $data['layanan'] = 'Prima 2';
-        } else if ($jenis == 'psat') {
-          $data['layanan'] = 'PSAT';
-        } else if ($jenis == 'rumah_kemas') {
-          $data['layanan'] = 'Rumah Kemas';
-        } else if ($jenis == 'hc') {
-          $data['layanan'] = 'Health Certificate';
-        }
+        $data["layanan"] = $this->model_admin->getDataWhere("master_layanan","kode_layanan",$jenis)[0]["nama_layanan"];
         $this->loadView('dashboard_view/admin/layanan', $data);
       } else {
         $value = '';
