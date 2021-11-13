@@ -79,7 +79,19 @@ include 'header_cetak.php';
                         </tbody>
                     </table>
                 </div>
-                 
+                <table border="0" width="100%">
+                    <tr>
+                        <td width="30%">Analis Laboratorium</td>
+                        <td width="40%">&nbsp;</td>
+                        <td width="30%">Manager Teknis</td>
+                    </tr>
+                    <tr><td><br/><br/><br/></td><td><br/><br/><br/></td><td><br/><br/><br/></td></tr>
+                    <tr>
+                        <td width="30%"><?=$detail[0]['namaanalis'] ?></td>
+                        <td width="40%">&nbsp;</td>
+                        <td width="30%"><?=$detail[0]['namamantek'] ?></td>
+                    </tr>
+                </table>
             </div>
           </div>
         </div>

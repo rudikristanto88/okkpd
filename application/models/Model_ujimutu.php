@@ -119,13 +119,15 @@ class Model_ujimutu extends CI_Model {
 
   public function getDataUjiMutuLHUDetail()
   {
-    $this->db->select("a.*,b.*,c.*,d.namadetail,e.namajenis,f.nama_kemasan");
+    $this->db->select("a.*,b.*,c.*,d.namadetail,e.namajenis,f.nama_kemasan,g.nama_lengkap as namaanalis,h.nama_lengkap as namamantek");
     $this->db->from('identitas_usaha as a');
     $this->db->join('layanan_ujimutu as b',"a.id_identitas_usaha=b.id_identitas_usaha");
     $this->db->join('master_layanan as c',"b.kode_layanan=c.kode_layanan");  
     $this->db->join('jenis_komoditas_detil as d',"b.idjenisdetail=d.idjenisdetail"); 
     $this->db->join('jenis_komoditas as e',"b.idjenis=e.idjenis"); 
     $this->db->join('master_kemasan as f',"b.id_kemasan=f.id_kemasan"); 
+    $this->db->join('user as g',"b.userValidLab=g.id_user"); 
+    $this->db->join('user as h',"b.userValidMantek=h.id_user"); 
     $this->db->where('b.samplelab',"1"); 
     $this->db->where('b.validlab',"1"); 
     $this->db->where('b.validManTek',"1"); 
@@ -137,13 +139,15 @@ class Model_ujimutu extends CI_Model {
 
   function getDataUjiMutuLHUDetailByID($id){
     
-    $this->db->select("a.*,b.*,c.*,d.namadetail,e.namajenis,f.nama_kemasan");
+    $this->db->select("a.*,b.*,c.*,d.namadetail,e.namajenis,f.nama_kemasan,g.nama_lengkap as namaanalis,h.nama_lengkap as namamantek");
     $this->db->from('identitas_usaha as a');
     $this->db->join('layanan_ujimutu as b',"a.id_identitas_usaha=b.id_identitas_usaha");
     $this->db->join('master_layanan as c',"b.kode_layanan=c.kode_layanan");  
     $this->db->join('jenis_komoditas_detil as d',"b.idjenisdetail=d.idjenisdetail"); 
     $this->db->join('jenis_komoditas as e',"b.idjenis=e.idjenis"); 
     $this->db->join('master_kemasan as f',"b.id_kemasan=f.id_kemasan"); 
+    $this->db->join('user as g',"b.userValidLab=g.id_user"); 
+    $this->db->join('user as h',"b.userValidMantek=h.id_user"); 
     $this->db->where('b.samplelab',"1"); 
     $this->db->where('b.validlab',"1"); 
     $this->db->where('b.validManTek',"1"); 
