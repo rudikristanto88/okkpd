@@ -8,7 +8,7 @@
             <li class="breadcrumb-item 	bcrumb-1">
               <a href="<?= base_url() ?>dashboard">
                 <i class="material-icons">home</i>
-                Home</a>
+                Beranda</a>
             </li>
             <li class="breadcrumb-item active">Pendaftaran</li>
           </ul>
@@ -102,7 +102,7 @@
               <div class="col-md-4">
                 <div class="card">
                   <a href="<?= base_url('dashboard/pendaftaran/ujimutu') ?>">
-                    <div class="image-200">
+                    <div class="image-180">
                       <img class="card-img-top " src="<?= base_url() ?>assets/image/layanan/ujimutu.png" alt="Card image">
                     </div>
                     <div class="card-body">

@@ -202,6 +202,7 @@ class Dashboard extends MY_Controller {
 			echo "<option value='".$kec['kode_kec'].';'.$kec['nama_kec']."'>".$kec['nama_kec']."</option>";
 		}
 	}
+	
 	function getInstansi(){
 		$kode_kota = $this->input->post("kode_kota");
 		$kota = $this->model_user->getDataWhere("kota","kode_kota",$kode_kota);
@@ -209,6 +210,7 @@ class Dashboard extends MY_Controller {
 		echo $kota['nama_instansi'].'<>'.$kota['nama_ketua'];
 
 	}
+	
 	function getDataKelurahan(){
 		$kode_kec = $this->input->post("kode_kec");
 		$kel = $this->model_user->getDataWhere("kelurahan","kode_kec",$kode_kec);
@@ -229,8 +231,14 @@ class Dashboard extends MY_Controller {
 		}*/
 		$i=1;
 		foreach ($kel as $kel) {
-			if($i==1){$checked=" checked ";}else{$checked="";}
-			echo "<input $checked type='radio' name='jenisdetail' value='".$kel['idjenisdetail'].';'.$kel['namadetail']."'>".$kel['namadetail']."<br/>";
+			if ($i == 1) {
+				$checked = " checked ";
+			} else {
+				$checked = "";
+			}
+			echo "<input $checked style='opacity: 100;' class='jenisdetail' type='radio' id='jenisdetail-" . $i . "' name='jenisdetail' value='" . $kel['idjenisdetail'] . ';' . $kel['namadetail'] . "'>";
+			echo "<label style='display:inline' for='jenisdetail-" . $i . "'>" . $kel['namadetail'] . "</label><br/>";
+
 			$i++;
 		}
 	}
@@ -287,36 +295,40 @@ class Dashboard extends MY_Controller {
 		$id_user = $this->session->userdata("dataLogin")['id_user'];
 
 		$arr = array(
-			"nama_pemohon" => $nama_pemohon,
-			"jabatan_pemohon" => $jabatan_pemohon,
 			"no_ktp_pemohon" => $no_ktp_pemohon,
 			"no_npwp" => $no_npwp,
-			"nama_usaha"=>$nama_usaha,
-			"alamat_usaha"=>$alamat_usaha,
-			"rt"=>$rt,
-			"rw"=>$rw,
-			"kelurahan"=>$kelurahan[1],
-			"kecamatan"=>$kecamatan[1],
-			"kota"=>$kota[1],
-			"no_telp"=>$no_telp,
-			"no_hp_pemohon"=>$no_hp_pemohon,
-			"unit_kerja"=>$unit_kerja,
-			"nama_pimpinan"=>$nama_pimpinan,
-			"id_user"=>$id_user,
-			"jenis_usaha"=>$jenis_usaha);
+			"alamat_usaha" => $alamat_usaha,
+			"rt" => $rt,
+			"rw" => $rw,
+			"kelurahan" => $kelurahan[1],
+			"kecamatan" => $kecamatan[1],
+			"kota" => $kota[1],
+			"no_telp" => $no_telp,
+			"no_hp_pemohon" => $no_hp_pemohon,
+			"unit_kerja" => $unit_kerja,
+			"nama_pimpinan" => $nama_pimpinan,
+		);
 
-			if($foto_ktp_temp!=null){
-				$foto_ktp = file_get_contents($foto_ktp_temp['full_path']);
-				$arr["foto_ktp"] = $foto_ktp;
-			}
-			if($foto_npwp_temp!=null){
-				$foto_npwp = file_get_contents($foto_npwp_temp['full_path']);
-				$arr["foto_npwp"] = $foto_npwp;
-			}
-			if($kop_surat_temp!=null){
-				$kop_surat = file_get_contents($kop_surat_temp['full_path']);
-				$arr["kop_surat"] = $kop_surat;
-			}
+		if ($menu == "tambah") {
+			$arr["nama_pemohon"] = $nama_pemohon;
+			$arr["jabatan_pemohon"] = $jabatan_pemohon;
+			$arr["nama_usaha"] = $nama_usaha;
+			$arr["jenis_usaha"] =  $jenis_usaha;
+			$arr["id_user"] = $id_user;
+		}
+
+		if ($foto_ktp_temp != null) {
+			$foto_ktp = file_get_contents($foto_ktp_temp['full_path']);
+			$arr["foto_ktp"] = $foto_ktp;
+		}
+		if ($foto_npwp_temp != null) {
+			$foto_npwp = file_get_contents($foto_npwp_temp['full_path']);
+			$arr["foto_npwp"] = $foto_npwp;
+		}
+		if ($kop_surat_temp != null) {
+			$kop_surat = file_get_contents($kop_surat_temp['full_path']);
+			$arr["kop_surat"] = $kop_surat;
+		}
 
 			$hasil;
 			if($menu == 'tambah'){
@@ -332,27 +344,34 @@ class Dashboard extends MY_Controller {
 				$this->session->set_userdata("dataLogin",$ses);
 				$this->session->set_flashdata("status","<div class='alert alert-success'>Data berhasil disimpan</div>");
 
-				redirect("dashboard/identitas_usaha","redirect");
-			}else{
-				$this->session->set_flashdata("status","<div class='alert alert-warning'>Gagal menyimpan data</div>");
-				redirect("dashboard/identitas_usaha","redirect");
+				if ($hasil) {
+					$ses = $this->session->userdata("dataLogin");
+					$ses['punya_usaha'] = 1;
+					$this->session->set_userdata("dataLogin", $ses);
+					$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
+					redirect("dashboard/identitas_usaha", "redirect");
+				} else {
+					$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
+					redirect("dashboard/identitas_usaha", "redirect");
+				}
 			}
+	}
 
-		}
-		public function insert_aktor(){
-			$i = $this->input;
-			$nama_lengkap = $i->post("nama_lengkap");
-			$username = $i->post("username");
-			$alamat_lengkap = $i->post("alamat_lengkap");
-			$kode_kota = $i->post("kode_kota");
-			$no_ktp = $i->post("no_ktp");
-			// $foto_ktp = "";
-			$kode_role = $i->post("kode_role");
-			$status = 1;
-			$password = sha1("Okkpd2018!12345678");
+	public function insert_aktor()
+	{
+		$i = $this->input;
+		$nama_lengkap = $i->post("nama_lengkap");
+		$username = $i->post("username");
+		$alamat_lengkap = $i->post("alamat_lengkap");
+		$kode_kota = $i->post("kode_kota");
+		$no_ktp = $i->post("no_ktp");
+		// $foto_ktp = "";
+		$kode_role = $i->post("kode_role");
+		$status = 1;
+		$password = sha1("Okkpd2018!12345678");
 
-			$files = $_FILES;
-/*
+		$files = $_FILES;
+		/*
 			if($this->uploads($_FILES,'foto_ktp') == null){
 				$this->session->set_flashdata("status","<div class='alert alert-warning'>Foto KTP Kosong</div>");
 				var_dump($_FILES);
@@ -2106,8 +2125,8 @@ class Dashboard extends MY_Controller {
 			      $this->loadView('dashboard_view/admin/keluhan_saran',$data);
 			    }
 
-					public function getKeluhanDansaran($jenis)
-			    {
+			public function getKeluhanDansaran($jenis)
+			{
 			      $dat = $this->model_admin->getKeluhanSaran($jenis);
 						foreach ($dat as $dat) {
 							echo '<tr>
@@ -2118,7 +2137,7 @@ class Dashboard extends MY_Controller {
 									<td></td>
 								</tr>';
 						}
-			    }
+			}
 	
 				function valid_sample(){
 					$data['datalogin'] = $this->session->userdata("dataLogin");

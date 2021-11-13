@@ -20,7 +20,7 @@ foreach ($kontak as $kontak) {
             <li class="breadcrumb-item 	bcrumb-1">
               <a href="<?= base_url() ?>dashboard">
                 <i class="material-icons">home</i>
-                Home</a>
+                Beranda</a>
               </li>
               <li class="breadcrumb-item active">Kontak Kami</li>
               <li class="breadcrumb-item active">Tambah Alamat & Nomor Telepon </li>

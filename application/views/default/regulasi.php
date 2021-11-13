@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-<li><a href="#">Home</a></li>
+<li><a href="#">Beranda</a></li>
 <li class="active"><a href="#">Regulasi atau Produk Hukum</a></li>
 </ol>
 <div class="page_content">

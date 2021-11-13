@@ -8,7 +8,7 @@
             <li class="breadcrumb-item 	bcrumb-1">
               <a href="index.html">
                 <i class="material-icons">home</i>
-                Home</a>
+                Beranda</a>
               </li>
               <li class="breadcrumb-item active">Dashboard</li>
               <li class="breadcrumb-item active">Daftarkan Aktor</li>
