@@ -40,7 +40,7 @@ class Model_ujimutu extends CI_Model {
     $this->db->where('b.validlab',"1"); 
     $this->db->where('b.validManTek',"1"); 
      
-    $this->db->order_by('b.kode_pendaftaran','desc');
+    $this->db->order_by('b.kode_pendaftaran','asc');
     $query = $this->db->get();
     return $query->result_array();
   }
@@ -112,7 +112,7 @@ class Model_ujimutu extends CI_Model {
     $this->db->where("b.samplelab",1); 
     $where = '(b.validlab = 0 or b.validManTek = 2)';
     $this->db->where($where); 
-    $this->db->order_by('b.kode_pendaftaran','desc');
+    $this->db->order_by('b.tanggalsampleLab asc,b.kode_pendaftaran asc');
     $query = $this->db->get();
     return $query->result_array();
   }
@@ -156,5 +156,44 @@ class Model_ujimutu extends CI_Model {
     $query = $this->db->get();
     return $query->result_array();
   }
+
+  
+  public function getDataLayananUjiMutu($value)
+  {
+    if ($value != null) {
+      $query = $this->db->query("SELECT *,a.status status_layanan ,timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(DATE_ADD(a.tanggal_buat, INTERVAL 7 DAY), DATE)) selisih
+      from layanan_ujimutu a
+      join master_layanan b on a.kode_layanan = b.kode_layanan 
+      where a.id_identitas_usaha = " . $value . "
+      and case when a.validlab = 0 then timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(now(), DATE)) else 0 end <= 7 
+      order by a.tanggal_buat desc");
+      return $query->result_array();
+    } else {
+      return null;
+    }
+  }
+  
+  public function getValidSampleLab()
+  {
+    $this->db->select("a.*,b.*,c.*,d.namajenis,e.namadetail");
+    $this->db->from('identitas_usaha a');
+    $this->db->join('layanan_ujimutu b', "a.id_identitas_usaha=b.id_identitas_usaha");
+    $this->db->join('master_layanan c', "b.kode_layanan=c.kode_layanan");
+    $this->db->join('jenis_komoditas d', "b.idjenis=d.idjenis");
+    $this->db->join('jenis_komoditas_detil e', "b.idjenisdetail=e.idjenisdetail");
+
+    $this->db->where("samplelab", 0);
+    $this->db->order_by('b.kode_pendaftaran', 'desc');
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+  public function getPimpinanBalai()
+  {
+    $this->db->select("a.*");
+    $this->db->from('identitas_kepala_balai as a');  
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+  
 }
 ?>

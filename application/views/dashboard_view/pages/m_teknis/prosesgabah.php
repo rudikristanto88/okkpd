@@ -109,6 +109,7 @@
                   <form class="" action="<?= base_url("dashboard/mtek_validasi_ujimutu") ?>" class="text-white" method="post">
                   
                     <input type="hidden" name="id_layanan" value="<?= $id_layanan ?>" readonly>
+                    <input type="hidden" name="id_jenis" value="<?= $idjenis ?>" readonly>
                     <button type="submit " class="btn btn-info waves-effect" name="button">Terima</button>
                   </form>
                 </div>

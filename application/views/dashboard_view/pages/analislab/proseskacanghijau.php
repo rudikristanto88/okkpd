@@ -61,88 +61,56 @@
                             <th>JENIS UJI</th>
                             <th>SATUAN</th>
                             <th>HASIL UJI</th>
-                            <th>KELAS MUTU</th>
+                            <th>SYARAT MUTU</th>
                             <th>METODE UJI</th>  
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1.	Derajat Sosoh (Min)</td>
+                                <td>1. Butir rusak</td>
                                 <td>%</td>
                                 <td><input id="hasiluji1" type="text" name="hasiluji1" class="text-white" value=""></td>
                                 <td><input id="kelasmutu1" type="text" name="kelasmutu1" class="text-white" value="">
-                                <input type="hidden" name="jenisuji1" value="1.	Derajat Sosoh (Min)">
+                                <input type="hidden" name="jenisuji1" value="1. Butir rusak">
                                 <input type="hidden" name="satuan1" value="%">
-                                <input type="hidden" name="metodeuji1" value="SNI 6128:2015">
+                                <input type="hidden" name="metodeuji1" value="SNI 01-3923-1995">
                                 </td>
-                                <td>SNI 6128:2015</td>
+                                <td>SNI 01-3923-1995</td>
                             </tr>
                             <tr>
-                                <td>2. Kadar Air (Maks)</td>
+                                <td>2. Butir belah</td>
                                 <td>%</td>
                                 <td><input id="hasiluji2" type="text" name="hasiluji2" class="text-white" value=""></td>
                                 <td><input id="kelasmutu2" type="text" name="kelasmutu2" class="text-white" value="">
-                                <input type="hidden" name="jenisuji2" value="2. Kadar Air (Maks)">
+                                <input type="hidden" name="jenisuji2" value="2. Butir belah">
                                 <input type="hidden" name="satuan2" value="%">
-                                <input type="hidden" name="metodeuji2" value="SNI 6128:2015">
+                                <input type="hidden" name="metodeuji2" value="SNI 01-3923-1995">
                                 </td>
-                                <td>SNI 6128:2015</td>
+                                <td>SNI 01-3923-1995</td>
                             </tr>
                             <tr>
-                                <td>3.	Beras Kepala (Min)</td>
+                                <td>3. Butir keriput</td>
                                 <td>%</td>
                                 <td><input id="hasiluji3" type="text" name="hasiluji3" class="text-white" value=""></td>
                                 <td><input id="kelasmutu3" type="text" name="kelasmutu3" class="text-white" value="">
-                                <input type="hidden" name="jenisuji3" value="3.	Beras Kepala (Min)">
+                                <input type="hidden" name="jenisuji3" value="3. Butir keriput">
                                 <input type="hidden" name="satuan3" value="%">
-                                <input type="hidden" name="metodeuji3" value="SNI 6128:2015">
+                                <input type="hidden" name="metodeuji3" value="SNI 01-3923-1995">
                                 </td>
-                                <td>SNI 6128:2015</td>
+                                <td>SNI 01-3923-1995</td>
                             </tr>
                             <tr>
-                                <td>4.	Butir Patah (Maks)</td>
+                                <td>4. Kotoran</td>
                                 <td>%</td>
                                 <td><input id="hasiluji4" type="text" name="hasiluji4" class="text-white" value=""></td>
                                 <td><input id="kelasmutu4" type="text" name="kelasmutu4" class="text-white" value="">
-                                <input type="hidden" name="jenisuji4" value="4.	Butir Patah (Maks)">
+                                <input type="hidden" name="jenisuji4" value="4. Kotoran">
                                 <input type="hidden" name="satuan4" value="%">
-                                <input type="hidden" name="metodeuji4" value="SNI 6128:2015">
+                                <input type="hidden" name="metodeuji4" value="SNI 01-3923-1995">
                                 </td>
-                                <td>SNI 6128:2015</td>
+                                <td>SNI 01-3923-1995</td>
                             </tr>
-                            <tr>
-                                <td>5.	Butir Lainnya (Maks) Terdiri dari Butir Menir, Butir Merah, Butir Kuning/Rusak, Butir kapur</td>
-                                <td>%</td>
-                                <td><input id="hasiluji5" type="text" name="hasiluji5" class="text-white" value=""></td>
-                                <td><input id="kelasmutu5" type="text" name="kelasmutu5" class="text-white" value="">
-                                <input type="hidden" name="jenisuji5" value="5.	Butir Lainnya (Maks) Terdiri dari Butir Menir, Butir Merah, Butir Kuning/Rusak, Butir kapur">
-                                <input type="hidden" name="satuan5" value="%">
-                                <input type="hidden" name="metodeuji5" value="SNI 6128:2015">
-                                </td>
-                                <td>SNI 6128:2015</td>
-                            </tr>
-                            <tr>
-                                <td>6.	Butir Gabah (Maks)</td>
-                                <td>(Butir/100 gr)</td>
-                                <td><input id="hasiluji6" type="text" name="hasiluji6" class="text-white" value=""></td>
-                                <td><input id="kelasmutu6" type="text" name="kelasmutu6" class="text-white" value="">
-                                <input type="hidden" name="jenisuji6" value="6.	Butir Gabah (Maks)">
-                                <input type="hidden" name="satuan6" value="(Butir/100 gr)">
-                                <input type="hidden" name="metodeuji6" value="SNI 6128:2015">
-                                </td>
-                                <td>SNI 6128:2015</td>
-                            </tr>
-                            <tr>
-                                <td>7.	Benda Asing (Maks)</td>
-                                <td>%</td>
-                                <td><input id="hasiluji7" type="text" name="hasiluji7" class="text-white" value=""></td>
-                                <td><input id="kelasmutu7" type="text" name="kelasmutu7" class="text-white" value="">
-                                <input type="hidden" name="jenisuji7" value="7.	Benda Asing (Maks)">
-                                <input type="hidden" name="satuan7" value="%">
-                                <input type="hidden" name="metodeuji7" value="SNI 6128:2015">
-                                </td>
-                                <td>SNI 6128:2015</td>
-                            </tr>
+                              
                         </tbody>
                     </table>
                 </div>

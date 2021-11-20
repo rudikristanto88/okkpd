@@ -23,7 +23,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div >
             <div class="body">
-              <h4 class="card-inside-title">Daftar Valid Sample Uji Mutu</h4>
+              <h4 class="card-inside-title">Daftar LHU</h4>
               <?php if($this->session->flashdata('status')!= ""){
                 echo $this->session->flashdata('status');
               } ?>
@@ -62,10 +62,9 @@
                           <?php// if($ppc['id_survey'] == null):?>
                             <!--<a href="<?= base_url() ?>dashboard/survey?id=<?= $ppc['uid']?>" class="btn btn-primary">Isi Survey</a>-->
                             <?php //else :?>
-                              <form target="_blank" class="inline" action="<?= base_url() ?>dashboard/cetakLHU" method="post">
-                            <input type="hidden" name="id_layanan" value="<?= $ppc['uid'] ?>">
-                            <button type="sumbit" name="button" class="btn btn-info">Cetak</button>
-                          </form>
+                               
+                            <button onclick="openModal(<?= $ppc['uid'] ?>)" type="sumbit" name="button" class="btn btn-info">Download</button>
+                           
                               <?php //endif; ?>
                         
                     </td>
@@ -94,10 +93,10 @@
   <div class="modal" id="modalUnggah">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="" action="<?= base_url() ?>dashboard/ubah_status_sampling/" method="post"  enctype="multipart/form-data">
+      <form target="_blank" class="inline" action="<?= base_url() ?>dashboard/cetakLHU" method="post">
         <div class="modal-header">
-          <h4 class="modal-title">Lihat Sampling Plan </h4>
-          <input type="hidden" name="id_sampling" id="id_sampling">
+          <h4 class="modal-title">Update tanggal download </h4>
+          <input type="hidden" name="id_layanan" id="id_layanan">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
 
@@ -105,19 +104,21 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-sm-12">
-              <div id='deskripsi'>
-
+              
+          <div class="col-sm-12">
+            <div class="form-group">
+                <label for="nama_dagang">Tanggal Cetak</label>
+                <input class="text-black" type="date" id="tanggal" name="tanggal" placeholder="dd-mm-yyyy" value=""
+        min="1997-01-01" max="2030-12-31">
               </div>
-
+            </div>
             </div>
 
           </div>
         </div>
         <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> &nbsp;&nbsp;
-          <button type="submit" class="btn btn-warning" name="Tolak" value="1">Tolak</button> &nbsp;&nbsp;
-          <button type="submit" class="btn btn-info" name="Simpan" value="2">Setuju</button>
+        <div class="modal-footer"> 
+          <button type="submit" class="btn btn-warning" name="Tolak" value="1">Cetak</button>  
         </div>
       </form>
 
@@ -140,6 +141,11 @@
     }
     function sendDataUpload(id_layanan){
       $("#id_layanan_surat").val(id_layanan);
+    }
+    
+    function openModal(kode){
+      $("#id_layanan").val(kode);
+      $('#modalUnggah').modal();
     }
     function ijinPPC(id_layanan){
       $.ajax({

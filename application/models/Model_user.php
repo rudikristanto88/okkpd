@@ -400,18 +400,6 @@ class Model_user extends MY_Model
   }
 
 
-  public function getValidSampleLab()
-  {
-    $this->db->select("identitas_usaha.*,layanan_ujimutu.*,master_layanan.*");
-    $this->db->from('identitas_usaha');
-    $this->db->join('layanan_ujimutu', "identitas_usaha.id_identitas_usaha=layanan_ujimutu.id_identitas_usaha");
-    $this->db->join('master_layanan', "layanan_ujimutu.kode_layanan=master_layanan.kode_layanan");
-
-    $this->db->where("samplelab", 0);
-    $this->db->order_by('layanan_ujimutu.kode_pendaftaran', 'desc');
-    $query = $this->db->get();
-    return $query->result_array();
-  }
 
 
   public function getDataLayanan($value)
@@ -424,15 +412,6 @@ class Model_user extends MY_Model
     }
   }
 
-  public function getDataLayananUjiMutu($value)
-  {
-    if ($value != null) {
-      $query = $this->db->query("SELECT *,layanan_ujimutu.status status_layanan from layanan_ujimutu join master_layanan on layanan_ujimutu.kode_layanan = master_layanan.kode_layanan where layanan_ujimutu.id_identitas_usaha = " . $value . " order by layanan_ujimutu.tanggal_buat desc");
-      return $query->result_array();
-    } else {
-      return null;
-    }
-  }
   public function getDataSertifikat($value)
   {
     if ($value != null) {

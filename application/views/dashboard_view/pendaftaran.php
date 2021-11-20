@@ -107,7 +107,7 @@
                     </div>
                     <div class="card-body">
                       <div class="text-center">
-                        <h4 class="card-title">Pendaftaran Uji Mutu PSAT</h4>
+                        <h4 class="card-title">Pendaftaran Uji Mutu Pangan</h4>
                       </div>
                     </div>
                   </a>

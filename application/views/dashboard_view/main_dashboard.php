@@ -89,11 +89,16 @@
                             echo date("d", $tanggal) . " " . $this->bulan[$bulan] . " " . date("Y", $tanggal) ?></td>
                         <td><?= $layanan['kode_pendaftaran'] ?></td>
                         <td><?= $layanan['nama_layanan'] ?></td>
-                        <td><?php if ($layanan['status_layanan'] == 0) {
-                              echo "Menunggu";
-                            } else if ($layanan['status_layanan'] == 1) {
-                              echo "Ditolak";
-                            } ?></td>
+                        <td><?php if ($layanan['validManTek'] == 1) {
+                              echo "Proses Validasi LHU";
+                            } else if ($layanan['validLab'] == 1) {
+                              echo "Proses Validasi Hasil Lab";
+                            } else if ($layanan['sampleLab'] == 1) {
+                              echo "Proses Pengujian Lab";
+                            } else if ($layanan['sampleLab'] == 0) {
+                              echo "Menunggu Pengiriman Sample max " . $layanan['selisih'] . " hari lagi";
+                            }  ?>
+                            </td>
                         <td>
 
                         </td>

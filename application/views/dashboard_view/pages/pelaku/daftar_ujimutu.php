@@ -186,7 +186,7 @@ foreach ($identitas_usaha as $usaha);
               
             </div>
             <label for="nama_dagang">
-            Sanggup mengirim sampel produk ke BPMKP Prov Jawa Tengah berupa : </label> 
+            Sanggup Mengirimkan Sampel dalam kurun waktu maksimal 7 (tujuh) hari : </label> 
             <label for="nama_dagang">1.	Uji Laboratorium seberat 2 Kg </label>
             <label for="nama_dagang">2.	Arsip Sampel seberat 1 Kg</label>
               <div class="form-check m-l-10">
@@ -226,24 +226,38 @@ var urutan = 1;
     var splitDataJ = jenis.split(";");
     var splitDataJ1 = detail.split(";");
     var splitDataK = kemasan.split(";"); 
+    var boleh = 1;
+    var pesan = "";
+    if(kemasan == ""){
+      pesan += "Kemasan harus diisi. \n";
+      boleh = 0;
+    }
+    if(splitDataJ1[0] == ""){
+      pesan += "Detail harus diisi. \n";
+      boleh = 0;
+    }
 
-
-    body += '<td><input readonly class="text-white" type="text" name="nama_produk[]" value="'+splitDataJ[1]+' - '+splitDataJ1[1]+'"/></td>';
-    body += '<td><input readonly class="text-white" type="text" name="nama_dagang[]" value="'+nama_dagang+'"/></td>';
-    body += '<td><input type="hidden" name="id_kemasan[]"  value="'+splitDataK[0]+'"/><input readonly class="text-white" type="text" name="nama_kemasan[]" value="'+splitDataK[1]+' '+ kemasanlain+'"/></td>';
-    body += '<td><input type="hidden" name="id_jenis[]"  value="'+splitDataJ[0]+'"/>';
-    body += '<td><input type="hidden" name="id_detail[]"  value="'+splitDataJ1[0]+'"/>';
-    body += '<td><input type="hidden" name="kemasanlain[]"  value="'+kemasanlain+'"/>';
+    if(boleh == 1){
+      body += '<td><input readonly class="text-white" type="text" name="nama_produk[]" value="'+splitDataJ[1]+' - '+splitDataJ1[1]+'"/></td>';
+      body += '<td><input readonly class="text-white" type="text" name="nama_dagang[]" value="'+nama_dagang+'"/></td>';
+      body += '<td><input type="hidden" name="id_kemasan[]"  value="'+splitDataK[0]+'"/><input readonly class="text-white" type="text" name="nama_kemasan[]" value="'+splitDataK[1]+' '+ kemasanlain+'"/></td>';
+      body += '<td><input type="hidden" name="id_jenis[]"  value="'+splitDataJ[0]+'"/>';
+      body += '<td><input type="hidden" name="id_detail[]"  value="'+splitDataJ1[0]+'"/>';
+      body += '<td><input type="hidden" name="kemasanlain[]"  value="'+kemasanlain+'"/>';
+      
+      body +='<td><button type="button" onclick="removeElement('+urutan+')" class="btn btn-warning"><i class="fas fa-minus"></i></button></td>';
+  //
+      body += '</tr>';
+      document.getElementById("tbody").innerHTML += body; 
+      document.getElementById("nama_dagang").value = ""; 
+      document.getElementById("txtkemasanlain").value = ""; 
+    }else{
+      alert(pesan);
+    }
     
-    body +='<td><button type="button" onclick="removeElement('+urutan+')" class="btn btn-warning"><i class="fas fa-minus"></i></button></td>';
-//
-    body += '</tr>';
-    document.getElementById("tbody").innerHTML += body; 
-    document.getElementById("nama_dagang").value = ""; 
-    document.getElementById("txtkemasanlain").value = ""; 
     $("#kemasanlain").hide();
-  $("#tblAjukan").hide();
-$('#cekBersedia').prop('checked', false);
+    $("#tblAjukan").hide();
+    $('#cekBersedia').prop('checked', false);
     urutan++;
   }
   function removeElement(elementId) {

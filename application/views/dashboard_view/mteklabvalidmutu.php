@@ -35,6 +35,8 @@
                       <th>Kode Pendaftaran</th>
                       <th>Jenis Produk</th>
                       <th>Tanggal Sample</th>
+                      <th>Tanggal Valid Lab</th>
+                      <th>Aksi</th>
                     </tr>
 
 
@@ -51,6 +53,8 @@
                         <td><?= $ppc['namajenis'] . " - " . $ppc['namadetail'] ?></td>
                        
                         <td><?php $tgl =  strtotime($ppc['tanggalsampleLab']); echo date("d",$tgl)."/".(date("m",$tgl))."/".date("Y",$tgl); ?></td>
+                        
+                        <td><?php $tgl =  strtotime($ppc['tanggalValidLab']); echo date("d",$tgl)."/".(date("m",$tgl))."/".date("Y",$tgl); ?></td>
                        
                         <td>
                         <form class="inline" action="<?= base_url() ?>dashboard/update_valid_ujimtek" method="post">

@@ -32,14 +32,15 @@
                   <thead>
                     <tr>
                       <th rowspan="2">No.</th>
-                      <th rowspan="2">Nama Perusahaan / Kelompok</th> 
+                      <th rowspan="2">Nama Pemohon</th> 
                       <th rowspan="2">Kab/Kota</th>
-                      <th colspan="2" style="text-align:center">Pengajuan Mutu</th>
+                      <th colspan="3" style="text-align:center">Pengajuan Mutu</th>
                       
                       <th rowspan="2" width="150px">Aksi <br/>Valid</th>
                     </tr>
                     <tr>
                       <th>Kode Pendaftaran</th>
+                      <th>Komoditas</th>
                       <th>Tanggal</th>
                     </tr>
 
@@ -55,13 +56,14 @@
                         <td><?= $ppc['nama_usaha'] ?></td> 
                         <td><?= $ppc['kota'] ?></td>
                         <td><?= $ppc['kode_pendaftaran'] ?>
+                        <td><?= $ppc['namajenis'] . " - " . $ppc['namadetail'] ?>
                         </td>
                         <td><?php $tgl =  strtotime($ppc['tanggal_buat']); echo date("d",$tgl)."/".(date("m",$tgl))."/".date("Y",$tgl); ?></td>
                        
                         <td>
-                        <form class="inline" action="<?= base_url() ?>dashboard/update_valid_sample" method="post">
-                            <input type="hidden" name="id_layanan" value="<?= $ppc['uid'] ?>">
-                            <button type="sumbit" name="button" class="btn btn-info">Valid</button>
+                        
+                        
+                            <button type="sumbit" onclick="openModal(<?= $ppc['uid'] ?>)" name="button" class="btn btn-info">Terima Sampel</button>
                           </form>
                     </td>
                         </tr>
@@ -89,7 +91,8 @@
   <div class="modal" id="modalUnggah">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form class="" action="<?= base_url() ?>dashboard/ubah_status_sampling/" method="post"  enctype="multipart/form-data">
+      <form class="inline" action="<?= base_url() ?>dashboard/update_valid_sample" method="post">
+      <input type="hidden" name="id_layanan" id="id_layanan" value="">
         <div class="modal-header">
           <h4 class="modal-title">Lihat Sampling Plan </h4>
           <input type="hidden" name="id_sampling" id="id_sampling">
@@ -99,20 +102,26 @@
         <!-- Modal body -->
         <div class="modal-body">
           <div class="row">
-            <div class="col-sm-12">
-              <div id='deskripsi'>
-
+          <div class="col-sm-12">
+            <div class="form-group">
+                <label for="nama_dagang">Berat Sampel</label>
+                <input class="text-black" type="text" id="berat" name="berat" placeholder="m2">
               </div>
-
             </div>
+            <div class="col-sm-12">
+            <div class="form-group">
+              <label for="nama_dagang">Kondisi Sampel</label>
+              <input class="text-black" type="text" id="kondisi" name="kondisi" placeholder="m2">
+            </div>
+          </div>
+
+
 
           </div>
         </div>
         <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> &nbsp;&nbsp;
-          <button type="submit" class="btn btn-warning" name="Tolak" value="1">Tolak</button> &nbsp;&nbsp;
-          <button type="submit" class="btn btn-info" name="Simpan" value="2">Setuju</button>
+        <div class="modal-footer"> 
+          <button type="submit" class="btn btn-info" name="Simpan" value="2">Simpan</button>
         </div>
       </form>
 
@@ -136,6 +145,11 @@
     function sendDataUpload(id_layanan){
       $("#id_layanan_surat").val(id_layanan);
     }
+
+    function openModal(kode){
+      $("#id_layanan").val(kode);
+      $('#modalUnggah').modal();
+    }
     function ijinPPC(id_layanan){
       $.ajax({
         url: "<?= base_url()?>dashboard/ijin",
@@ -153,5 +167,7 @@
         }
       });
     }
+
+
 
   </script>
