@@ -1,11 +1,16 @@
-<nav class="navbar  navbar-default ">
+<nav class="navbar  navbar-default" style="margin-bottom:0">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="<?= base_url() ?>index.php/home/basis_data"><i class="fas fa-arrow-left"></i></a>
+            <a class="navbar-brand" href="<?= base_url() ?>home/basis_data"><i class="fas fa-arrow-left"></i></a>
             <span class="navbar-brand" href="#"><?= $layanan['nama_layanan'] ?></span>
         </div>
     </div>
 </nav>
+<ol class="breadcrumb">
+  <li><a href="<?= base_url() ?>">Beranda</a></li>
+  <li><a href="<?= base_url() ?>home/basis_data">Basis Data</a></li>
+  <li><?= $layanan['nama_layanan'] ?></li>
+</ol>
 <div class="container">
     <h3>DAFTAR LAPORAN HASIL UJI </h3>
     <table id="table-datatable" class="table table-responsive stripped">

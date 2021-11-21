@@ -7,7 +7,7 @@
 <nav class="navbar  navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="<?= base_url() ?>index.php/home/basis_data"><i class="fas fa-arrow-left"></i></a>
+            <a class="navbar-brand" href="<?= base_url() ?>home/basis_data"><i class="fas fa-arrow-left"></i></a>
 
             <span class="navbar-brand" href="#">REGISTRASI/SERTIFIKASI</span>
         </div>
@@ -26,7 +26,7 @@
                                         <img alt="Supply Chain Security" src="<?= base_url() ?>assets/image/layanan/<?= $sub['url'] ?>.png">
                                         <div class="hover_wrap">
                                             <div class="link_wrap">
-                                                <a class="hover_link icon-link" href="<?= base_url() ?>index.php/home/basis_data/<?= $menu ?>/<?= $sub['url'] ?>"></a>
+                                                <a class="hover_link icon-link" href="<?= base_url() ?>home/basis_data/<?= $menu ?>/<?= $sub['url'] ?>"></a>
                                             </div>
                                         </div>
                                     </div>

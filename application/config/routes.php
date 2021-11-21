@@ -53,8 +53,8 @@ $route['default_controller'] = 'home';
 
 //=============== HOME ==================
 $route['home/basis_data'] = "home/basis_data";
-$route['home/basis_data/okkpd'] = "home/basis_data_okkpd";
-$route['home/basis_data/okkpd/(:any)'] = "home/basis_data_okkpd/$1";
+$route['home/basis_data/sertifikasi'] = "home/basis_data_okkpd";
+$route['home/basis_data/sertifikasi/(:any)'] = "home/basis_data_okkpd/$1";
 $route['home/basis_data/uji_mutu'] = "home/basis_data_okkpd/mutupangan";
 
 

@@ -633,7 +633,6 @@ class Model_user extends MY_Model
     }
     $this->db->from('layanan');
     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha=identitas_usaha.id_identitas_usaha");
-    $this->db->join('user', "identitas_usaha.id_user=user.id_user");
     $this->db->join('master_layanan', "layanan.kode_layanan=master_layanan.kode_layanan");
     if ($jenis_layanan == 'prima_3' || $jenis_layanan == 'prima_2' || $jenis_layanan == 'kemas') {
       if ($menu == 'daftar') {

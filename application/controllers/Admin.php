@@ -366,6 +366,7 @@ class Admin extends MY_Controller
       'w_hasil_mt' => $tanggal,
       'w_komtek' => $tanggal,
       'w_diterima' => $tanggal,
+      'status_hasil_uji' => 2
     );
 
     $id_layanan = $this->model_admin->insertGetID('layanan', $data_layanan);
@@ -381,14 +382,19 @@ class Admin extends MY_Controller
         $iterasi++;
         continue;
       }
-      $date = str_replace('/', '-', $element[9]);
+      $layanan = $this->model_admin->getDataWhere("master_layanan","kode_layanan",$element[11])[0];
+      $UNIX_DATE = ($element[9] - 25569) * 86400;
+      $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
+
       $tanggal_sertifikat = date('Y-m-d', strtotime($date));
+      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+".$layanan['masa_berlaku']." months", strtotime($date)));
       $data_excel = array(
         "nomor_sertifikat" => $element[0],
         "nama_jenis_komoditas" => $element[6],
         "nama_latin" => $element[7],
         "luas_lahan" => $element[8],
         "tanggal_unggah" => $tanggal_sertifikat,
+        "tanggal_kadaluarsa" => $tanggal_kadaluarsa,
         "status" => $element[10]
       );
       $data_pelaku = array(
@@ -415,8 +421,11 @@ class Admin extends MY_Controller
         $iterasi++;
         continue;
       }
-      $date = str_replace('/', '-', $element[7]);
+      $UNIX_DATE = ($element[7] - 25569) * 86400;
+      $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
       $tanggal_sertifikat = date('Y-m-d', strtotime($date));
+      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+".$layanan['masa_berlaku']." months", strtotime($date)));
+
       $data_excel = array(
         "nomor_sertifikat" => $element[0],
         "nama_unit" => $element[1],
@@ -426,6 +435,7 @@ class Admin extends MY_Controller
         "level_sppb" => $element[5],
         "ruang_lingkup" => $element[6],
         "tanggal_unggah" => $tanggal_sertifikat,
+        "tanggal_kadaluarsa" => $tanggal_kadaluarsa,
         "status" => $element[8]
       );
       $data_pelaku = array(
@@ -450,8 +460,11 @@ class Admin extends MY_Controller
         $iterasi++;
         continue;
       }
-      $date = str_replace('/', '-', $element[8]);
+      $UNIX_DATE = ($element[8] - 25569) * 86400;
+      $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
       $tanggal_sertifikat = date('Y-m-d', strtotime($date));
+      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+".$layanan['masa_berlaku']." months", strtotime($date)));
+
       $data_excel = array(
         "komoditas" => $element[3],
         "nama_dagang" => $element[4],
@@ -459,6 +472,7 @@ class Admin extends MY_Controller
         "kelas_mutu" => $element[6],
         "nomor_sertifikat" =>  $element[7],
         "tanggal_unggah" => $tanggal_sertifikat,
+        "tanggal_kadaluarsa" => $tanggal_kadaluarsa,
         "netto" => $element[9],
         "status" => $element[10]
       );
@@ -484,8 +498,11 @@ class Admin extends MY_Controller
         $iterasi++;
         continue;
       }
-      $date = str_replace('/', '-', $element[12]);
+      $UNIX_DATE = ($element[12] - 25569) * 86400;
+      $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
       $tanggal_sertifikat = date('Y-m-d', strtotime($date));
+      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+".$layanan['masa_berlaku']." months", strtotime($date)));
+
       $data_excel = array(
         "nomor_sertifikat" => $element[0],
         "alamat_pengemasan" => $element[4],
@@ -494,6 +511,7 @@ class Admin extends MY_Controller
         "komoditas" => $element[10],
         "komoditas_latin" => $element[11],
         "tanggal_unggah" => $tanggal_sertifikat,
+        "tanggal_kadaluarsa" => $tanggal_kadaluarsa,
         "status" => $element[13]
       );
       $data_pelaku = array(

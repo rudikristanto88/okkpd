@@ -25,7 +25,7 @@
                 <div class="col-md-4 <?php if ($index == 1) {
                                             echo "col-md-offset-2";
                                         } ?>">
-                    <a href="<?= base_url() ?>index.php/home/basis_data/<?= $mn["url"] ?>">
+                    <a href="<?= base_url() ?>home/basis_data/<?= $mn["url"] ?>">
                         <div class="panel panel-default radius-lg hover">
                             <div class="panel-body text-center font-weight-bold"><?= $mn["title"] ?></div>
                         </div>

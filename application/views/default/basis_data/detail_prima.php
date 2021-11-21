@@ -1,11 +1,17 @@
-<nav class="navbar  navbar-default ">
+<nav class="navbar  navbar-default" style="margin-bottom:0">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="<?= base_url() ?>index.php/home/basis_data/okkpd"><i class="fas fa-arrow-left"></i></a>
+            <a class="navbar-brand" href="<?= base_url() ?>home/basis_data/sertifikasi"><i class="fas fa-arrow-left"></i></a>
             <span class="navbar-brand" href="#"><?= $submenu['title'] ?></span>
         </div>
     </div>
 </nav>
+<ol class="breadcrumb">
+  <li><a href="<?= base_url() ?>">Beranda</a></li>
+  <li><a href="<?= base_url() ?>home/basis_data">Basis Data</a></li>
+  <li><a href="<?= base_url() ?>home/basis_data/sertifikasi">Sertifikasi</a></li>
+  <li><?= $submenu['title'] ?></li>
+</ol>
 <div class="container">
     <table id="table-datatable" class="table table-responsive stripped">
         <thead>

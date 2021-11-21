@@ -444,12 +444,12 @@ class Home extends MY_Controller
 	{
 		$data = [];
 		if ($menu == null) {
-			$data["menu"] = array(array("url" => "ujimutu", "title" => "UJI MUTU PANGAN"), array("url" => "okkpd", "title" => "REGISTRASI/SERTIFIKASI"));
+			$data["menu"] = array(array("url" => "ujimutu", "title" => "UJI MUTU PANGAN"), array("url" => "sertifikasi", "title" => "REGISTRASI/SERTIFIKASI"));
 			$this->loadViewHome('default/basis_data/index', $data, false);
 		} else {
 
 			if ($menu != null && $submenu == null) {
-				if ($menu == "okkpd") {
+				if ($menu == "sertifikasi") {
 					$data["menu"] = $menu;
 					$data["submenu"] = array(array("url" => "prima_3", "title" => "Sertifikasi Prima 3"), array("url" => "prima_2", "title" => "Sertifikasi Prima 2"));
 					$this->loadViewHome('default/basis_data/' . $menu, $data, false);
@@ -472,9 +472,9 @@ class Home extends MY_Controller
 			array("url" => "kemas", "title" => "Ijin Rumah Pengemasan")
 		);
 		if ($submenu == null) {
-			$data["menu"] = "okkpd";
+			$data["menu"] = "sertifikasi";
 			$data["submenu"] = $data_submenu;
-			$this->loadViewHome('default/basis_data/okkpd', $data, false);
+			$this->loadViewHome('default/basis_data/sertifikasi', $data, false);
 		} else {
 			if (
 				$submenu != 'prima_2'

@@ -14,6 +14,7 @@ class Dashboard extends MY_Controller
 		$this->load->model('model_admin');
 		$this->load->model('model_dokumen');
 		$this->load->model('model_ujimutu');
+		$this->load->helper("data_helper");
 		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$this->menu =  $this->model_user->getMenu($this->saya());
 		$this->bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -961,9 +962,16 @@ class Dashboard extends MY_Controller
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Dokumen tidak dapat diunggah</div>");
 			redirect("dashboard/daftar_sertifikat/produk/" . $kode_layanan . '/' . $id_detail);
 		} else {
+			$layanan = $this->model_admin->getDataWhere("master_layanan","kode_layanan",$kode_layanan)[0];
+			$sertifikat = $this->model_admin->getDataWhere("detail_komoditas","id_detail",$id_detail)[0];
+
+			$tanggal_sertifikat = $sertifikat['tanggal_unggah'] == "" || $sertifikat['tanggal_unggah'] == null ? date('Y-m-d') : $sertifikat['tanggal_unggah'];
+			$tanggal_kadaluarsa = $sertifikat['tanggal_kadaluarsa'] == "" || $sertifikat['tanggal_kadaluarsa'] == null ? date('Y-m-d', strtotime("+".$layanan['masa_berlaku']." months")) : $sertifikat['tanggal_kadaluarsa'];
+			echo $tanggal_kadaluarsa;
+
 			$gambar_temp = $this->uploads($_FILES, 'gambar');
 			$gambar = file_get_contents($gambar_temp['full_path']);
-			$data = array("sertifikat" => $gambar, "mime_type" => $_FILES['gambar']['type']);
+			$data = array("sertifikat" => $gambar, "mime_type" => $_FILES['gambar']['type'], "tanggal_unggah"=>$tanggal_sertifikat, "tanggal_kadaluarsa"=>$tanggal_kadaluarsa);
 			if ($kode_layanan == 'psat') {
 				$this->model_user->updateData('detail_identitas_produk', $id_detail, 'id', $data);
 			} else if ($kode_layanan == 'hc') {
