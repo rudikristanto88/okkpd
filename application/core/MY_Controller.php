@@ -19,23 +19,23 @@ class MY_Controller extends CI_Controller
     $this->bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
   }
 
-  public function index()
+  protected function index()
   {
     $this->load->view('welcome_message');
   }
 
-  public function saya()
+  protected function saya()
   {
     $datalogin = $this->session->userdata("dataLogin");
     return $datalogin['kode_role'];
   }
-  public function id_saya()
+  protected function id_saya()
   {
     $datalogin = $this->session->userdata("dataLogin");
     return $datalogin['id_user'];
   }
 
-  public function loadView($view, $data = [])
+  protected function loadView($view, $data = [])
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
 
@@ -51,9 +51,24 @@ class MY_Controller extends CI_Controller
     $this->load->view('dashboard_view/template/footer');
   }
 
+  // $is_pelaku = pelaku usaha atau bukan. jika pelaku, wajib isi $user
+  protected function checkUser($is_pelaku = false, $user = null, $redirect = "home")
+  {
+    if (getenv("MODE") == "DEVELOPMENT") {
+      $allow = true;
+      if ($is_pelaku) {
+        $allowed_user = explode(",", getenv("ALLOWED_USER"));
+        if (!in_array($user, $allowed_user)) $allow = false;
+      }
+      if(!$allow){
+        $this->session->set_flashdata("status", "<div class='alert alert-warning'>Maaf, Aplikasi OKKPD dan UJI MUTU PANGAN sedang dalam tahap perbaikan. Terima Kasih</div>");
+        redirect($redirect, "redirect");
+      }
+    }
+    
+  }
 
-
-  public function loadViewHome($halaman, $data, $with_navigation = true)
+  protected function loadViewHome($halaman, $data, $with_navigation = true)
   {
     $data['islogin'] = false;
 
@@ -72,13 +87,13 @@ class MY_Controller extends CI_Controller
   }
 
 
-  public function get_data($data)
+  protected function get_data($data)
   {
     foreach ($data as $hasil);
     return $hasil;
   }
 
-  public function kirim_email($subject, $email_to, $message)
+  protected function kirim_email($subject, $email_to, $message)
   {
     $config['protocol']    = 'smtp';
     $config['smtp_host']    = 'mail.dishanpan.jatengprov.go.id';
@@ -107,7 +122,7 @@ class MY_Controller extends CI_Controller
 
     }
   }
-  public function validateCaptcha($captcha)
+  protected function validateCaptcha($captcha)
   {
     if ($captcha == null || $captcha == "") {
       return 2;
@@ -124,21 +139,21 @@ class MY_Controller extends CI_Controller
     }
   }
 
-  public function getNamaUsaha()
+  protected function getNamaUsaha()
   {
     $data = $this->model_user->getDataUsaha($this->id_saya());
     foreach ($data as $data);
     return $data['nama_usaha'];
   }
 
-  public function getNamaFolder($id_layanan)
+  protected function getNamaFolder($id_layanan)
   {
     $nama_usaha = $this->model_user->getNamaUsahaByLayanan($id_layanan);
     $kode = $this->model_user->getKodePendaftaran($id_layanan);
     return "./upload/Dokumen_Usaha/" . $nama_usaha . "/" . $kode . '/';
   }
 
-  public function lokasi($menu, $lokasi = null)
+  protected function lokasi($menu, $lokasi = null)
   {
     if ($menu == 'dokumen_dinas') {
       return './upload/Dokumen_Dinas/';
@@ -147,7 +162,7 @@ class MY_Controller extends CI_Controller
     }
   }
 
-  public function upload_dokumen($files, $nama, $location)
+  protected function upload_dokumen($files, $nama, $location)
   {
     if (!is_dir($location)) {
       mkdir($location, 0777, TRUE);
@@ -186,10 +201,5 @@ class MY_Controller extends CI_Controller
       }
       return $this->upload->data();
     }
-  }
-
-  public function trial()
-  {
-    echo "halo";
   }
 }

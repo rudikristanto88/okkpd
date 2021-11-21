@@ -12,7 +12,7 @@ class Admin extends MY_Controller
     $this->load->library('session');
     $this->load->model('model_user');
     $this->load->model('model_admin');
-		$this->load->helper("data_helper");
+    $this->load->helper("data_helper");
     $data['datalogin'] = $this->session->userdata("dataLogin");
     $this->menu =  $this->model_user->getMenu($this->saya());
   }
@@ -48,14 +48,14 @@ class Admin extends MY_Controller
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
     if ($jenis == null) {
-      $data["layanan"] = $this->model_admin->getDataWhere("master_layanan","status",1);
+      $data["layanan"] = $this->model_admin->getDataWhere("master_layanan", "status", 1);
       $this->loadView('dashboard_view/admin/info_layanan', $data);
     } else {
       if ($data_ubah == null) {
         $data['info_layanan'] = $this->model_user->getDataWhere('info_layanan', 'kode_layanan', $jenis);
 
         $data['jenis'] = $jenis;
-        $data["layanan"] = $this->model_admin->getDataWhere("master_layanan","kode_layanan",$jenis)[0]["nama_layanan"];
+        $data["layanan"] = $this->model_admin->getDataWhere("master_layanan", "kode_layanan", $jenis)[0]["nama_layanan"];
         $this->loadView('dashboard_view/admin/layanan', $data);
       } else {
         $value = '';
@@ -321,15 +321,9 @@ class Admin extends MY_Controller
     $this->loadView('dashboard_view/admin/migrasi_layanan', $data);
   }
 
-  public function proses_migrasi()
+  public function migrasi()
   {
     $this->load->library('SimpleXLSX');
-    $data['datalogin'] = $this->session->userdata("dataLogin");
-    /*$_FILES['form_migrasi']['name'];
-    $_FILES['form_migrasi']['type'];
-    $_FILES['form_migrasi']['tmp_name'];
-    $_FILES['form_migrasi']['error'];
-    $_FILES['form_migrasi']['size'];*/
     $type = $_FILES['form_migrasi']['type'];
     if (
       $type == 'application/wps-office.xlsx'
@@ -337,99 +331,187 @@ class Admin extends MY_Controller
       || $type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     ) {
       if ($xlsx = SimpleXLSX::parse($_FILES['form_migrasi']['tmp_name'])) {
-        $arrs = $xlsx->rows();
-        $iterasi = 0;
-        $data = array();
-        foreach ($arrs as $arr) {
-          if ($iterasi == 0) {
-            $iterasi++;
-            continue;
-          }
-          $iterasi++;
-          if ($arr[5] == '' || $arr[0] == '') {
-            continue;
-          }
-          $data_excel = array(
-            "nomor_sertifikat" => $arr[0],
-            "nama_pelaku_usaha" => $arr[1],
-            "alamat" => $arr[2],
-            "kota_kab" => $arr[3],
-            "no_telepon" => $arr[4],
-            "jenis_sertifikat" => $arr[5],
-            "jenis_komoditas" => $arr[6],
-            "merk_dagang" => $arr[7],
-            "tanggal_terbit" => $arr[8]
-          );
-          array_push($data, $data_excel);
-
-          $date = str_replace('/', '-', $data_excel['tanggal_terbit']);
-          $tanggal_sertifikat = date('Y-m-d', strtotime($date));
-          $layanan = '';
-          if ($data_excel['jenis_sertifikat'] == 'prima_3' || $data_excel['jenis_sertifikat'] == 'Prima 3') {
-            $layanan = 'prima_3';
-          } else if ($data_excel['jenis_sertifikat'] == 'prima_2' || $data_excel['jenis_sertifikat'] == 'Prima 2') {
-            $layanan = 'prima_2';
-          } else if ($data_excel['jenis_sertifikat'] == 'kemas' || $data_excel['jenis_sertifikat'] == 'Pendaftaran Rumah Kemas') {
-            $layanan = 'kemas';
-          } else if ($data_excel['jenis_sertifikat'] == 'psat' || $data_excel['jenis_sertifikat'] == 'Pendaftaran PSAT') {
-            $layanan = 'psat';
-          } else if ($data_excel['jenis_sertifikat'] == 'hc' || $data_excel['jenis_sertifikat'] == 'Penerbitan Health Certificate') {
-            $layanan = 'hc';
-          }
-
-          $data_pelaku = array(
-            'nama_pemohon' => $data_excel['nama_pelaku_usaha'],
-            'nama_usaha' => $data_excel['merk_dagang'],
-            'alamat_usaha' => $data_excel['alamat'],
-            'kota' => $data_excel['kota_kab'],
-            'no_telp' => $data_excel['no_telepon'],
-            'jenis_usaha' => 'Perorangan',
-            'jabatan_pemohon' => 'MIGRASI',
-            'id_user' => '17'
-          );
-          $insert_id = $this->model_admin->insertGetID('identitas_usaha', $data_pelaku);
-          $tanggal = date('Y-m-d H:i:sa');
-          $data_layanan = array(
-            'kode_layanan' => $layanan,
-            'id_identitas_usaha' => $insert_id,
-            'kode_pendaftaran' => 'MIGRASI',
-            'tanggal_buat' => $tanggal,
-            'manager_adm' => $tanggal,
-            'syarat_teknis' => '-',
-            'w_inspeksi' => $tanggal,
-            'w_ppc' => $tanggal,
-            'w_hasil_mt' => $tanggal,
-            'w_komtek' => $tanggal,
-            'w_diterima' => $tanggal,
-          );
-          $id_layanan = $this->model_admin->insertGetID('layanan', $data_layanan);
-
-          if (
-            $layanan == 'prima_3'
-            || $layanan == 'prima_2'
-            || $layanan == 'kemas'
-          ) {
-            $data_sertifikat = array("nama_jenis_komoditas" => $data_excel['jenis_komoditas'], 'id_layanan' => $id_layanan, 'tanggal_unggah' => $tanggal_sertifikat);
-            $insert_id = $this->model_admin->insertData('detail_komoditas', $data_sertifikat);
-          } else if ($layanan == 'psat') {
-            $data_sertifikat = array("nama_produk_pangan" => $data_excel['jenis_komoditas'], 'id_layanan' => $id_layanan, 'nama_dagang' => $data_excel['merk_dagang'], 'tanggal_unggah' => $tanggal_sertifikat);
-            $insert_id = $this->model_admin->insertData('detail_identitas_produk', $data_sertifikat);
-          } else if ($layanan == 'hc') {
-            $data_sertifikat = array("nama_produk" => $data_excel['jenis_komoditas'], 'id_layanan' => $id_layanan, 'jenis_produk' => $data_excel['merk_dagang'], 'tanggal_unggah' => $tanggal_sertifikat);
-            $insert_id = $this->model_admin->insertData('detail_identitas_export', $data_sertifikat);
-          }
+        $arrs = $xlsx->rows(1);
+        switch ($arrs[1][2]) {
+          case "prima_2":
+            $this->migrasi_prima($xlsx->rows());
+            break;
+          case "sppb":
+            $this->migrasi_sppb($xlsx->rows());
+            break;
+          case "psat":
+            $this->migrasi_psat($xlsx->rows());
+            break;
+          case "kemas":
+            $this->migrasi_kemas($xlsx->rows());
+            break;
         }
-        $this->session->set_flashdata("status", "<div class='alert alert-success'>Proses migrasi berhasil</div>");
-        redirect("admin/migrasi_layanan", "redirect");
-      } else {
-        $this->session->set_flashdata("status", "<div class='alert alert-warning'>" . SimpleXLSX::parseError() . "</div>");
-        redirect("admin/migrasi_layanan/", "redirect");
       }
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>File tidak didukung</div>");
-      redirect("admin/migrasi_layanan/", "redirect");
     }
   }
+
+  private function insert_layanan_migrasi($layanan, $data_pelaku, $tabel_detail, $data_detail)
+  {
+    $identitas_usaha = $this->model_admin->insertGetID('identitas_usaha', $data_pelaku);
+    $tanggal = date('Y-m-d H:i:sa');
+    $data_layanan = array(
+      'kode_layanan' => $layanan,
+      'id_identitas_usaha' => $identitas_usaha,
+      'kode_pendaftaran' => 'MIGRASI',
+      'tanggal_buat' => $tanggal,
+      'manager_adm' => $tanggal,
+      'syarat_teknis' => '-',
+      'w_inspeksi' => $tanggal,
+      'w_ppc' => $tanggal,
+      'w_hasil_mt' => $tanggal,
+      'w_komtek' => $tanggal,
+      'w_diterima' => $tanggal,
+    );
+
+    $id_layanan = $this->model_admin->insertGetID('layanan', $data_layanan);
+    $data_detail["id_layanan"] = $id_layanan;
+    return $this->model_admin->insertData($tabel_detail, $data_detail);
+  }
+
+  private function migrasi_prima($data)
+  {
+    $iterasi = 0;
+    foreach ($data as $element) {
+      if ($iterasi == 0 || ($element[0] == '' || $element[1] == '' || $element[2] == '' || $element[3] == '' || $element[4] == '' || $element[5] == '')) {
+        $iterasi++;
+        continue;
+      }
+      $date = str_replace('/', '-', $element[9]);
+      $tanggal_sertifikat = date('Y-m-d', strtotime($date));
+      $data_excel = array(
+        "nomor_sertifikat" => $element[0],
+        "nama_jenis_komoditas" => $element[6],
+        "nama_latin" => $element[7],
+        "luas_lahan" => $element[8],
+        "tanggal_unggah" => $tanggal_sertifikat,
+        "status" => $element[10]
+      );
+      $data_pelaku = array(
+        'nama_pemohon' => $element[1],
+        'nama_usaha' => $element[1],
+        'alamat_usaha' => $element[2],
+        'kelurahan' => $element[3],
+        'kecamatan' => $element[4],
+        'kota' => $element[5],
+        'jabatan_pemohon' => 'MIGRASI'
+      );
+      $this->insert_layanan_migrasi($element[11], $data_pelaku, 'detail_komoditas', $data_excel);
+      $iterasi++;
+    }
+    $this->session->set_flashdata("status", "<div class='alert alert-success'>Proses migrasi berhasil</div>");
+    redirect("admin/migrasi_layanan", "redirect");
+  }
+
+  private function migrasi_sppb($data)
+  {
+    $iterasi = 0;
+    foreach ($data as $element) {
+      if ($iterasi == 0 || ($element[0] == '' || $element[1] == '' || $element[2] == '' || $element[3] == '' || $element[4] == '' || $element[5] == '')) {
+        $iterasi++;
+        continue;
+      }
+      $date = str_replace('/', '-', $element[7]);
+      $tanggal_sertifikat = date('Y-m-d', strtotime($date));
+      $data_excel = array(
+        "nomor_sertifikat" => $element[0],
+        "nama_unit" => $element[1],
+        "alamat" => $element[2],
+        "kota" => $element[3],
+        "status_kepemilikan" => $element[4],
+        "level_sppb" => $element[5],
+        "ruang_lingkup" => $element[6],
+        "tanggal_unggah" => $tanggal_sertifikat,
+        "status" => $element[8]
+      );
+      $data_pelaku = array(
+        'nama_pemohon' => $data_excel['nama_unit'],
+        'nama_usaha' => $data_excel['nama_unit'],
+        'alamat_usaha' => $data_excel['alamat'],
+        'kota' => $data_excel['kota'],
+        'jabatan_pemohon' => 'MIGRASI'
+      );
+      $this->insert_layanan_migrasi("sppb", $data_pelaku, 'detail_identitas_sppb', $data_excel);
+      $iterasi++;
+    }
+    $this->session->set_flashdata("status", "<div class='alert alert-success'>Proses migrasi berhasil</div>");
+    redirect("admin/migrasi_layanan", "redirect");
+  }
+
+  private function migrasi_psat($data)
+  {
+    $iterasi = 0;
+    foreach ($data as $element) {
+      if ($iterasi == 0 || ($element[0] == '' || $element[1] == '' || $element[2] == '' || $element[3] == '' || $element[4] == '' || $element[5] == '')) {
+        $iterasi++;
+        continue;
+      }
+      $date = str_replace('/', '-', $element[8]);
+      $tanggal_sertifikat = date('Y-m-d', strtotime($date));
+      $data_excel = array(
+        "komoditas" => $element[3],
+        "nama_dagang" => $element[4],
+        "nama_produk_pangan" => $element[5],
+        "kelas_mutu" => $element[6],
+        "nomor_sertifikat" =>  $element[7],
+        "tanggal_unggah" => $tanggal_sertifikat,
+        "netto" => $element[9],
+        "status" => $element[10]
+      );
+      $data_pelaku = array(
+        'nama_pemohon' => $element[0],
+        'nama_usaha' => $element[4],
+        'alamat_usaha' => $element[1],
+        'kota' => $element[2],
+        'jabatan_pemohon' => 'MIGRASI'
+      );
+      $this->insert_layanan_migrasi("psat", $data_pelaku, 'detail_identitas_produk', $data_excel);
+      $iterasi++;
+    }
+    $this->session->set_flashdata("status", "<div class='alert alert-success'>Proses migrasi berhasil</div>");
+    redirect("admin/migrasi_layanan", "redirect");
+  }
+
+  private function migrasi_kemas($data)
+  {
+    $iterasi = 0;
+    foreach ($data as $element) {
+      if ($iterasi == 0 || ($element[0] == '' || $element[1] == '' || $element[2] == '' || $element[3] == '' || $element[4] == '' || $element[5] == '')) {
+        $iterasi++;
+        continue;
+      }
+      $date = str_replace('/', '-', $element[12]);
+      $tanggal_sertifikat = date('Y-m-d', strtotime($date));
+      $data_excel = array(
+        "nomor_sertifikat" => $element[0],
+        "alamat_pengemasan" => $element[4],
+        "kota_pengemasan" => $element[5],
+        "nama_personel" => $element[7],
+        "komoditas" => $element[10],
+        "komoditas_latin" => $element[11],
+        "tanggal_unggah" => $tanggal_sertifikat,
+        "status" => $element[13]
+      );
+      $data_pelaku = array(
+        'nama_pemohon' => $element[6],
+        'nama_usaha' => $element[1],
+        'alamat_usaha' => $element[2],
+        'kota' => $element[3],
+        'email' => $element[9],
+        'no_hp_pemohon' => $element[8],
+        'jabatan_pemohon' => 'MIGRASI'
+      );
+      $this->insert_layanan_migrasi("kemas", $data_pelaku, 'detail_identitas_kemas', $data_excel);
+      $iterasi++;
+    }
+    $this->session->set_flashdata("status", "<div class='alert alert-success'>Proses migrasi berhasil</div>");
+    redirect("admin/migrasi_layanan", "redirect");
+  }
+
 
   public function berita()
   {
@@ -1309,22 +1391,22 @@ class Admin extends MY_Controller
       redirect('dashboard/kelola_kuesioner');
     }
 
-    $data['data_survey'] = $this->model_admin->getDataWhere("survey_data","id",$id)[0];
+    $data['data_survey'] = $this->model_admin->getDataWhere("survey_data", "id", $id)[0];
     $data['detail_survey'] = $this->model_admin->getDetailSurvey($id);
 
-    if($data['data_survey']["kode_layanan"] == "prima_2" || $data['data_survey']["kode_layanan"] == "prima_3")
-			$jenis = "okkpd";
-		else
-			$jenis = "ujimutu";
+    if ($data['data_survey']["kode_layanan"] == "prima_2" || $data['data_survey']["kode_layanan"] == "prima_3")
+      $jenis = "okkpd";
+    else
+      $jenis = "ujimutu";
 
-		$data["properties"] = array(
-			"jenis_kelamin" => data_jenis_kelamin(),
-			"pendidikan" => data_pendidikan(), "pekerjaan" => data_pekerjaan(), "pelayanan" => data_pelayanan($jenis)
-		);
-    
-		$data['jenis'] = $jenis;
-		$data["identitas"] = data_identitas_survey($jenis);
-    
+    $data["properties"] = array(
+      "jenis_kelamin" => data_jenis_kelamin(),
+      "pendidikan" => data_pendidikan(), "pekerjaan" => data_pekerjaan(), "pelayanan" => data_pelayanan($jenis)
+    );
+
+    $data['jenis'] = $jenis;
+    $data["identitas"] = data_identitas_survey($jenis);
+
     $this->loadView('dashboard_view/admin/hasil_survey_detail', $data);
   }
 }

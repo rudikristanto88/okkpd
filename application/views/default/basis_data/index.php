@@ -16,7 +16,7 @@
     <div class="container" style="max-width:800px">
         <div class="row no-gutters">
             <div class="col-md-12" style="margin-bottom:24px">
-                <div class="basisdata-title text-shadow">Selamat Datang Pada Aplikasi Database<br />
+                <div class="basisdata-title text-shadow">Selamat Datang Pada Aplikasi Basis Data<br />
                     OKKPD Jawa Tengah</div>
             </div>
             <?php
