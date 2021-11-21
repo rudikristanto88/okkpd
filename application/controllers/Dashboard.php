@@ -3283,4 +3283,70 @@ class Dashboard extends MY_Controller
 		$mpdf->WriteHTML($cetak);
 		$mpdf->Output();
 	}
+
+	function survey()
+	{
+		$id_layanan = $this->input->get("uid") ?? 0;
+		$kode_layanan = $this->input->get("layanan") ?? 0;
+		
+		$userdata = $this->session->userdata("dataLogin");
+		$layanan = $this->model_admin->getDataWhere($kode_layanan == "ujimutu" ? "layanan_ujimutu":"layanan", "uid", $id_layanan);
+		$identitas_usaha = $this->model_admin->getDataWhere("identitas_usaha", "id_user", $userdata['id_user']);
+		if (sizeof($identitas_usaha) == 0) {
+			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Anda tidak memiliki akses ke halaman ini</div>");
+			redirect("dashboard");
+		}
+
+		if ($layanan[0]["kode_layanan"] == "prima_2" || $layanan[0]["kode_layanan"] == "prima_3")
+			$jenis = "okkpd";
+		else
+			$jenis = "ujimutu";
+		$data["properties"] = array(
+			"jenis_kelamin" => data_jenis_kelamin(),
+			"pendidikan" => data_pendidikan(), "pekerjaan" => data_pekerjaan(), "pelayanan" => data_pelayanan($jenis)
+		);
+		$data['id_layanan'] = $id_layanan;
+		$data['jenis'] = $jenis;
+		$data["identitas"] = data_identitas_survey($jenis);
+		$surveyData = $this->model_admin->getDataWhere("master_kuesioner", 'jenis', $jenis);
+		$data['list_survey'] = array_filter($surveyData, function ($k) {
+			return $k["deleted"] == 0;
+		});
+		$this->loadView("dashboard_view/survey/index", $data);
+	}
+
+
+	function simpan_survey()
+	{
+		$input = $this->input;
+		$jenis = $input->post("jenis");
+		$param = array();
+		foreach (data_identitas_survey($jenis) as $element) {
+			if ($element[0] != "tanggal_survey" && $element[0] != "kecamatan" && $element[0] != "kota" && $element[0] != "provinsi") {
+				if ($element[0] == "alamat" && $jenis == "okkpd") {
+					$param[$element[0]] = $input->post($element[0]) . " Kec. " . $input->post("kecamatan") . " Kota/Kab " . $input->post("kota") . ", " . $input->post("provinsi");
+				} else {
+					$param[$element[0]] = $input->post($element[0]);
+				}
+			}
+		}
+		$param["saran"] = $input->post("saran");
+		$answers = $input->post("kuesioner");
+		$id_survey = $this->model_admin->insertGetID("survey_data", $param);
+		if($jenis == "ujimutu"){
+			$this->model_admin->updateData("layanan_ujimutu", $input->post("layanan"), "uid", array("id_survey" => $id_survey));
+		}else{
+			$this->model_admin->updateData("layanan", $input->post("layanan"), "uid", array("id_survey" => $id_survey));
+		}
+		foreach ($answers as $element) {
+			$param_survey = array();
+			$param_survey["id_kuesioner"] = $element['pertanyaan'][1];
+			$param_survey["id_survey"] = $id_survey;
+			$param_survey["nilai"] = $element['pertanyaan'][0];
+			$param_survey["kepentingan"] = $element['kepentingan'] == null ? 0 : $element['kepentingan'][0];
+			$this->model_admin->insertData("survey_kuesioner", $param_survey);
+		}
+		$this->session->set_flashdata("status", "<div class='alert alert-success'>Data survey berhasil disimpan</div>");
+		redirect("dashboard");
+	}
 }
