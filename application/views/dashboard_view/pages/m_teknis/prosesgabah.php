@@ -141,7 +141,8 @@
     <div class="modal-dialog">
       <div class="modal-content">
       <form class="" action="<?= base_url("dashboard/mtek_tolak_ujimutu") ?>" class="text-white" method="post">
-        <div class="modal-header"> 
+        <div class="modal-header">
+          <h4 class="modal-title">Update tanggal download </h4>
           <input type="hidden" name="id_layanan" id="id_layanan" readonly> 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>

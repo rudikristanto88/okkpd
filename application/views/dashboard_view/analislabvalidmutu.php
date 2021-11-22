@@ -34,9 +34,6 @@
                       <th>No.</th>  
                       <th>Kode Pendaftaran</th>
                       <th>Jenis Produk</th>
-                      <th>Berat Sampel</th>
-                      <th>Kemasan</th>
-                      <th>Kondisi Sampel</th>
                       <th>Tanggal Sample</th>
                     </tr>
 
@@ -52,9 +49,6 @@
                         <td><?= $ppc['kode_pendaftaran'] ?>
                         </td>
                         <td><?= $ppc['namajenis'] . " - " . $ppc['namadetail'] ?></td>
-                        <td><?= $ppc['berat'] ?>
-                        <td><?= $ppc['nama_kemasan'] ?>
-                        <td><?= $ppc['kondisi'] ?>
                        
                         <td><?php $tgl =  strtotime($ppc['tanggalsampleLab']); echo date("d",$tgl)."/".(date("m",$tgl))."/".date("Y",$tgl); ?></td>
                        

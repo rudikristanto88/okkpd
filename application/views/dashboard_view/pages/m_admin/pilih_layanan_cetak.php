@@ -25,7 +25,7 @@
                   <div class="card">
                     <a href="<?= base_url('dashboard/cetak_sertifikat/prima_3') ?>">
                       <div class="image-180">
-                        <img class="card-img-top " src="<?= base_url() ?>assets/image/layanan/prima3.png" alt="Card image">
+                        <img class="card-img-top " src="<?= base_url() ?>assets/image/layanan/prima_3.png" alt="Card image">
                       </div>
                       <div class="card-body">
                         <div class="text-center">
@@ -40,7 +40,7 @@
                   <div class="card">
                     <a href="<?= base_url('dashboard/cetak_sertifikat/prima_2') ?>">
                       <div class="image-180">
-                        <img class="card-img-top " src="<?= base_url() ?>assets/image/layanan/prima2.png" alt="Card image">
+                        <img class="card-img-top " src="<?= base_url() ?>assets/image/layanan/prima_2.png" alt="Card image">
                       </div>
                       <div class="card-body">
                         <div class="text-center">
