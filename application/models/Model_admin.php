@@ -197,7 +197,8 @@ class Model_admin extends MY_Model
   /// function to fetch sertifikat of layanan Prima 3 and Prima 2 
   function getsertifikat($id = null, $unduh = false)
   {
-    $this->db->select("layanan.kode_layanan,detail_komoditas.id_layanan,detail_komoditas.nomor_sertifikat,detail_komoditas.nama_latin,identitas_usaha.nama_usaha,identitas_usaha.alamat_usaha,master_komoditas.deskripsi,detail_komoditas.nama_jenis_komoditas nama_jenis, detail_komoditas.nama_jenis_komoditas, detail_komoditas.luas_lahan as luas_lahan_detail,detail_komoditas.tanggal_unggah,detail_komoditas.sertifikat as sertifikat_produk,detail_komoditas.mime_type as tipe_sertifikat_produk");
+    $this->db->select("layanan.kode_layanan,detail_komoditas.id_layanan,detail_komoditas.nomor_sertifikat,detail_komoditas.nama_latin,identitas_usaha.nama_usaha,identitas_usaha.alamat_usaha,identitas_usaha.kota, identitas_usaha.kecamatan, identitas_usaha.kelurahan, 
+    master_komoditas.deskripsi,detail_komoditas.nama_jenis_komoditas nama_jenis, detail_komoditas.nama_jenis_komoditas, detail_komoditas.luas_lahan as luas_lahan_detail,detail_komoditas.tanggal_unggah,detail_komoditas.sertifikat as sertifikat_produk,detail_komoditas.mime_type as tipe_sertifikat_produk");
     $this->db->from('detail_komoditas');
     $this->db->join('layanan', "detail_komoditas.id_layanan = layanan.uid");
     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");

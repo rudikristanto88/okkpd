@@ -16,7 +16,7 @@
     <div class="container" style="max-width:800px">
         <div class="row no-gutters">
             <div class="col-md-12" style="margin-bottom:24px">
-                <div class="basisdata-title text-shadow">Selamat Datang Pada Aplikasi Database<br />
+                <div class="basisdata-title text-shadow">Selamat Datang Pada Aplikasi Basis Data<br />
                     OKKPD Jawa Tengah</div>
             </div>
             <?php
@@ -25,7 +25,7 @@
                 <div class="col-md-4 <?php if ($index == 1) {
                                             echo "col-md-offset-2";
                                         } ?>">
-                    <a href="<?= base_url() ?>index.php/home/basis_data/<?= $mn["url"] ?>">
+                    <a href="<?= base_url() ?>home/basis_data/<?= $mn["url"] ?>">
                         <div class="panel panel-default radius-lg hover">
                             <div class="panel-body text-center font-weight-bold"><?= $mn["title"] ?></div>
                         </div>
