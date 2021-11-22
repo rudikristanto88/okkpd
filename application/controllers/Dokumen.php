@@ -79,6 +79,8 @@ class Dokumen extends MY_Controller {
       $dokumen =$this->model_admin->getsertifikatPSAT($id,true);
     }else if($jenis == 'hc'){
       $dokumen =$this->model_admin->getsertifikatHC($id,true);
+    }else if($jenis == 'ujimutu'){
+      $dokumen =$this->model_admin->getsertifikatUjiMutu($id,true);
     }else{
       $dokumen =$this->model_admin->getsertifikat($id,true);
     }

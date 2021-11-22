@@ -63,8 +63,11 @@
                             <!--<a href="<?= base_url() ?>dashboard/survey?id=<?= $ppc['uid']?>" class="btn btn-primary">Isi Survey</a>-->
                             <?php //else :?>
                                
-                            <button onclick="openModal(<?= $ppc['uid'] ?>)" type="sumbit" name="button" class="btn btn-info">Download Draft LHU</button>
-                           
+                            <button onclick="openModal(<?= $ppc['uid'] ?>)" type="sumbit" name="button" class="btn btn-info">Download Draft LHU</button>&nbsp;
+                            <button onclick="modalUpload(<?= $ppc['uid'] ?>,'<?= $ppc['username'] ?>','<?= $ppc['nama_usaha'] ?>','<?= $ppc['kode_pendaftaran'] ?>')" type="sumbit" name="button" class="btn btn-danger">Upload LHU</button>
+                            <?php if($ppc['mime_type'] != ""){?>
+                              <a href="<?= base_url()?>dokumen/cetak_sertifikat/ujimutu/<?= $ppc['uid'] ?>" target="_blank"><button class="btn btn-success">Unduh Sertifikat</button></a>
+                            <?php }?>
                               <?php //endif; ?>
                         
                     </td>
@@ -89,6 +92,44 @@
 
   </section>
 
+
+  <div class="modal" id="modalUpload">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      <form enctype="multipart/form-data" class="inline" action="<?= base_url() ?>dashboard/uploadLHU" method="post">
+        <div class="modal-header">
+        <h4 class="modal-title">Unggah Sertifikat</h4>
+          <input type="hidden" name="id_layananu" id="id_layananu">
+          <input type="hidden" name="uploademail" id="uploademail">
+          <input type="hidden" name="uploadnama" id="uploadnama">
+          <input type="hidden" name="uploadkode" id="uploadkode">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-12">
+              
+          <div class="col-sm-12">
+            <div class="form-group">
+                <label for="nama_dagang">Upload File</label> 
+                <input type="file" name="gambar" required>
+              </div>
+            </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer"> 
+          <button type="submit" class="btn btn-warning" name="Tolak" value="1">Simpan</button>  
+        </div>
+      </form>
+
+      </div>
+    </div>
+  </div>
 
   <div class="modal" id="modalUnggah">
     <div class="modal-dialog">
@@ -129,7 +170,6 @@
 
 
 
-
     <script type="text/javascript">
     function setDataSampling(id_sampling,deskripsi){
       $("#id_sampling").val(id_sampling);
@@ -143,6 +183,13 @@
       $("#id_layanan_surat").val(id_layanan);
     }
     
+    function modalUpload(kode,email,nama,kode){
+      $("#id_layananu").val(kode);
+      $("#uploademail").val(email);
+      $("#uploadnama").val(nama);
+      $("#uploadkode").val(kode);
+      $('#modalUpload').modal();
+    }
     function openModal(kode){
       $("#id_layanan").val(kode);
       $('#modalUnggah').modal();

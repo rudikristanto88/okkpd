@@ -2183,6 +2183,8 @@ class Dashboard extends MY_Controller {
 					$data['berat'] = $i->post("berat");
 					$data['kondisi'] = $i->post("kondisi");
 					$data['datalogin'] = $this->session->userdata("dataLogin");  
+					$data['detaildata'] = $this->model_ujimutu->getDataHasilUjiMutuLHUByIDTolak($id_layanan);
+					$data['headerdata'] = $this->model_ujimutu->getDataHasilUjiMutuByUID($id_layanan);
 					if($idjenisdetail == "1"){
 						//gabah
 					
@@ -2639,8 +2641,8 @@ class Dashboard extends MY_Controller {
 							"jenisuji"=>$jenisuji,
 							"satuan"=>$satuan,
 							"metodeuji"=>$metodeuji,
-							"hasiluji"=>"",
-							"kelasmutu"=>""); 
+							"hasiluji"=>$hasiluji,
+							"kelasmutu"=>$kelasmutu); 
 						$this->model_user->insertData("layanan_ujimutu_hasil",$arr);
  
 					}elseif($idjenisdetail == "5"){
@@ -3111,7 +3113,7 @@ class Dashboard extends MY_Controller {
 			"kodelhu"=>$kodependaftaran,
 			"userValidMantek"=>$data['datalogin']['id_user']); 
 		$this->db->trans_begin();
-		if($this->model_user->updateData('layanan_ujimutu_hasil',$id_layanan,'idlayanan_ujimutu',$arr) && $this->model_user->updateData('layanan_ujimutu',$id_layanan,'uid',$arr2)){
+		if($this->model_user->updateLayananmutuDetail('layanan_ujimutu_hasil',$id_layanan,$arr) && $this->model_user->updateData('layanan_ujimutu',$id_layanan,'uid',$arr2)){
 			$this->db->trans_commit();
 			$this->session->set_flashdata("status","<div class='alert alert-success'>Proses berhasil disimpan</div>");
 			redirect("dashboard/mteklist_validujimutu",'redirect');
@@ -3126,10 +3128,12 @@ class Dashboard extends MY_Controller {
 	function mtek_tolak_ujimutu(){
 		$i = $this->input; 
 		$id_layanan = $i->post("id_layanan");
+		$alasan = $i->post("alasan");
 		$arr = array("valid"=>2);
 		
 		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$arr2 = array( 
+			"alasantolakmtek"=>$alasan,
 			"validManTek"=>2,
 			"userValidMantek"=>$data['datalogin']['id_user']); 
 		$this->db->trans_begin();
@@ -3191,10 +3195,44 @@ class Dashboard extends MY_Controller {
         $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
 		$data['qrcode'] = $image_name;
 		$cetak = $this->loadView('dashboard_view/cetak/lhu',$data, TRUE);
-		$mpdf = new \Mpdf\Mpdf();
+		$mpdf = new \Mpdf\Mpdf([
+			'margin_left' => 15,
+			'margin_right' => 15,
+			'margin_top' => 5,
+			'margin_bottom' => 5,
+			'margin_header' => 9,
+			'margin_footer' => 9
+		]);
 		//$cetak = $this->load->view('hasilPrint', [], TRUE);
 		$cetak = $this->load->view('dashboard_view/cetak/lhu',$data, TRUE);
 		$mpdf->WriteHTML($cetak);
 		$mpdf->Output();
+	}
+
+	function uploadLHU(){
+		$id_layanan = $this->input->post('id_layananu'); 
+		$uploademail = $this->input->post('uploademail'); 
+		$uploadnama = $this->input->post('uploadnama'); 
+		$uploadkode = $this->input->post('uploadkode'); 
+		$files = $_FILES;
+		// $lokasi = "./upload/Dokumen_Dinas/Sertifikat/";
+		// $isUpload = $this->upload_dokumen($_FILES,'gambar',$lokasi)
+ 
+		$data['nama'] = $uploadnama;
+		$data['kode'] = $uploadkode;
+		$message = $this->load->view('default/email/notifikasi_sertifikat_terbit',$data,true);
+		$this->kirim_email("Pemberitahuan",$uploademail,$message); 
+		if($this->uploads($_FILES,'gambar') == null){
+			$this->session->set_flashdata("status","<div class='alert alert-warning'>Dokumen tidak dapat diunggah</div>");
+			redirect("dashboard/u_layanan_cetakLHU");
+		}else{
+			$gambar_temp = $this->uploads($_FILES,'gambar');
+			$gambar = file_get_contents($gambar_temp['full_path']);
+			$data = array("sertifikat"=>$gambar,"mime_type"=>$_FILES['gambar']['type']); 
+			$this->model_user->updateData('layanan_ujimutu',$id_layanan,'uid',$data);
+			 
+			redirect("dashboard/u_layanan_cetakLHU");
+
+		}
 	}
 }

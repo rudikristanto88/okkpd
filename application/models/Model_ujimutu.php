@@ -100,6 +100,28 @@ class Model_ujimutu extends CI_Model {
     $query = $this->db->get();
     return $query->result_array();
   }
+
+  public function getDataHasilUjiMutuLHUByIDTolak($id)
+  {
+    $this->db->select("a.*");
+    $this->db->from('layanan_ujimutu_hasil as a'); 
+    $this->db->where('a.valid',"2");  
+    $this->db->where('a.idlayanan_ujimutu',$id);  
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+
+  
+  public function getDataHasilUjiMutuByUID($id)
+  {
+    $this->db->select("a.*");
+    $this->db->from('layanan_ujimutu as a');  
+    $this->db->where('a.uid',$id);  
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+  
+  
   
   public function getValidPengujian()
   {
@@ -119,7 +141,7 @@ class Model_ujimutu extends CI_Model {
 
   public function getDataUjiMutuLHUDetail()
   {
-    $this->db->select("a.*,b.*,c.*,d.namadetail,e.namajenis,f.nama_kemasan,g.nama_lengkap as namaanalis,h.nama_lengkap as namamantek");
+    $this->db->select("a.*,b.*,c.*,d.namadetail,e.namajenis,f.nama_kemasan,g.nama_lengkap as namaanalis,h.nama_lengkap as namamantek,i.username");
     $this->db->from('identitas_usaha as a');
     $this->db->join('layanan_ujimutu as b',"a.id_identitas_usaha=b.id_identitas_usaha");
     $this->db->join('master_layanan as c',"b.kode_layanan=c.kode_layanan");  
@@ -128,6 +150,7 @@ class Model_ujimutu extends CI_Model {
     $this->db->join('master_kemasan as f',"b.id_kemasan=f.id_kemasan"); 
     $this->db->join('user as g',"b.userValidLab=g.id_user"); 
     $this->db->join('user as h',"b.userValidMantek=h.id_user"); 
+    $this->db->join('user as i',"a.id_user=i.id_user"); 
     $this->db->where('b.samplelab',"1"); 
     $this->db->where('b.validlab',"1"); 
     $this->db->where('b.validManTek',"1"); 

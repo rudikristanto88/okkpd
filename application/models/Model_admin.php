@@ -241,6 +241,18 @@ class Model_admin extends MY_Model
     return $query->result_array();
   }
 
+  function getsertifikatUjiMutu($id = null, $unduh = false)
+  {
+    $this->db->select("layanan.kode_layanan,identitas_usaha.nama_usaha,  layanan.sertifikat as sertifikat_produk,layanan.mime_type as tipe_sertifikat_produk");
+    $this->db->from('layanan_ujimutu layanan'); 
+    $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
+    if ($id != null) {
+      $this->db->where("uid", $id);
+    }
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+  
   function getKeluhanSaran($jenis)
   {
     $this->db->select("*");

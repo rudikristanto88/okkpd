@@ -89,7 +89,13 @@
                             echo date("d", $tanggal) . " " . $this->bulan[$bulan] . " " . date("Y", $tanggal) ?></td>
                         <td><?= $layanan['kode_pendaftaran'] ?></td>
                         <td><?= $layanan['nama_layanan'] ?></td>
-                        <td><?php if ($layanan['validManTek'] == 1) {
+                        <td><?php 
+                        if($layanan['mime_type'] != ""){
+?>
+                              <a href="<?= base_url()?>dokumen/cetak_sertifikat/ujimutu/<?=  $layanan['uid'] ?>" target="_blank"><button class="btn btn-success">Unduh Sertifikat</button></a>
+<?php 
+                        
+                    }else if ($layanan['validManTek'] == 1) {
                               echo "Proses Validasi LHU";
                             } else if ($layanan['validLab'] == 1) {
                               echo "Proses Validasi Hasil Lab";

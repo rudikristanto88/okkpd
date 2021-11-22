@@ -41,6 +41,15 @@
                             <label for="nama_perusahaan">Jenis Sample</label>
                         </div>
                     </div>
+                    <?php if($headerdata[0]['alasantolakmtek']!=""){?>
+                        
+                    <div class="col-sm-12">
+                        <div class="input-field"> 
+                            <input id="namajenis" type="text" name="namajenis" class="text-white" data-length="10" value="<?=$headerdata[0]['alasantolakmtek'] ?>" readonly>
+                            <label for="nama_perusahaan">Alasan ditolak Manager Teknis</label>
+                        </div>
+                    </div>
+                    <?php }?>
                 </div>
                 <div class="table-responsive-md">
                     <table class="table table-hover display" width="100%" >
@@ -57,8 +66,24 @@
                             <tr>
                                 <td>1. Kadar Air (Maksimal)</td>
                                 <td>%</td>
-                                <td><input id="hasiluji1" type="text" name="hasiluji1" class="text-white" value=""></td>
-                                <td><input id="kelasmutu1" type="text" name="kelasmutu1" class="text-white" value="">
+                                <td><input id="hasiluji1" type="text" name="hasiluji1" class="text-white" value="<?php 
+                                $hasil = "";
+                                if(count($detaildata)>0){
+                                  foreach($detaildata as $row){
+                                    if($row['jenisuji'] == "1. Kadar Air (Maksimal)"){
+                                      $hasil = $row['hasiluji'];
+                                    }
+                                  }
+                                }echo $hasil;?>"></td>
+                                <td><input id="kelasmutu1" type="text" name="kelasmutu1" class="text-white" value="<?php 
+                                $hasil = "";
+                                if(count($detaildata)>0){
+                                  foreach($detaildata as $row){
+                                    if($row['jenisuji'] == "1. Kadar Air (Maksimal)"){
+                                      $hasil = $row['kelasmutu'];
+                                    }
+                                  }
+                                }echo $hasil;?>">
                                 <input type="hidden" name="jenisuji1" value="1. Kadar Air (Maksimal)">
                                 <input type="hidden" name="satuan1" value="%">
                                 <input type="hidden" name="metodeuji1" value="SNI 01-0224-1987">
@@ -68,8 +93,24 @@
                             <tr>
                                 <td>2. Gabah Hampa (Maksimal)</td>
                                 <td>%</td>
-                                <td><input id="hasiluji2" type="text" name="hasiluji2" class="text-white" value=""></td>
-                                <td><input id="kelasmutu2" type="text" name="kelasmutu2" class="text-white" value="">
+                                <td><input id="hasiluji2" type="text" name="hasiluji2" class="text-white" value="<?php 
+                                $hasil = "";
+                                if(count($detaildata)>0){
+                                  foreach($detaildata as $row){
+                                    if($row['jenisuji'] == "2. Gabah Hampa (Maksimal)"){
+                                      $hasil = $row['hasiluji'];
+                                    }
+                                  }
+                                }echo $hasil;?>"></td>
+                                <td><input id="kelasmutu2" type="text" name="kelasmutu2" class="text-white" value="<?php 
+                                $hasil = "";
+                                if(count($detaildata)>0){
+                                  foreach($detaildata as $row){
+                                    if($row['jenisuji'] == "2. Gabah Hampa (Maksimal)"){
+                                      $hasil = $row['kelasmutu'];
+                                    }
+                                  }
+                                }echo $hasil;?>">
                                 <input type="hidden" name="jenisuji2" value="2. Gabah Hampa (Maksimal)">
                                 <input type="hidden" name="satuan2" value="%">
                                 <input type="hidden" name="metodeuji2" value="SNI 01-0224-1987">
@@ -79,8 +120,24 @@
                             <tr>
                                 <td>3.	Benda Asing (Maksimal)</td>
                                 <td>%</td>
-                                <td><input id="hasiluji3" type="text" name="hasiluji3" class="text-white" value=""></td>
-                                <td><input id="kelasmutu3" type="text" name="kelasmutu3" class="text-white" value="">
+                                <td><input id="hasiluji3" type="text" name="hasiluji3" class="text-white" value="<?php 
+                                $hasil = "";
+                                if(count($detaildata)>0){
+                                  foreach($detaildata as $row){
+                                    if($row['jenisuji'] == "3.	Benda Asing (Maksimal)"){
+                                      $hasil = $row['hasiluji'];
+                                    }
+                                  }
+                                }echo $hasil;?>"></td>
+                                <td><input id="kelasmutu3" type="text" name="kelasmutu3" class="text-white" value="<?php 
+                                $hasil = "";
+                                if(count($detaildata)>0){
+                                  foreach($detaildata as $row){
+                                    if($row['jenisuji'] == "3.	Benda Asing (Maksimal)"){
+                                      $hasil = $row['kelasmutu'];
+                                    }
+                                  }
+                                }echo $hasil;?>">
                                 <input type="hidden" name="jenisuji3" value="3.	Benda Asing (Maksimal)">
                                 <input type="hidden" name="satuan3" value="%">
                                 <input type="hidden" name="metodeuji3" value="SNI 01-0224-1987">

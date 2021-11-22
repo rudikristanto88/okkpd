@@ -353,6 +353,15 @@ class Model_user extends MY_Model
     return $this->db->update($table, $data);
   }
 
+  
+  public function updateLayananmutuDetail($table, $id_layanan, $data)
+  {
+    $this->db->where("idlayanan_ujimutu", $id_layanan);
+    $this->db->where("valid", 0);
+    return $this->db->update($table, $data);
+  }
+
+
   public function statusInspektor($id_layanan)
   {
     $this->db->select("*");

@@ -104,7 +104,8 @@
                     </table>
                 </div>
                 
-                <div class="col-sm-2">
+                <div class="row clearfix">
+                <div class="col-sm-1">
 
                   <form class="" action="<?= base_url("dashboard/mtek_validasi_ujimutu") ?>" class="text-white" method="post">
                   
@@ -116,12 +117,13 @@
                 
                 <div class="col-sm-2">
 
-                  <form class="" action="<?= base_url("dashboard/mtek_tolak_ujimutu") ?>" class="text-white" method="post">
                   
-                    <input type="hidden" name="id_layanan" value="<?= $id_layanan ?>" readonly>
-                    <button type="submit " class="btn btn-danger waves-effect" name="button">Tolak</button>
+                  
+                    
+                    <button type="submit" onclick="openModal(<?= $id_layanan ?>)" class="btn btn-danger waves-effect" name="button">Tolak</button>
                   </form>                  
                 </div>
+              </div>
             </div>
           </div>
         </div>
@@ -135,3 +137,46 @@
 </div>
 
 </section>
+<div class="modal" id="modalUnggah">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      <form class="" action="<?= base_url("dashboard/mtek_tolak_ujimutu") ?>" class="text-white" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Update tanggal download </h4>
+          <input type="hidden" name="id_layanan" id="id_layanan" readonly> 
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-12">
+              
+          <div class="col-sm-12">
+            <div class="form-group">
+                <label for="nama_dagang">Alasan Tolak</label>
+                <input class="text-black" type="text" id="alasan" name="alasan" placeholder="Alasan Tolak" >
+              </div>
+            </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer"> 
+          <button type="submit" class="btn btn-warning" name="Tolak" value="1">Tolak</button>  
+        </div>
+      </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript"> 
+    
+    function openModal(kode){
+      $("#id_layanan").val(kode);
+      $('#modalUnggah').modal();
+    } 
+
+  </script>

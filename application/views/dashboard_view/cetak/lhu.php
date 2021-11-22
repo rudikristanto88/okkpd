@@ -17,7 +17,7 @@ include 'header_cetak_lhu.php';
     <tr>
         <td width="30%" align="left">2. Alamat</td>
         <td width="1">:</td>
-        <td><?= $detail[0]['alamat_usaha'] . " RT " . $detail[0]['rt'] . " RW " . $detail[0]['rw']. " Kel " . $detail[0]['kelurahan']. " Kec " . $detail[0]['kecamatan'] . $detail[0]['kota'] ?></td>
+        <td><?= $detail[0]['alamat_usaha'] . " RT " . $detail[0]['rt'] . " RW " . $detail[0]['rw']. " Kel " . $detail[0]['kelurahan']. " Kec " . $detail[0]['kecamatan'] ." ". $detail[0]['kota'] ?></td>
     </tr>
     <tr>
         <td width="30%" align="left">3. Deskripsi Contoh</td>
@@ -66,16 +66,14 @@ include 'header_cetak_lhu.php';
     </tr>
 </table> 
                     
-                    <table border="1" width="100%" >
-                        <thead>
+                    <table border="1" width="100%" > 
                             <tr>
                             <th>JENIS UJI</th>
                             <th>SATUAN</th>
                             <th>HASIL UJI</th>
-                            <th>KELAS MUTU I</th>
+                            <th>KELAS MUTU</th>
                             <th>METODE UJI</th>  
-                            </tr>
-                        </thead>
+                            </tr> 
                         <tbody>
                             <?php foreach($hasil as $r){?>
                               <tr>
