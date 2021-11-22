@@ -54,8 +54,6 @@ class Home extends MY_Controller
 	{
 		$data['islogin'] = false;
 		$data['kota'] = $this->model_user->getDataKota();
-		$this->checkUser(true, "", "home/pendaftaran_online");
-
 		if ($this->session->userdata("dataLogin") != null) {
 			$data['islogin'] = true;
 		}
@@ -70,7 +68,7 @@ class Home extends MY_Controller
 	public function verifikasi()
 	{
 		$i = $this->input;
-		$this->checkUser(true, $i->post('username'), "home/pendaftaran_online");
+
 		$validate = $this->model_user->validasi($i->post('username'), $i->post('password'), "pelaku");
 		if ($validate == 1) {
 			redirect("dashboard", "redirect");
@@ -444,12 +442,12 @@ class Home extends MY_Controller
 	{
 		$data = [];
 		if ($menu == null) {
-			$data["menu"] = array(array("url" => "ujimutu", "title" => "UJI MUTU PANGAN"), array("url" => "sertifikasi", "title" => "REGISTRASI/SERTIFIKASI"));
+			$data["menu"] = array(array("url" => "ujimutu", "title" => "UJI MUTU PSAT"), array("url" => "okkpd", "title" => "OKKPD/SERTIFIKASI"));
 			$this->loadViewHome('default/basis_data/index', $data, false);
 		} else {
 
 			if ($menu != null && $submenu == null) {
-				if ($menu == "sertifikasi") {
+				if ($menu == "okkpd") {
 					$data["menu"] = $menu;
 					$data["submenu"] = array(array("url" => "prima_3", "title" => "Sertifikasi Prima 3"), array("url" => "prima_2", "title" => "Sertifikasi Prima 2"));
 					$this->loadViewHome('default/basis_data/' . $menu, $data, false);
@@ -458,54 +456,29 @@ class Home extends MY_Controller
 					$data['data'] = $this->model_ujimutu->getDataUjiMutuLHUDetail();
 					$this->loadViewHome('default/basis_data/detail_ujimutu', $data, false);
 				}
+
 			}
 		}
 	}
 
 	public function basis_data_okkpd($submenu = null)
 	{
-		$data_submenu = array(
-			array("url" => "prima_3", "title" => "Sertifikasi Prima 3"),
-			array("url" => "prima_2", "title" => "Sertifikasi Prima 2"),
-			array("url" => "psat", "title" => "Permohonan Izin Edar PSAT-PD"),
-			array("url" => "sppb", "title" => "SPPB-PSAT"),
-			array("url" => "kemas", "title" => "Ijin Rumah Pengemasan")
-		);
 		if ($submenu == null) {
-			$data["menu"] = "sertifikasi";
-			$data["submenu"] = $data_submenu;
-			$this->loadViewHome('default/basis_data/sertifikasi', $data, false);
+			$data["menu"] = "okkpd";
+			$data["submenu"] = array(array("url" => "prima_3", "title" => "Sertifikasi Prima 3"), array("url" => "prima_2", "title" => "Sertifikasi Prima 2"));
+			$this->loadViewHome('default/basis_data/okkpd', $data, false);
 		} else {
-			if (
-				$submenu != 'prima_2'
-				&& $submenu != 'prima_3'
-				&& $submenu != 'psat'
-				&& $submenu != 'sppb'
-				&& $submenu != 'kemas'
-				&& $submenu != "mutupangan"
-			) {
+			if ($submenu != 'prima_2' && $submenu != 'prima_3' && $submenu != "mutupangan") {
 				header("location:" . base_url());
 			}
-			$temp = $this->model_dokumen->getDataSertifikat($submenu);
+			$temp = $this->model_admin->getsertifikat();
 			$data['layanan'] = $this->model_user->getDataWhere("master_layanan", "kode_layanan", $submenu)[0];
-			foreach ($data_submenu as $element) {
-				if ($element["url"] == $submenu) $data["submenu"] = $element;
-			}
 			$temp = array_filter($temp, function ($k) use ($submenu) {
 				return $k["kode_layanan"] == $submenu;
 			});
 			$data['data'] = $temp;
-			if ($submenu == "prima_2" || $submenu == "prima_3") {
-				$this->loadViewHome('default/basis_data/detail_prima', $data, false);
-			} else if ($submenu == "psat") {
-				$this->loadViewHome('default/basis_data/detail_psat', $data, false);
-			}else if ($submenu == "sppb") {
-				$this->loadViewHome('default/basis_data/detail_sppb', $data, false);
-			}else if ($submenu == "kemas") {
-				$this->loadViewHome('default/basis_data/detail_kemas', $data, false);
-			}else if ($submenu == "mutupangan") {
-				$this->loadViewHome('default/basis_data/detail_mutupangan', $data, false);
-			}
+			$data['submenu'] = $submenu;
+			$this->loadViewHome('default/basis_data/detail', $data, false);
 		}
 	}
 }

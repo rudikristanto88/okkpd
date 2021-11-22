@@ -3174,7 +3174,7 @@ class Dashboard extends MY_Controller {
 		$data['datalogin'] = $this->session->userdata("dataLogin"); 
 		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
 		$data['tanggal'] = $tanggal;
-		$this->load->library('ciqrcode'); //pemanggilan library QR CODE
+		/*$this->load->library('ciqrcode'); //pemanggilan library QR CODE
  
         $config['cacheable']    = true; //boolean, the default is true
         $config['cachedir']     = './assets/'; //string, the default is application/cache/
@@ -3193,7 +3193,7 @@ class Dashboard extends MY_Controller {
         $params['size'] = 10;
         $params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
         $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
-		$data['qrcode'] = $image_name;
+		$data['qrcode'] = $image_name;*/
 		$cetak = $this->loadView('dashboard_view/cetak/lhu',$data, TRUE);
 		$mpdf = new \Mpdf\Mpdf([
 			'margin_left' => 15,

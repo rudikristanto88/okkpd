@@ -34,10 +34,7 @@
                 <br/><br/>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <a href="<?= base_url() ?>upload/Dokumen_Dinas/form_prima.xlsx" style="margin-top:8px;" class="btn btn-info waves-effect" name="button">Form Prima 2 & 3</a>
-                    <a href="<?= base_url() ?>upload/Dokumen_Dinas/form_sppb.xlsx" style="margin-top:8px;" class="btn btn-info waves-effect" name="button">From SPPB-PSAT</a>
-                    <a href="<?= base_url() ?>upload/Dokumen_Dinas/form_psat.xlsx" style="margin-top:8px;" class="btn btn-info waves-effect" name="button">Form PSAT-PD</a>
-                    <a href="<?= base_url() ?>upload/Dokumen_Dinas/form_kemas.xlsx" style="margin-top:8px;" class="btn btn-info waves-effect" name="button">Form Ijin Rumah Pengamasan</a>
+                    <a href="<?= base_url() ?>upload/Dokumen_Dinas/master_form.xlsx" class="btn btn-info waves-effect" name="button">Unduh Form</a>
                   </div>
                 </div>
               </div>
@@ -54,7 +51,7 @@
 
               <?php
               $attribute = array("class"=>"text-white");
-              echo form_open_multipart('admin/migrasi',$attribute);?>
+              echo form_open_multipart('admin/proses_migrasi',$attribute);?>
                 <div class="row clearfix">
 
                   <div class="col-sm-12">

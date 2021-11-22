@@ -414,7 +414,7 @@ class Model_user extends MY_Model
   public function getDataLayanan($value)
   {
     if ($value != null) {
-      $query = $this->db->query("SELECT *,layanan.status status_layanan from layanan join master_layanan on layanan.kode_layanan = master_layanan.kode_layanan where layanan.id_identitas_usaha = " . $value . " and layanan.status_hasil_uji <> 2 order by layanan.tanggal_buat desc");
+      $query = $this->db->query("SELECT *,layanan.status status_layanan,'' as namajenis,'' as namadetail from layanan join master_layanan on layanan.kode_layanan = master_layanan.kode_layanan where layanan.id_identitas_usaha = " . $value . " and layanan.status_hasil_uji <> 2 order by layanan.tanggal_buat desc");
       return $query->result_array();
     } else {
       return null;
@@ -642,6 +642,7 @@ class Model_user extends MY_Model
     }
     $this->db->from('layanan');
     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha=identitas_usaha.id_identitas_usaha");
+    $this->db->join('user', "identitas_usaha.id_user=user.id_user");
     $this->db->join('master_layanan', "layanan.kode_layanan=master_layanan.kode_layanan");
     if ($jenis_layanan == 'prima_3' || $jenis_layanan == 'prima_2' || $jenis_layanan == 'kemas') {
       if ($menu == 'daftar') {

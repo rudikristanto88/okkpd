@@ -54,7 +54,7 @@
 						</div>
 					</div> -->
 					<div class="container-login100-form-btn">
-						<input type="submit" style="margin-top:12px;" class="btn btn-info btn-block" name="" value="Login">
+						<input type="submit" style="margn-top:12px;" class="btn btn-info btn-block" name="" value="Login">
 					</div>
 					<div class="text-center p-t-50">
 						<span>Hubungi admin apabila lupa kata sandi anda</span>

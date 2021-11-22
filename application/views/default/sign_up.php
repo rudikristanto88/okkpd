@@ -6,8 +6,8 @@
                               <div class="card">
                                 <div class="card-body">
                                   <?php
-                                    if($this->session->flashdata("status") != null){
-                                      echo $this->session->flashdata("status");
+                                    if($this->session->flashdata("status_registrasi") != null){
+                                      echo $this->session->flashdata("status_registrasi");
                                     }
                                   ?>
                                   <h4>Pendaftaran Online</h4>
@@ -71,7 +71,7 @@
                                       <input type="file" name="foto_ktp" class="form-input form-block" >
                                     </div> -->
                                     <div class="form-container">
-                                      <input type="submit" style="margin-top:12px;" class="btn btn-primary btn-block" name="" value="Daftar">
+                                      <input type="submit" style="margn-top:12px;" class="btn btn-primary btn-block" name="" value="Daftar">
 
                                     </div>
                                   </form>
