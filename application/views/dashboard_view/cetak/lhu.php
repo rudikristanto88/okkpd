@@ -7,7 +7,6 @@
 <?php
 include 'header_cetak_lhu.php';
 ?>
-<h2 align="center">LAPORAN HASIL UJI</h2>
 <p align="center">No : <?= $detail[0]['kodelhu'] ?></p>
 <table border="0" width="100%">
     <tr>

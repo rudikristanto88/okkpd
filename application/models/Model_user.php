@@ -414,7 +414,7 @@ class Model_user extends MY_Model
   public function getDataLayanan($value)
   {
     if ($value != null) {
-      $query = $this->db->query("SELECT *,layanan.status status_layanan,'' as namajenis,'' as namadetail from layanan join master_layanan on layanan.kode_layanan = master_layanan.kode_layanan where layanan.id_identitas_usaha = " . $value . " and layanan.status_hasil_uji <> 2 order by layanan.tanggal_buat desc");
+      $query = $this->db->query("SELECT *,layanan.status status_layanan from layanan join master_layanan on layanan.kode_layanan = master_layanan.kode_layanan where layanan.id_identitas_usaha = " . $value . " and layanan.status_hasil_uji <> 2 order by layanan.tanggal_buat desc");
       return $query->result_array();
     } else {
       return null;
@@ -633,24 +633,41 @@ class Model_user extends MY_Model
   public function getDokumenDiterima($jenis_layanan, $menu = null, $kategori = null, $cari = null)
   {
     $where = "";
-    if ($jenis_layanan == 'prima_3' || $jenis_layanan == 'prima_2' || $jenis_layanan == 'kemas') {
+    if ($jenis_layanan == 'prima_3' || $jenis_layanan == 'prima_2') {
       $this->db->select('*,detail_komoditas.sertifikat as sertifikat_produk, detail_komoditas.mime_type as tipe_sertifikat_produk ');
-    } else if ($jenis_layanan == "psat") {
+    } else if ($jenis_layanan == "kemas") {
+      $this->db->select('*,detail_identitas_kemas.sertifikat as sertifikat_produk, detail_identitas_kemas.mime_type as tipe_sertifikat_produk ');
+    } else if ($jenis_layanan == "sppb") {
+      $this->db->select('*,detail_identitas_sppb.sertifikat as sertifikat_produk, detail_identitas_sppb.mime_type as tipe_sertifikat_produk ');
+    }else if ($jenis_layanan == "psat") {
       $this->db->select('*,detail_identitas_produk.sertifikat as sertifikat_produk, detail_identitas_produk.mime_type as tipe_sertifikat_produk ');
     } else if ($jenis_layanan == "hc") {
       $this->db->select('*,detail_identitas_ekspor.sertifikat as sertifikat_produk, detail_identitas_ekspor.mime_type as tipe_sertifikat_produk ');
     }
     $this->db->from('layanan');
     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha=identitas_usaha.id_identitas_usaha");
-    $this->db->join('user', "identitas_usaha.id_user=user.id_user");
     $this->db->join('master_layanan', "layanan.kode_layanan=master_layanan.kode_layanan");
-    if ($jenis_layanan == 'prima_3' || $jenis_layanan == 'prima_2' || $jenis_layanan == 'kemas') {
+    if ($jenis_layanan == 'prima_3' || $jenis_layanan == 'prima_2') {
       if ($menu == 'daftar') {
         $where = "detail_komoditas.sertifikat is not null";
       } else if ($menu == 'cetak') {
         $where = "detail_komoditas.sertifikat is null";
       }
       $this->db->join('detail_komoditas', "detail_komoditas.id_layanan=layanan.uid");
+    } else if ($jenis_layanan == 'kemas') {
+      if ($menu == 'daftar') {
+        $where = "detail_identitas_kemas.sertifikat is not null";
+      } else if ($menu == 'cetak') {
+        $where = "detail_identitas_kemas.sertifikat is null";
+      }
+      $this->db->join('detail_identitas_kemas', "detail_identitas_kemas.id_layanan=layanan.uid");
+    } else if ($jenis_layanan == 'sppb') {
+      if ($menu == 'daftar') {
+        $where = "detail_identitas_sppb.sertifikat is not null";
+      } else if ($menu == 'cetak') {
+        $where = "detail_identitas_sppb.sertifikat is null";
+      }
+      $this->db->join('detail_identitas_sppb', "detail_identitas_sppb.id_layanan=layanan.uid");
     } else if ($jenis_layanan == "psat") {
       if ($menu == 'daftar') {
         $where = "detail_identitas_produk.sertifikat is not null";

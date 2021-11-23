@@ -11,7 +11,7 @@
                 <i class="material-icons">home</i>
                 Beranda</a>
               </li>
-              <li class="breadcrumb-item active">Cetak Sertifikat</li>
+              <li class="breadcrumb-item active">Daftar Sertifikat</li>
               <li class="breadcrumb-item active">PSAT</li>
             </ul>
           </div>
@@ -51,7 +51,7 @@
                             <td>
                               <?php
                               if($produk['sertifikat'] == null){ ?>
-                                <a href="<?= base_url()?>dokumen/sertifikat/<?= $menu ?>/<?= $produk['id']?>" target="_blank"><button class="btn btn-success">Unduh</button></a>
+                                <!-- <a href="<?= base_url()?>dokumen/sertifikat/<?= $menu ?>/<?= $produk['id']?>" target="_blank"><button class="btn btn-success">Unduh</button></a> -->
                                 <button data-toggle="modal" onClick="setData(<?= $produk['id'] ?>,<?= $produk['uid'] ?>)" data-target="#modalUpload" class='btn btn-info'>Unggah <i class="fas fa-upload"></i></button>
                               <?php }else{ ?>
                                 <button data-toggle="modal" onClick="setData(<?= $produk['id'] ?>)" data-target="#modalUpload" class='btn btn-info'>Unggah <i class="fas fa-upload"></i></button>

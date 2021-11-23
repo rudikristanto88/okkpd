@@ -14,7 +14,7 @@ foreach ($slider as $slider) {
 
  <style media="screen">
    .table-noboder tr td{
-     boder-color:transparent;
+     border-color:transparent;
      color:black;
 
    }

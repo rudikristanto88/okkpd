@@ -47,7 +47,7 @@
                     <td><?= $element["kelas_mutu"] ?></td>
                     <td><?= $element["nomor_sertifikat"] ?></td>
                     <td><?php $tanggal_cetak = strtotime($element['tanggal_cetak']); echo date('d/m/Y',$tanggal_cetak) ?></td>
-                    <td><?php $tanggal_akhir = strtotime($element['tanggal_akhir']); echo date('d/m/Y',$tanggal_akhir) ?></td>
+                    <td><?php $tanggal_akhir = strtotime($element['tanggal_kadaluarsa']); echo date('d/m/Y',$tanggal_akhir) ?></td>
                     <td><?= $element["ukuran"] ?></td>
                     <td><?= $element["status_aktif"] ?></td>
                 </tr>
