@@ -40,7 +40,7 @@
                     <td><?= $element["kota"] ?></td>
                     <td><?= $element["nama_jenis_komoditas"] ?></td>
                     <td><?php $tanggal_cetak = strtotime($element['tanggal_cetak']); echo date('d/m/Y',$tanggal_cetak) ?></td>
-                    <td><?php $tanggal_akhir = strtotime($element['tanggal_akhir']); echo date('d/m/Y',$tanggal_akhir) ?></td>
+                    <td><?php $tanggal_akhir = strtotime($element['tanggal_kadaluarsa']); echo date('d/m/Y',$tanggal_akhir) ?></td>
                     <td><?= $element["status_aktif"] ?></td>
                 </tr>
             <?php endforeach; ?>

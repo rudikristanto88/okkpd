@@ -202,13 +202,27 @@ class Model_admin extends MY_Model
     $this->db->from('detail_komoditas');
     $this->db->join('layanan', "detail_komoditas.id_layanan = layanan.uid");
     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
-    $this->db->join('master_komoditas', "detail_komoditas.id_komoditas = master_komoditas.kode_komoditas");
+    $this->db->join('master_komoditas', "detail_komoditas.id_komoditas = master_komoditas.kode_komoditas", "left");
     if ($id != null) {
       $this->db->where("detail_komoditas.id_detail", $id);
     }
     $query = $this->db->get();
     return $query->result_array();
   }
+
+   /// function to fetch sertifikat of layanan SPPB
+   function getsertifikatSPPB($id = null, $unduh = false)
+   {
+     $this->db->select("*,detail_identitas_sppb.nomor_sertifikat,detail_identitas_sppb.sertifikat as sertifikat_produk, detail_identitas_sppb.mime_type as tipe_sertifikat_produk");
+     $this->db->from('detail_identitas_sppb');
+     $this->db->join('layanan', "detail_identitas_sppb.id_layanan = layanan.uid");
+     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
+     if ($id != null) {
+       $this->db->where("detail_identitas_sppb.id", $id);
+     }
+     $query = $this->db->get();
+     return $query->result_array();
+   }
 
   /// function to fetch sertifikat of layanan PSAT
   function getsertifikatPSAT($id = null, $unduh = false)
@@ -220,6 +234,24 @@ class Model_admin extends MY_Model
     }
     $this->db->from('detail_identitas_produk');
     $this->db->join('layanan', "detail_identitas_produk.id_layanan = layanan.uid");
+    $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
+    if ($id != null) {
+      $this->db->where("id", $id);
+    }
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+
+  /// function to fetch sertifikat of layanan Kemas
+  function getsertifikatKemas($id = null, $unduh = false)
+  {
+    if ($unduh == true) {
+      $this->db->select("*,detail_identitas_kemas.nomor_sertifikat,detail_identitas_kemas.sertifikat as sertifikat_produk, detail_identitas_kemas.mime_type as tipe_sertifikat_produk");
+    } else {
+      $this->db->select("*");
+    }
+    $this->db->from('detail_identitas_kemas');
+    $this->db->join('layanan', "detail_identitas_kemas.id_layanan = layanan.uid");
     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
     if ($id != null) {
       $this->db->where("id", $id);

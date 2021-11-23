@@ -65,8 +65,8 @@ class Model_dokumen extends MY_Model
     $default = "
     a.nomor_sertifikat, 
     a.tanggal_unggah as tanggal_cetak,
-    DATE_ADD(a.tanggal_unggah, INTERVAL 3 YEAR) tanggal_akhir,
-    case when sysdate() <= DATE_ADD(a.tanggal_unggah, INTERVAL 3 YEAR) then 'AKTIF' else 'KADALUARSA' end status_aktif,
+    case when a.tanggal_kadaluarsa is null then DATE_ADD(a.tanggal_unggah, INTERVAL 3 YEAR) else tanggal_kadaluarsa end as tanggal_kadaluarsa,
+    case when a.status <> 'Dibekukan' then case when sysdate() <= DATE_ADD(a.tanggal_unggah, INTERVAL 3 YEAR) then 'AKTIF' else 'KADALUARSA' end else a.status end status_aktif,
     b.kode_layanan,
     c.nama_usaha,
     c.nama_pemohon,

@@ -69,11 +69,9 @@ $this->ciqrcode->generate($params);
       <b><u>Ketua Otoritas Kompeten Keamanan Pangan Daerah</u></b><br>
       <i>Lead Of Local Foodsafety Competent Authority</i><br>
       <br><br><br><br><br>
-      <u><b><?= $data['nama_kepala_dinas'] ?></b></u><br>
-      <b><?= $data['pangkat'] ?></b><br>
-      <b>NIP.<?= $data['nip'] ?></b><br>
-
-
+      <u><b><?= sizeof($kadin) > 0 ? $kadin[0]['nama_kepala_dinas'] : "-" ?></b></u><br>
+      <b><?= sizeof($kadin) > 0 ? $kadin[0]['pangkat'] : "-" ?></b><br>
+      <b>NIP.<?= sizeof($kadin) > 0 ? $kadin[0]['nip'] : "-" ?></b><br>
 
   </p>
 
