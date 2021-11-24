@@ -70,7 +70,7 @@ class Home extends MY_Controller
 	public function verifikasi()
 	{
 		$i = $this->input;
-		$this->checkUser(true, $i->post('username'), "home/pendaftaran_online");
+		//$this->checkUser(true, $i->post('username'), "home/pendaftaran_online");
 		$validate = $this->model_user->validasi($i->post('username'), $i->post('password'), "pelaku");
 		if ($validate == 1) {
 			redirect("dashboard", "redirect");

@@ -36,6 +36,7 @@
                     <th>Tanggal Pengajuan</th>
                     <th>Kode Registrasi</th>
                     <th>Jenis Layanan</th>
+                    <th>Komoditas</th>
                     <th>Status</th>
                     <th></th>
                   </tr>
@@ -57,6 +58,7 @@
                               echo date("d", $tanggal) . " " . $this->bulan[$bulan] . " " . date("Y", $tanggal) ?></td>
                           <td><?= $layanan['kode_pendaftaran'] ?></td>
                           <td><?= $layanan['nama_layanan'] ?></td>
+                          <td></td>
                           <td><?php if ($layanan['status_layanan'] == 0) {
                                 echo "Menunggu";
                               } else if ($layanan['status_layanan'] == 1) {
@@ -89,10 +91,15 @@
                             echo date("d", $tanggal) . " " . $this->bulan[$bulan] . " " . date("Y", $tanggal) ?></td>
                         <td><?= $layanan['kode_pendaftaran'] ?></td>
                         <td><?= $layanan['nama_layanan'] ?></td>
+                          <td><?= $layanan['namadetail'] ?></td>
                         <td><?php 
                         if($layanan['mime_type'] != ""){
 ?>
-                              <a href="<?= base_url()?>dokumen/cetak_sertifikat/ujimutu/<?=  $layanan['uid'] ?>" target="_blank"><button class="btn btn-success">Unduh Sertifikat</button></a>
+   <?php if($layanan['id_survey'] == 0):?>
+                            <a href="<?= base_url() ?>dashboard/survey?uid=<?= $layanan['uid']?>&layanan=ujimutu" class="btn btn-primary">Isi Survey</a>
+                            <?php else :?>
+                              <a href="<?= base_url()?>dokumen/cetak_sertifikat/ujimutu/<?=  $layanan['uid'] ?>" target="_blank"><button class="btn btn-success">Unduh LHU</button></a>
+                        <?php endif?>
 <?php 
                         
                     }else if ($layanan['validManTek'] == 1) {

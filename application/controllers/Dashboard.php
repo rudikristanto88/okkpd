@@ -8,6 +8,7 @@ class Dashboard extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->helper('url_helper');
+		$this->load->helper('data_helper');
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('session');
 		$this->load->model('model_user');
@@ -3371,10 +3372,10 @@ class Dashboard extends MY_Controller
 			$jenis = "okkpd";
 		else
 			$jenis = "ujimutu";
-		$data["properties"] = array(
-			"jenis_kelamin" => data_jenis_kelamin(),
-			"pendidikan" => data_pendidikan(), "pekerjaan" => data_pekerjaan(), "pelayanan" => data_pelayanan($jenis)
-		);
+			$data["properties"] = array(
+				"jenis_kelamin" => data_jenis_kelamin(),
+				"pendidikan" => data_pendidikan(), "pekerjaan" => data_pekerjaan(), "pelayanan" => data_pelayanan($jenis)
+			);
 		$data['id_layanan'] = $id_layanan;
 		$data['jenis'] = $jenis;
 		$data["identitas"] = data_identitas_survey($jenis);
