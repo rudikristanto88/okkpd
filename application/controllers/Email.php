@@ -55,6 +55,11 @@ class Email extends MY_Controller {
         Berkas LHU asli dapat diambil di kantor BPMKP Ungaran pada jam kerja.
         Terima kasih.";
       $headers = "From:" . $from;
+      $headers = "MIME-Version: 1.0" . "\r\n";
+$headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n";
+$headers .= "From: $from" . "\r\n" .
+"Reply-To: $from" . "\r\n" .
+"X-Mailer: PHP/" . phpversion();
       mail($to,$subject,$message, $headers);
       echo "The email message was sent.";
     }
