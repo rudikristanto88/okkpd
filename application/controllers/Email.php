@@ -24,7 +24,7 @@ class Email extends MY_Controller {
         $this->email->initialize($config);
 
         $this->email->from('okkpd@dishanpan.jatengprov.go.id', 'Sistem Notifikasi OKKPD JATENG');
-        $this->email->to('yogaadidr@gmail.com');
+        $this->email->to('rudi.kristanto@gmail.com');
 
         $this->email->subject('Email Test');
         $this->email->message('Testing the email class.');
