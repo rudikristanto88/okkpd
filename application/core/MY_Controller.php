@@ -96,10 +96,10 @@ class MY_Controller extends CI_Controller
   protected function kirim_email($subject, $email_to, $message)
   {
     $config['protocol']    = 'smtp';
-    $config['smtp_host']    = 'mail.dishanpan.jatengprov.go.id';
-    $config['smtp_port']    = '587';
+    $config['smtp_host']    = 'okkpd.dishanpan.jatengprov.go.id';
+    $config['smtp_port']    = '465';
     $config['smtp_timeout'] = '7';
-    $config['smtp_user']    = 'okkpd@dishanpan.jatengprov.go.id';
+    $config['smtp_user']    = 'admin@okkpd.dishanpan.jatengprov.go.id';
     $config['smtp_pass']    = 'Okkpd2018';
     $config['charset']    = 'utf-8';
     $config['newline']    = "\r\n";
@@ -115,11 +115,9 @@ class MY_Controller extends CI_Controller
     $this->email->message($message);
 
     if (!$this->email->send()) {
-
-      //echo $this->email->print_debugger(array('headers'));
+      echo $this->email->print_debugger(array('headers'));
     } else {
-      //echo'email terkirim';
-
+      echo'email terkirim';
     }
   }
   protected function validateCaptcha($captcha)
