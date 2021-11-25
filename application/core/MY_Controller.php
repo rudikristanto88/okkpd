@@ -95,19 +95,18 @@ class MY_Controller extends CI_Controller
 
   protected function kirim_email($subject, $email_to, $message)
   {
-    $config['protocol']    = 'mail';
+    $config['protocol']    = 'smtp';
     $config['smtp_host']    = 'okkpd.dishanpan.jatengprov.go.id';
     $config['smtp_port']    = '587';
     $config['smtp_timeout'] = '7';
     $config['smtp_user']    = 'admin@okkpd.dishanpan.jatengprov.go.id';
     $config['smtp_pass']    = 'rahasia123okkpd';
     $config['charset']    = 'utf-8';
-    $config['newline']    = "\r\n";
     $config['mailtype'] = 'html'; // or html
     //    $config['validation'] = TRUE; // bool whether to validate email or not
 
     $this->email->initialize($config);
-
+    $this->email->set_newline("\r\n");
     $this->email->from('okkpd@dishanpan.jatengprov.go.id', 'Sistem Notifikasi OKKPD JATENG');
     $this->email->to($email_to);
 
