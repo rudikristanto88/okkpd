@@ -60,7 +60,7 @@ $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n";
 $headers .= "From: $from" . "\r\n" .
 "Reply-To: $from" . "\r\n" .
 "X-Mailer: PHP/" . phpversion();
-      mail($to,$subject,$message, $headers,'-noreplyokkpd@dishanpan.jatengprov.go.id');
+      mail($to,$subject,$message, $headers,'-f noreplyokkpd@dishanpan.jatengprov.go.id');
       echo "The email message was sent.";
     }
 }
