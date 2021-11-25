@@ -100,7 +100,7 @@ class MY_Controller extends CI_Controller
     $config['smtp_port']    = '587';
     $config['smtp_timeout'] = '7';
     $config['smtp_user']    = 'admin@okkpd.dishanpan.jatengprov.go.id';
-    $config['smtp_pass']    = 'Okkpd2018';
+    $config['smtp_pass']    = 'rahasia123okkpd';
     $config['charset']    = 'utf-8';
     $config['newline']    = "\r\n";
     $config['mailtype'] = 'html'; // or html
