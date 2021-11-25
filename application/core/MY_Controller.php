@@ -95,7 +95,7 @@ class MY_Controller extends CI_Controller
 
   protected function kirim_email($subject, $email_to, $message)
   {
-    $config['protocol']    = 'smtp';
+    $config['protocol']    = 'mail';
     $config['smtp_host']    = 'okkpd.dishanpan.jatengprov.go.id';
     $config['smtp_port']    = '587';
     $config['smtp_timeout'] = '7';
