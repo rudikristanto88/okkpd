@@ -46,4 +46,16 @@ class Email extends MY_Controller {
       $message = $this->load->view('default/email/notifikasi_daftar_layanan',$data,true);
       $this->kirim_email($subject,$mailto,$message);
     }
+
+    function sendemailmanual(){
+      $from = 'okkpd@dishanpan.jatengprov.go.id';
+      $to = "rudi.kristanto@gmail.com";
+      $subject = " Informasi LHU telah terbit";
+      $message = " Informasi LHU telah terbit: No Registrasi Uji Mutu Pangan Anda ................... telah terbit. Silahkan unduh berkas dokumen digital LHU di sistem informasi OKKPD https://okkpd.dishanpan.jatengprov.go.id.
+        Berkas LHU asli dapat diambil di kantor BPMKP Ungaran pada jam kerja.
+        Terima kasih.";
+      $headers = "From:" . $from;
+      mail($to,$subject,$message, $headers);
+      echo "The email message was sent.";
+    }
 }
