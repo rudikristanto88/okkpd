@@ -107,7 +107,7 @@ class MY_Controller extends CI_Controller
 
     $this->email->initialize($config);
     $this->email->set_newline("\r\n");
-    $this->email->from('okkpd@dishanpan.jatengprov.go.id', 'Sistem Notifikasi OKKPD JATENG');
+    $this->email->from('admin@okkpd.dishanpan.jatengprov.go.id', 'Sistem Notifikasi OKKPD JATENG');
     $this->email->to($email_to);
 
     $this->email->subject($subject);
