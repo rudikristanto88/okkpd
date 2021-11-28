@@ -93,21 +93,53 @@ class MY_Controller extends CI_Controller
     return $hasil;
   }
 
+  // protected function kirim_email($subject, $email_to, $message)
+  // {
+  //   $config['protocol']    = 'smtp';
+  //   $config['smtp_host']    = 'mail.dishanpan.jatengprov.go.id';
+  //   $config['smtp_port']    = '587';
+  //   $config['smtp_timeout'] = '7';
+  //   $config['smtp_user']    = 'okkpd@dishanpan.jatengprov.go.id';
+  //   $config['smtp_pass']    = 'Okkpd2021!';
+  //   $config['charset']    = 'utf-8';
+  //   $config['mailtype'] = 'html'; // or html
+  //   //    $config['validation'] = TRUE; // bool whether to validate email or not
+
+  //   $this->email->initialize($config);
+  //   $this->email->set_newline("\r\n");
+  //   $this->email->from('okkpd@dishanpan.jatengprov.go.id', 'Sistem Notifikasi OKKPD JATENG');
+  //   $this->email->to($email_to);
+
+  //   $this->email->subject($subject);
+  //   $this->email->message($message);
+
+  //   if (!$this->email->send()) {
+  //     echo $this->email->print_debugger(array('headers'));
+  //   } else {
+  //     echo'email terkirim';
+  //   }
+  // }
+
   protected function kirim_email($subject, $email_to, $message)
   {
-    $config['protocol']    = 'smtp';
-    $config['smtp_host']    = 'mail.dishanpan.jatengprov.go.id';
-    $config['smtp_port']    = '587';
-    $config['smtp_timeout'] = '7';
-    $config['smtp_user']    = 'okkpd@dishanpan.jatengprov.go.id';
-    $config['smtp_pass']    = 'Okkpd2021!';
-    $config['charset']    = 'utf-8';
-    $config['mailtype'] = 'html'; // or html
+    $email_from = 'develop.yogaadidr@gmail.com';
+    $config = [
+      'mailtype'  => 'html',
+      'charset'   => 'utf-8',
+      'protocol'  => 'smtp',
+      'smtp_host' => 'smtp.gmail.com',
+      'smtp_user' => $email_from,  // Email gmail
+      'smtp_pass'   => '',  // Password gmail
+      'smtp_crypto' => 'ssl',
+      'smtp_port'   => 465,
+      'crlf'    => "\r\n",
+      'newline' => "\r\n"
+  ];
     //    $config['validation'] = TRUE; // bool whether to validate email or not
 
     $this->email->initialize($config);
     $this->email->set_newline("\r\n");
-    $this->email->from('okkpd@dishanpan.jatengprov.go.id', 'Sistem Notifikasi OKKPD JATENG');
+    $this->email->from($email_from, 'Sistem Notifikasi OKKPD JATENG');
     $this->email->to($email_to);
 
     $this->email->subject($subject);
@@ -119,6 +151,7 @@ class MY_Controller extends CI_Controller
       echo'email terkirim';
     }
   }
+
   protected function validateCaptcha($captcha)
   {
     if ($captcha == null || $captcha == "") {
