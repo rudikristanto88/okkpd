@@ -97,10 +97,10 @@ class MY_Controller extends CI_Controller
   {
     $config['protocol']    = 'smtp';
     $config['smtp_host']    = 'mail.dishanpan.jatengprov.go.id';
-    $config['smtp_port']    = '587';
+    $config['smtp_port']    = '465';
     $config['smtp_timeout'] = '7';
     $config['smtp_user']    = 'okkpd@dishanpan.jatengprov.go.id';
-    $config['smtp_pass']    = 'Okkpd2018';
+    $config['smtp_pass']    = 'Okkpd2021!';
     $config['charset']    = 'utf-8';
     $config['mailtype'] = 'html'; // or html
     //    $config['validation'] = TRUE; // bool whether to validate email or not
