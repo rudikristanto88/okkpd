@@ -97,7 +97,7 @@ class MY_Controller extends CI_Controller
   {
     $config['protocol']    = 'smtp';
     $config['smtp_host']    = 'smtp.gmail.com';
-    $config['smtp_port']    = '465';
+    $config['smtp_port']    = '587';
     $config['smtp_timeout'] = '7';
     $config['smtp_user']    = 'develop.yogaadidr@gmail.com';
 		$config['smtp_crypto'] = 'ssl';
