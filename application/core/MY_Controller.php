@@ -122,14 +122,14 @@ class MY_Controller extends CI_Controller
 
   protected function kirim_email($subject, $email_to, $message)
   {
-    $email_from = 'develop.yogaadidr@gmail.com';
+    $email_from = 'bpmkpjateng@gmail.com';
     $config = [
       'mailtype'  => 'html',
       'charset'   => 'utf-8',
       'protocol'  => 'smtp',
       'smtp_host' => 'smtp.gmail.com',
       'smtp_user' => $email_from,  // Email gmail
-      'smtp_pass'   => '',  // Password gmail
+      'smtp_pass'   => 'mutuhasil',  // Password gmail
       'smtp_crypto' => 'ssl',
       'smtp_port'   => 465,
       'crlf'    => "\r\n",
