@@ -64,7 +64,20 @@ class Email extends MY_Controller {
 
     function kirimemailbelumkirimsampel(){
       $list = $this->model_ujimutu->daftarBelumKirimSampel();
-      print_r($list);
+      if(count($list)>0){
+        foreach($list as $row){
+          $mailto = $row['username'];
+          $namaLengkap =  $row['nama_lengkap'];
+          $kode = $row["kode_pendaftaran"];
+          $subject = "Pengingat Kirim Sampel: ".$kode;
+
+          $data['link'] = base_url()."dokumen/berkas_pendaftaran/?q=".sha1($kode);
+          $data['nama'] = $namaLengkap;
+          $data['kode'] = $kode;
+          $message = "Pengingat Kirim Sampel: No Registrasi Uji Mutu Pangan Anda $kode belum mengirim sampel. Batas waktu kirim tinggal " . ($row["kurang"]) . " hari.";
+          $this->kirim_email($subject,$mailto,$message);
+        }
+      }
     }
 
     function sendemailmanual(){

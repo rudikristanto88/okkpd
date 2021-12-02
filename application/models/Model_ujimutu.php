@@ -205,7 +205,7 @@ class Model_ujimutu extends CI_Model {
   public function daftarBelumKirimSampel()
   { 
       $query = $this->db->query("SELECT f.username,f.nama_lengkap,a.kode_pendaftaran,
-      c.namajenis,d.namadetail,
+      c.namajenis,d.namadetail, 7-ifnull(timestampdiff(DAY, CONVERT(a.tanggal_buat, DATE), CONVERT(now(), DATE)),0) kurang,
       a.status status_layanan ,timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(DATE_ADD(a.tanggal_buat, INTERVAL 7 DAY), DATE)) selisih
       from layanan_ujimutu a
       join master_layanan b on a.kode_layanan = b.kode_layanan 
