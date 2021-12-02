@@ -200,6 +200,24 @@ class Model_ujimutu extends CI_Model {
       return null;
     }
   }
+
+  
+  public function daftarBelumKirimSampel()
+  { 
+      $query = $this->db->query("SELECT f.username,f.nama_lengkap,a.kode_pendaftaran,
+      c.namajenis,d.namadetail,
+      a.status status_layanan ,timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(DATE_ADD(a.tanggal_buat, INTERVAL 7 DAY), DATE)) selisih
+      from layanan_ujimutu a
+      join master_layanan b on a.kode_layanan = b.kode_layanan 
+      join jenis_komoditas c on a.idjenis = c.idjenis 
+      join jenis_komoditas_detil d on a.idjenisdetail = d.idjenisdetail
+      join identitas_usaha e on a.id_identitas_usaha = e.id_identitas_usaha
+      join user f on e.id_user = f.id_user
+      where a.validlab = 0 
+      and case when a.validlab = 0 then timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(now(), DATE)) else 8 end <= 7 
+      order by a.tanggal_buat desc");
+      return $query->result_array(); 
+  }
   
   public function getValidSampleLab()
   {

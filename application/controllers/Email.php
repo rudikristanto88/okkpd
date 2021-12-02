@@ -8,6 +8,7 @@ class Email extends MY_Controller {
   		$this->load->helper(array('form', 'url'));
       $this->load->library('session');
   		$this->load->library('email');
+      $this->load->model('model_ujimutu');
   	}
 
     function index()
@@ -58,6 +59,12 @@ class Email extends MY_Controller {
       $data['kode'] = $kode;
       $message = $this->load->view('default/email/notifikasi_daftar_layanan',$data,true);
       $this->kirim_email($subject,$mailto,$message);
+    }
+
+
+    function kirimemailbelumkirimsampel(){
+      $list = $this->model_ujimutu->daftarBelumKirimSampel();
+      print_r($list);
     }
 
     function sendemailmanual(){
