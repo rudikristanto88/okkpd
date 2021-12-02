@@ -131,7 +131,7 @@ class MY_Controller extends CI_Controller
       'smtp_user' => $email_from,  // Email gmail
       'smtp_pass'   => 'mutuhasil',  // Password gmail
       'smtp_crypto' => 'ssl',
-      'smtp_port'   => 465,
+      'smtp_port'   => 587,
       'crlf'    => "\r\n",
       'newline' => "\r\n"
   ];
