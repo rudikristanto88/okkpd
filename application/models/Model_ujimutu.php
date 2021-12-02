@@ -213,8 +213,8 @@ class Model_ujimutu extends CI_Model {
       join jenis_komoditas_detil d on a.idjenisdetail = d.idjenisdetail
       join identitas_usaha e on a.id_identitas_usaha = e.id_identitas_usaha
       join user f on e.id_user = f.id_user
-      where a.validlab = 0 
-      and case when a.validlab = 0 then timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(now(), DATE)) else 8 end <= 7 
+      where a.samplelab = 0 
+      and case when a.samplelab = 0 then timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(now(), DATE)) else 8 end <= 7 
       order by a.tanggal_buat desc");
       return $query->result_array(); 
   }
