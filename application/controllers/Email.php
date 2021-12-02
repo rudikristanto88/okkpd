@@ -47,6 +47,19 @@ class Email extends MY_Controller {
       $this->kirim_email($subject,$mailto,$message);
     }
 
+    function cobaemailbaru(){
+      $mailto = "rudi.kristanto@gmail.com";
+      $namaLengkap = "rudi kristanto";
+      $kode = "123";
+      $subject = "Pendaftaran Layanan - Kode Pendaftaran";
+
+      $data['link'] = base_url()."dokumen/berkas_pendaftaran/?q=".sha1($kode);
+      $data['nama'] = $namaLengkap;
+      $data['kode'] = $kode;
+      $message = $this->load->view('default/email/notifikasi_daftar_layanan',$data,true);
+      $this->kirim_email($subject,$mailto,$message);
+    }
+
     function sendemailmanual(){
       $from = 'okkpd@dishanpan.jatengprov.go.id';
       $to = "rudi.kristanto@gmail.com";
