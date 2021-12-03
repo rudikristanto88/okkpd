@@ -187,7 +187,7 @@ class Model_ujimutu extends CI_Model {
     if ($value != null) {
       $query = $this->db->query("SELECT *,
       c.namajenis,d.namadetail,
-      a.status status_layanan ,timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(DATE_ADD(a.tanggal_buat, INTERVAL 7 DAY), DATE)) selisih
+      a.status status_layanan ,timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(DATE_ADD(now(), INTERVAL 7 DAY), DATE)) selisih
       from layanan_ujimutu a
       join master_layanan b on a.kode_layanan = b.kode_layanan 
       join jenis_komoditas c on a.idjenis = c.idjenis 
