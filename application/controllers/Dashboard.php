@@ -2247,6 +2247,7 @@ class Dashboard extends MY_Controller
 		$kode_pendaftaran = $i->post("kode_pendaftaran");
 		$idjenis = $i->post("idjenis");
 		$idjenisdetail = $i->post("idjenisdetail");
+		$kesimpulan = $i->post("kesimpulan");
 		$data['id_layanan'] = $id_layanan;
 		$data['kode_pendaftaran'] = $kode_pendaftaran;
 		$data['idjenis'] = $idjenis;
@@ -2254,6 +2255,7 @@ class Dashboard extends MY_Controller
 		$data['namajenis'] = $i->post("namajenis");
 		$data['berat'] = $i->post("berat");
 		$data['kondisi'] = $i->post("kondisi");
+		$data['kesimpulan'] = $i->post("kesimpulan");
 		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$data['detaildata'] = $this->model_ujimutu->getDataHasilUjiMutuLHUByIDTolak($id_layanan);
 		$data['headerdata'] = $this->model_ujimutu->getDataHasilUjiMutuByUID($id_layanan);
@@ -2314,6 +2316,7 @@ class Dashboard extends MY_Controller
 		$kode_pendaftaran = $i->post("kode_pendaftaran");
 		$idjenis = $i->post("idjenis");
 		$idjenisdetail = $i->post("idjenisdetail");
+		$kesimpulan = $i->post("kesimpulan");
 		$data['id_layanan'] = $id_layanan;
 		$data['kode_pendaftaran'] = $kode_pendaftaran;
 		$data['idjenis'] = $idjenis;
@@ -3062,7 +3065,8 @@ class Dashboard extends MY_Controller
 			"validManTek" => 0,
 			"tanggalValidLab" => date("Y-m-d h:i"),
 			"validLab" => 1,
-			"userValidLab" => $data['datalogin']['id_user']
+			"userValidLab" => $data['datalogin']['id_user'],
+			"kesimpulan" => $kesimpulan
 		);
 
 		if ($this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $arr)) {

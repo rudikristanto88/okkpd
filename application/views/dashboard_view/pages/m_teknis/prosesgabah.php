@@ -102,6 +102,15 @@
                             
                         </tbody>
                     </table>
+                    <div class="row clearfix">
+
+                      <div class="col-sm-12">
+                          <div class="input-field"> 
+                              <input id="kode_pendaftaran" type="text" name="kode_pendaftaran" class="text-white" data-length="100" value="<?= $detail[0]['kesimpulan'] ?>" readonly>
+                              <label for="nama_perusahaan">Kesimpulan</label>
+                          </div>
+                      </div>
+                    </div>
                 </div>
                 
                 <div class="row clearfix">

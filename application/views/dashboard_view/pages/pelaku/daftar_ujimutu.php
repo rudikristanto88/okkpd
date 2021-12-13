@@ -187,8 +187,8 @@ foreach ($identitas_usaha as $usaha);
             </div>
             <label for="nama_dagang">
             Sanggup Mengirimkan Sampel dalam kurun waktu maksimal 7 (tujuh) hari : </label> 
-            <label for="nama_dagang">1.	Uji Laboratorium seberat 2 Kg </label>
-            <label for="nama_dagang">2.	Arsip Sampel seberat 1 Kg</label>
+            <label for="nama_dagang">1.	Uji Laboratorium Beras seberat 2 Kg </label>
+            <label for="nama_dagang">2.	Uji Laboratorium Komoditas Lainnya seberat 1 Kg</label>
               <div class="form-check m-l-10">
                                         <label class="form-check-label">
                                             <input class="form-check-input" id="cekBersedia" type="checkbox" value="1"> Bersedia

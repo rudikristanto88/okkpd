@@ -88,6 +88,13 @@ include 'header_cetak_lhu.php';
                             
                         </tbody>
                     </table> 
+                    <table border="0" width="100%">
+    <tr>
+        <td width="30%" align="left">Kesimpulan</td>
+        <td width="1">:</td>
+        <td><?= $detail[0]['kesimpulan'] ?></td>
+    </tr>
+                            </table>
                 <table border="0" width="100%">
                     <tr>
                         <td width="30%"><br/><img style="width: 100px;" src="<?php echo base_url().''.$qrcode;?>"></td>

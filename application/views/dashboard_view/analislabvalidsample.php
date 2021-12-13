@@ -34,13 +34,14 @@
                       <th rowspan="2">No.</th>
                       <th rowspan="2">Nama Pemohon</th> 
                       <th rowspan="2">Kab/Kota</th>
-                      <th colspan="3" style="text-align:center">Pengajuan Mutu</th>
+                      <th colspan="4" style="text-align:center">Pengajuan Mutu</th>
                       
                       <th rowspan="2" width="150px">Aksi <br/>Valid</th>
                     </tr>
                     <tr>
                       <th>Kode Pendaftaran</th>
                       <th>Komoditas</th>
+                      <th>Nama Dagang</th>
                       <th>Tanggal</th>
                     </tr>
 
@@ -58,6 +59,7 @@
                         <td><?= $ppc['kode_pendaftaran'] ?>
                         <td><?= $ppc['namajenis'] . " - " . $ppc['namadetail'] ?>
                         </td>
+                        <td><?= $ppc['nama_dagang'] ?>
                         <td><?php $tgl =  strtotime($ppc['tanggal_buat']); echo date("d",$tgl)."/".(date("m",$tgl))."/".date("Y",$tgl); ?></td>
                        
                         <td>

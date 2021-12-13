@@ -66,6 +66,7 @@
                             <input type="hidden" name="idjenisdetail" value="<?= $ppc['idjenisdetail'] ?>">
                             <input type="hidden" name="berat" value="<?= $ppc['berat'] ?>">
                             <input type="hidden" name="kondisi" value="<?= $ppc['kondisi'] ?>">
+                            <input type="hidden" name="kesimpulan" value="<?= $ppc['kesimpulan'] ?>">
                             <input type="hidden" name="namajenis" value="<?= $ppc['namajenis'] . " - " . $ppc['namadetail'] ?>">
                             <button type="sumbit" name="button" class="btn btn-info">Proses</button>
                           </form>

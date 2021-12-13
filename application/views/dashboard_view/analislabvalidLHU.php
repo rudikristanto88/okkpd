@@ -63,10 +63,10 @@
                             <!--<a href="<?= base_url() ?>dashboard/survey?id=<?= $ppc['uid']?>" class="btn btn-primary">Isi Survey</a>-->
                             <?php //else :?>
                                
-                            <button onclick="openModal(<?= $ppc['uid'] ?>)" type="sumbit" name="button" class="btn btn-info">Download Draft LHU</button>&nbsp;
-                            <button onclick="modalUpload(<?= $ppc['uid'] ?>,'<?= $ppc['username'] ?>','<?= $ppc['nama_usaha'] ?>','<?= $ppc['kode_pendaftaran'] ?>')" type="sumbit" name="button" class="btn btn-danger">Upload LHU</button>
+                            <button onclick="openModal(<?= $ppc['uid'] ?>)" type="sumbit" name="button" class="btn btn-info col-md-12">Download Draft LHU</button>
+                            <button onclick="modalUpload(<?= $ppc['uid'] ?>,'<?= $ppc['username'] ?>','<?= $ppc['nama_usaha'] ?>','<?= $ppc['kode_pendaftaran'] ?>')" type="sumbit" name="button" class="btn btn-danger col-md-12">Upload LHU</button>
                             <?php if($ppc['mime_type'] != ""){?>
-                              <a href="<?= base_url()?>dokumen/cetak_sertifikat/ujimutu/<?= $ppc['uid'] ?>" target="_blank"><button class="btn btn-success">Unduh Sertifikat</button></a>
+                              <a href="<?= base_url()?>dokumen/cetak_sertifikat/ujimutu/<?= $ppc['uid'] ?>" target="_blank"><button class="btn btn-success  col-md-12">Unduh Sertifikat</button></a>
                             <?php }?>
                               <?php //endif; ?>
                         

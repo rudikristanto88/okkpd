@@ -106,6 +106,15 @@
                              
                         </tbody>
                     </table>
+                    <div class="row clearfix">
+
+                      <div class="col-sm-12">
+                          <div class="input-field"> 
+                              <input id="kesimpulan" type="text" name="kesimpulan" class="text-white" data-length="100" value="<?= $kesimpulan ?>">
+                              <label for="nama_perusahaan">Kesimpulan</label>
+                          </div>
+                      </div>
+                    </div>
                 </div>
                 <button type="submit " class="btn btn-info waves-effect" name="button">Simpan</button>
               </form>
