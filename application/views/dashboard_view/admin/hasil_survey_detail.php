@@ -116,9 +116,7 @@
                               </td>
                               <td></td>
                             <?php endif; ?>
-
                           </tr>
-
                         <?php $i++;
                         endforeach; ?>
                       </tbody>
@@ -128,8 +126,6 @@
               </div>
             </div>
             <!-- #END# Basic Table -->
-
-
           </div>
         </div>
       </div>

@@ -44,6 +44,26 @@
                                             </li>
                                         </ul>
                                     </div>
+
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">Periode</div>
+                                            <div class="col-md-4">
+                                                <form id="formTahun" method="get" action="<?= base_url() ?>dashboard/kelola_kuesioner">
+                                                    <select class="form-control text-black" name="periode" id="periode" style="color:black" onchange="lihatSurvey(this)">
+                                                        <?php
+                                                        $year = date("Y");
+                                                        $selectedYear = $periode;
+                                                        for ($i = 0; $i < 4; $i++) { ?>
+                                                            <option <?php if (($year - $i) == $year || ($year - $i) == $periode) {
+                                                                        echo "selected";
+                                                                    } ?> value="<?= $year - $i ?>"><?= $year - $i ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="table-responsive">
                                         <table class="table table-hover" id="table-datatable" class="display">
                                             <thead>
@@ -149,7 +169,13 @@
                                 </select>
                             </div>
                         </div>
-                       
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="text-small">Periode</label>
+                                <input id="periode" name="periode" type="number" readonly value="<?= $periode ?>" required>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -199,5 +225,9 @@
     function tambahData() {
         action = "Tambah";
         setModalUpdate(defaultKuesioner);
+    }
+
+    function lihatSurvey(tahun) {
+        $("#formTahun").submit();
     }
 </script>

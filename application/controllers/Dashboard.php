@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Dashboard extends MY_Controller
 {
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -928,10 +927,10 @@ class Dashboard extends MY_Controller
 					$data['jenis'] = "Prima 2";
 				} else if ($menu == 'kemas') {
 					$data['jenis'] = "Rumah Kemas";
-				}else if ($menu == 'sppb') {
+				} else if ($menu == 'sppb') {
 					$data['jenis'] = "SPPB-PSAT";
 				}
-				
+
 				$data['cetak'] = false;
 			} else if ($menu == 'psat') {
 				$data['jenis'] = "PSAT";
@@ -989,7 +988,8 @@ class Dashboard extends MY_Controller
 		}
 	}
 
-	function bekukan_sertifikat(){
+	function bekukan_sertifikat()
+	{
 		$id_detail = $this->input->post('id_detail');
 		$kode_layanan = $this->input->post('kode_layanan');
 		$data['status'] = $this->input->post('status');
@@ -1007,7 +1007,6 @@ class Dashboard extends MY_Controller
 		}
 		$this->session->set_flashdata("status", "<div class='alert alert-info'>Dokumen telah dibekukan</div>");
 		redirect("dashboard/daftar_sertifikat/" . $kode_layanan);
-
 	}
 
 
@@ -3376,20 +3375,20 @@ class Dashboard extends MY_Controller
 			$jenis = "okkpd";
 		else
 			$jenis = "ujimutu";
-			$data["properties"] = array(
-				"jenis_kelamin" => data_jenis_kelamin(),
-				"pendidikan" => data_pendidikan(), "pekerjaan" => data_pekerjaan(), "pelayanan" => data_pelayanan($jenis)
-			);
+		$data["properties"] = array(
+			"jenis_kelamin" => data_jenis_kelamin(),
+			"pendidikan" => data_pendidikan(), "pekerjaan" => data_pekerjaan(), "pelayanan" => data_pelayanan($jenis)
+		);
 		$data['id_layanan'] = $id_layanan;
 		$data['jenis'] = $jenis;
 		$data["identitas"] = data_identitas_survey($jenis);
-		$surveyData = $this->model_admin->getDataWhere("master_kuesioner", 'jenis', $jenis);
+		$periode = date("Y");
+		$surveyData = $this->model_admin->getKuesioner($periode, $jenis);
 		$data['list_survey'] = array_filter($surveyData, function ($k) {
 			return $k["deleted"] == 0;
 		});
 		$this->loadView("dashboard_view/survey/index", $data);
 	}
-
 
 	function simpan_survey()
 	{
@@ -3408,17 +3407,18 @@ class Dashboard extends MY_Controller
 		$param["saran"] = $input->post("saran");
 		$answers = $input->post("kuesioner");
 		$id_survey = $this->model_admin->insertGetID("survey_data", $param);
-		if ($jenis == "ujimutu") {
-			$this->model_admin->updateData("layanan_ujimutu", $input->post("layanan"), "uid", array("id_survey" => $id_survey));
-		} else {
-			$this->model_admin->updateData("layanan", $input->post("layanan"), "uid", array("id_survey" => $id_survey));
-		}
+		// if ($jenis == "ujimutu") {
+		// 	$this->model_admin->updateData("layanan_ujimutu", $input->post("layanan"), "uid", array("id_survey" => $id_survey));
+		// } else {
+		// 	$this->model_admin->updateData("layanan", $input->post("layanan"), "uid", array("id_survey" => $id_survey));
+		// }
 		foreach ($answers as $element) {
 			$param_survey = array();
 			$param_survey["id_kuesioner"] = $element['pertanyaan'][1];
 			$param_survey["id_survey"] = $id_survey;
 			$param_survey["nilai"] = $element['pertanyaan'][0];
-			$param_survey["kepentingan"] = $element['kepentingan'] == null ? 0 : $element['kepentingan'][0];
+			$param_survey["pertanyaan"] = $element['soal'][0];
+			$param_survey["kepentingan"] = array_key_exists("kepentingan", $element) ? $element['kepentingan'][0] : 0;
 			$this->model_admin->insertData("survey_kuesioner", $param_survey);
 		}
 		$this->session->set_flashdata("status", "<div class='alert alert-success'>Data survey berhasil disimpan</div>");

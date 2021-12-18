@@ -32,6 +32,26 @@
                   <div class="header">
                     <h2><strong>Hasil</strong> Survey</h2>
                   </div>
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-12">Periode</div>
+                      <div class="col-md-4">
+                        <form id="formTahun" method="get" action="<?= base_url() ?>dashboard/hasil_survey">
+                        <select class="form-control text-black" name="periode" id="periode" style="color:black" onchange="lihatSurvey(this)">
+                          <?php
+                          $year = date("Y");
+                          $selectedYear = $periode;
+                          for ($i = 0; $i < 4; $i++) { ?>
+                            <option <?php if (($year - $i) == $year || ($year - $i) == $periode) {
+                                      echo "selected";
+                                    } ?> value="<?= $year - $i ?>"><?= $year - $i ?></option>
+                          <?php } ?>
+                        </select>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="body table-responsive">
                     <table class="table table-hover" id="table-datatable">
                       <thead>
@@ -69,7 +89,7 @@
                                   <div class="col-md-9">
                                     <div class="progress">
                                       <div class="progress-bar" role="progressbar" aria-valuenow="<?= $progressYa  ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $progressYa ?>%">
-                                      <?= $progressYa  ?>%</div>
+                                        <?= $progressYa  ?>%</div>
                                     </div>
                                   </div>
                                 </div>
@@ -78,7 +98,7 @@
                                   <div class="col-md-9">
                                     <div class="progress">
                                       <div class="progress-bar" role="progressbar" aria-valuenow="<?= $progressTidak  ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $progressTidak ?>%">
-                                      <?= $progressTidak  ?>%</div>
+                                        <?= $progressTidak  ?>%</div>
                                     </div>
                                   </div>
                                 </div>
@@ -163,4 +183,8 @@
     convert_to_utf8: false
   }
   $(".rating").rate(options);
+
+  function lihatSurvey(tahun){
+    $("#formTahun").submit();
+  }
 </script>

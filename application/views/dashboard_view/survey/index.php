@@ -118,7 +118,9 @@
                                                 foreach ($list_survey as $element) : ?>
                                                     <tr>
                                                         <td><?= $index; ?>.</td>
-                                                        <td><?= $element['pertanyaan']; ?></td>
+                                                        <td><?= $element['pertanyaan']; ?>
+                                                            <input type="hidden" name="kuesioner[soal-<?= $index ?>][soal][]" value="<?= $element["pertanyaan"] ?>" />
+                                                        </td>
                                                         <?php if ($element['tipe'] === "Yes/No") : ?>
                                                             <?php $name = "kuesioner[soal-" . $index . "][pertanyaan][]"; ?>
                                                             <td colspan="2">

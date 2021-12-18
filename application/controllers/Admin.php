@@ -352,11 +352,9 @@ class Admin extends MY_Controller
 
   private function insert_layanan_migrasi($layanan, $data_pelaku, $tabel_detail, $data_detail)
   {
-    $identitas_usaha = $this->model_admin->insertGetID('identitas_usaha', $data_pelaku);
     $tanggal = date('Y-m-d H:i:sa');
     $data_layanan = array(
       'kode_layanan' => $layanan,
-      'id_identitas_usaha' => $identitas_usaha,
       'kode_pendaftaran' => 'MIGRASI',
       'tanggal_buat' => $tanggal,
       'manager_adm' => $tanggal,
@@ -369,9 +367,24 @@ class Admin extends MY_Controller
       'status_hasil_uji' => 2
     );
 
-    $id_layanan = $this->model_admin->insertGetID('layanan', $data_layanan);
-    $data_detail["id_layanan"] = $id_layanan;
-    return $this->model_admin->insertData($tabel_detail, $data_detail);
+    $data = $this->model_admin->getDataWhere($tabel_detail, "nomor_sertifikat", $data_detail["nomor_sertifikat"]);
+    if (sizeof($data) > 0 && $data[0]["nomor_sertifikat"] != '') {
+      $layanan = $this->model_admin->getDataWhere("layanan", "uid", $data[0]["id_layanan"]);
+      $identitas = $this->model_admin->getDataWhere("identitas_usaha", "id_identitas_usaha", $layanan[0]["id_identitas_usaha"]);
+
+      $this->model_admin->updateData("layanan", $layanan[0]["uid"], "uid", $data_layanan);
+      $this->model_admin->updateData("identitas_usaha", $identitas[0]["id_identitas_usaha"], "id_identitas_usaha", $data_pelaku);
+
+      return $this->model_admin->updateData($tabel_detail, $data_detail["nomor_sertifikat"], "nomor_sertifikat", $data_detail);
+    } else {
+      $identitas_usaha = $this->model_admin->insertGetID('identitas_usaha', $data_pelaku);
+      $data_layanan['id_identitas_usaha'] = $identitas_usaha;
+
+      $id_layanan = $this->model_admin->insertGetID('layanan', $data_layanan);
+      $data_detail["id_layanan"] = $id_layanan;
+
+      return $this->model_admin->insertData($tabel_detail, $data_detail);
+    }
   }
 
   private function migrasi_prima($data)
@@ -382,13 +395,11 @@ class Admin extends MY_Controller
         $iterasi++;
         continue;
       }
-      $layanan = $this->model_admin->getDataWhere("master_layanan","kode_layanan",$element[11])[0];
+      $layanan = $this->model_admin->getDataWhere("master_layanan", "kode_layanan", $element[11])[0];
       $UNIX_DATE = ($element[9] - 25569) * 86400;
-      // $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
-      $date = date("Y-m-d", strtotime($element[9]));
+      $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
       $tanggal_sertifikat = date('Y-m-d', strtotime($date));
-      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+".$layanan['masa_berlaku']." months", strtotime($element[9])));
-
+      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+" . $layanan['masa_berlaku'] . " months", strtotime($date)));
       $data_excel = array(
         "nomor_sertifikat" => $element[0],
         "nama_jenis_komoditas" => $element[6],
@@ -411,7 +422,7 @@ class Admin extends MY_Controller
       $iterasi++;
     }
     $this->session->set_flashdata("status", "<div class='alert alert-success'>Proses migrasi berhasil</div>");
-    redirect("admin/migrasi_layanan", "redirect");
+    // redirect("admin/migrasi_layanan", "redirect");
   }
 
   private function migrasi_sppb($data)
@@ -424,10 +435,11 @@ class Admin extends MY_Controller
       }
       // $UNIX_DATE = ($element[7] - 25569) * 86400;
       // $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
-      $layanan = $this->model_admin->getDataWhere("master_layanan","kode_layanan","sppb")[0];
-      $date = date("Y-m-d", strtotime($element[7]));
+      $layanan = $this->model_admin->getDataWhere("master_layanan", "kode_layanan", "sppb")[0];
+      $UNIX_DATE = ($element[7] - 25569) * 86400;
+      $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
       $tanggal_sertifikat = date('Y-m-d', strtotime($date));
-      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+".$layanan['masa_berlaku']." months", strtotime($element[7])));
+      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+" . $layanan['masa_berlaku'] . " months", strtotime($date)));
 
       $data_excel = array(
         "nomor_sertifikat" => $element[0],
@@ -463,13 +475,13 @@ class Admin extends MY_Controller
         $iterasi++;
         continue;
       }
-      $layanan = $this->model_admin->getDataWhere("master_layanan","kode_layanan","psat")[0];
-      // $UNIX_DATE = ($element[8] - 25569) * 86400;
-      // $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
-      $date = date("Y-m-d", strtotime($element[8]));
+      $layanan = $this->model_admin->getDataWhere("master_layanan", "kode_layanan", "psat")[0];
+     
+      $UNIX_DATE = ($element[8] - 25569) * 86400;
+      $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
       $tanggal_sertifikat = date('Y-m-d', strtotime($date));
-      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+".$layanan['masa_berlaku']." months", strtotime($element[8])));
-
+      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+" . $layanan['masa_berlaku'] . " months", strtotime($date)));
+      
       $data_excel = array(
         "komoditas" => $element[3],
         "nama_dagang" => $element[4],
@@ -503,12 +515,12 @@ class Admin extends MY_Controller
         $iterasi++;
         continue;
       }
-      $layanan = $this->model_admin->getDataWhere("master_layanan","kode_layanan","kemas")[0];
-      // $UNIX_DATE = ($element[12] - 25569) * 86400;
-      // $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
-      $date = date("Y-m-d", strtotime($element[12]));
+      $layanan = $this->model_admin->getDataWhere("master_layanan", "kode_layanan", "kemas")[0];
+
+      $UNIX_DATE = ($element[12] - 25569) * 86400;
+      $date = gmdate("d-m-Y H:i:s", $UNIX_DATE);
       $tanggal_sertifikat = date('Y-m-d', strtotime($date));
-      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+".$layanan['masa_berlaku']." months", strtotime($element[12])));
+      $tanggal_kadaluarsa = date('Y-m-d', strtotime("+" . $layanan['masa_berlaku'] . " months", strtotime($date)));
 
       $data_excel = array(
         "nomor_sertifikat" => $element[0],
@@ -1371,10 +1383,11 @@ class Admin extends MY_Controller
   }
   public function kelola_kuesioner()
   {
-    $data['jenis'] = array(array("key" => "okkpd", "value" => "OKKPD"), array("key" => "ujimutu", "value" => "Uji Mutu"));
+    $data['periode'] = $this->input->get("periode") ?? date("Y");
+    $data['jenis'] = array(array("key" => "ujimutu", "value" => "Uji Mutu"));
     $data['tipe'] = array("Skor", "Yes/No");
     $data['aspek'] = array("Mudah", "Cepat", "Berkualitas", "Kompeten", "Sopan", "Lengkap");;
-    $data['kuesioner'] = $this->model_admin->getDataWhere("master_kuesioner", "deleted", "0");
+    $data['kuesioner'] = $this->model_admin->getKuesioner($data['periode']);
     $this->loadView('dashboard_view/admin/kelola_kuesioner', $data);
   }
 
@@ -1391,7 +1404,7 @@ class Admin extends MY_Controller
   {
     $input = $this->input;
     $id = $input->post('id');
-    $data = array("pertanyaan" => $input->post("pertanyaan"), "jenis" => $input->post("jenis"), "tipe" => $input->post("tipe"));
+    $data = array("pertanyaan" => $input->post("pertanyaan"), "jenis" => $input->post("jenis"), "tipe" => $input->post("tipe"), "periode"=>$input->post("periode"));
     if ($input->post('action') == "Tambah") {
       $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambah</div>");
       $this->model_admin->insertData("master_kuesioner", $data);
@@ -1399,13 +1412,14 @@ class Admin extends MY_Controller
       $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil diubah</div>");
       $this->model_admin->updateData("master_kuesioner", $id, "id", $data);
     }
-    redirect('dashboard/kelola_kuesioner');
+    redirect('dashboard/kelola_kuesioner?periode='.$input->post("periode"));
   }
   function hasil_survey()
   {
-    $jenis = $this->input->get("jenis") ?? "okkpd";
-    $data['report_survey'] = $this->model_admin->getReportSurvey($jenis);
-    $data['hasil_survey'] = $this->model_admin->getAllData("survey_data");
+    $data['periode'] = $this->input->get("periode") ?? date("Y");
+    $jenis = $this->input->get("jenis") ?? "ujimutu";
+    $data['report_survey'] = $this->model_admin->getReportSurvey($jenis, $data['periode']);
+    $data['hasil_survey'] = $this->model_admin->getSurvey($data['periode']);
     $this->loadView('dashboard_view/admin/hasil_survey', $data);
   }
 
