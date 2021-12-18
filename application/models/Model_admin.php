@@ -345,7 +345,7 @@ class Model_admin extends MY_Model
 
   function getKuesioner($periode = null,$jenis = null){
     $periode = $periode == null ? date("Y") : $periode;
-    $whereJenis = " AND jenis = '".$jenis."'"; 
+    $whereJenis = $jenis != null ? " AND jenis = '".$jenis."'" : ""; 
     $query = "SELECT * FROM master_kuesioner where periode = ".$periode." and deleted = 0 ".$whereJenis;
     return $this->db->query($query)->result_array();
   }
