@@ -318,24 +318,41 @@ class Model_admin extends MY_Model
     return $query->result_array();
   }
 
-  function getReportSurvey($jenis = null)
+  function getReportSurvey($jenis = null, $periode = null)
   {
+    $periode = $periode == null ? date("Y") : $periode;
     $param = $jenis == null ? "" : " AND jenis = '" . $jenis . "'";
     $query = "SELECT master_kuesioner.*, coalesce(result.avg_nilai,0) avg_nilai, coalesce(result.avg_kepentingan,0) avg_kepentingan 
     FROM master_kuesioner
     LEFT JOIN (SELECT id_kuesioner, ROUND(AVG(nilai),2) AS avg_nilai, Round(AVG(kepentingan),2) AS avg_kepentingan 
     FROM survey_kuesioner
+    JOIN survey_data ON survey_kuesioner.id_survey = survey_data.id
+    AND YEAR(survey_data.tanggal_survey) = ".$periode."
     GROUP BY id_kuesioner) result
     ON master_kuesioner.id = result.id_kuesioner
-    WHERE deleted = 0 AND STATUS = 1
+    WHERE deleted = 0 AND STATUS = 1 AND periode = ".$periode."
     " . $param . "
     ORDER BY urutan";
     return $this->db->query($query)->result_array();
   }
 
+  function getSurvey($periode = null)
+  {
+    $where = $periode != null ? "Where YEAR(survey_data.tanggal_survey) = ".$periode : "";
+    $query = "SELECT * FROM survey_data ".$where;
+    return $this->db->query($query)->result_array();
+  }
+
+  function getKuesioner($periode = null,$jenis = null){
+    $periode = $periode == null ? date("Y") : $periode;
+    $whereJenis = " AND jenis = '".$jenis."'"; 
+    $query = "SELECT * FROM master_kuesioner where periode = ".$periode." and deleted = 0 ".$whereJenis;
+    return $this->db->query($query)->result_array();
+  }
+
   function getDetailSurvey($id)
   {
-    $query = "SELECT master_kuesioner.id, master_kuesioner.pertanyaan,master_kuesioner.jenis, master_kuesioner.tipe,master_kuesioner.urutan, survey_kuesioner.nilai, survey_kuesioner.kepentingan, survey_kuesioner.jawaban FROM survey_kuesioner
+    $query = "SELECT master_kuesioner.id, survey_kuesioner.pertanyaan,master_kuesioner.jenis, master_kuesioner.tipe,master_kuesioner.urutan, survey_kuesioner.nilai, survey_kuesioner.kepentingan, survey_kuesioner.jawaban FROM survey_kuesioner
     JOIN master_kuesioner ON survey_kuesioner.id_kuesioner = master_kuesioner.id
     WHERE id_survey = $id";
     return $this->db->query($query)->result_array();

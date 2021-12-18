@@ -23,7 +23,7 @@
       <div class="col-lg-12 col-sm-12">
         <div class="card">
           <div class="card-header">
-          Daftar Permohonan <?= $jenis ?>
+            Daftar Permohonan <?= $jenis ?>
           </div>
           <div class="card-body">
 
@@ -59,19 +59,13 @@
                         <td>
                           <?php if ($jenis == "Ditolak") :
                             echo $permohonan['alasan_penolakan'];
-                          else :
-                            if ($permohonan['id_survey'] == null) : ?>
-                              <a class="btn btn-warning" href="<?= base_url() ?>dashboard/survey?uid=<?= $permohonan['uid'] ?>&layanan=<?= $permohonan['kode_layanan'] ?>">Isi Survey</a>
-                            <?php else : ?>
-
-                            <?php endif; ?>
+                          ?>
                           <?php endif; ?>
                         </td>
                       </tr>
                   <?php $i++;
                     }
                   } ?>
-
                 </tbody>
               </table>
             </div>
@@ -79,6 +73,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </section>

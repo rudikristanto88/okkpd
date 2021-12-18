@@ -55,7 +55,6 @@ class MY_Model extends CI_Model
         return $query->result_array();
     }
 
-
     public function getDataKota()
     {
         $this->db->select("*");
@@ -64,5 +63,4 @@ class MY_Model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-
 }
