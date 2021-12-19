@@ -3424,4 +3424,49 @@ class Dashboard extends MY_Controller
 		$this->session->set_flashdata("status", "<div class='alert alert-success'>Data survey berhasil disimpan</div>");
 		redirect("dashboard");
 	}
+
+	function u_layanan_kelolakomuditas(){
+		$data['datalogin'] = $this->session->userdata("dataLogin");
+		$data['sample'] = $this->model_ujimutu->getKelolaKomunitas();
+		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
+		$this->loadView("dashboard_view/pages/u_layanan/kelola_form", $data);
+	}
+
+	
+	public function ubah_statuskomoditas()
+	{
+		$kode = $this->input->post('id_layanan');
+		$keterangan = $this->input->post('keterangan');   
+		$arr = array();
+
+			$arr['isaktif'] = "0"; 
+			$arr['keterangan'] = $keterangan; 
+
+		if ($this->model_user->updateData('jenis_komoditas_detil', $kode, 'idjenisdetail', $arr)) {
+			$this->session->set_flashdata("status", "Data berhasil diubah.");
+			redirect("dashboard/u_layanan_kelolakomuditas", 'redirect');
+		} else {
+
+			$this->session->set_flashdata("status", "Data gagal diubah.");
+			redirect("dashboard/u_layanan_kelolakomuditas", 'redirect');
+		}
+	}
+
+	public function aktif_statuskomoditas()
+	{
+		$kode = $this->input->post('kode'); 
+		$arr = array();
+
+			$arr['isaktif'] = "1"; 
+			$arr['keterangan'] = ""; 
+
+		if ($this->model_user->updateData('jenis_komoditas_detil', $kode, 'idjenisdetail', $arr)) {
+			$this->session->set_flashdata("status", "Data berhasil diubah.");
+			redirect("dashboard/u_layanan_kelolakomuditas", 'redirect');
+		} else {
+
+			$this->session->set_flashdata("status", "Data gagal diubah.");
+			redirect("dashboard/u_layanan_kelolakomuditas", 'redirect');
+		}
+	}
 }

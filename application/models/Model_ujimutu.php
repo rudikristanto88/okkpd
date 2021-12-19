@@ -241,5 +241,13 @@ class Model_ujimutu extends CI_Model {
     return $query->result_array();
   }
   
+  public function getKelolaKomunitas()
+  {
+    $this->db->select("a.*,b.namajenis");
+    $this->db->from('jenis_komoditas_detil as a');  
+    $this->db->join('jenis_komoditas b', "b.idjenis=a.idjenis");
+    $query = $this->db->get();
+    return $query->result_array();
+  }
 }
 ?>

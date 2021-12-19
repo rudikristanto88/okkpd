@@ -51,8 +51,21 @@
                     </div>
                   </a>
                 </div>
-            <!--</div>
-             <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                  <a href="<?= base_url() ?>dashboard/u_layanan_kelolakomuditas">
+                    <div class="support-box text-center red">
+                        <div class="icon m-b-10">
+                            <div class="chart chart-bar"></div>
+                        </div>
+                        <div class="text m-b-10">Kelola layanan Komoditas</div> 
+                        <h3 class="m-b-0"><br/>
+                        </h3>
+                        <small class="displayblock">Proses<i class="fas fa-chevron-right"></i></small>
+                    </div>
+                  </a>
+                </div>
+            </div>
+             <!--<div class="row">
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="header">
