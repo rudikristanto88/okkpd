@@ -38,6 +38,17 @@ class Model_user extends MY_Model
     return $query->result_array();
   }
 
+  
+  public function getDataWhereTanpaIsaktif($table, $where, $value)
+  {
+    $this->db->select("*");
+    $this->db->from($table);
+    $this->db->where($where, $value); 
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+
+
   public function getProfile($id_profile)
   {
     $this->db->select("*");

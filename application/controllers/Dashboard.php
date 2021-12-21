@@ -229,22 +229,28 @@ class Dashboard extends MY_Controller
 	function getDataJenisDetail()
 	{
 		$kode = $this->input->post("kode");
-		$kel = $this->model_user->getDataWhere("jenis_komoditas_detil", "idjenis", $kode);
+		$kel = $this->model_user->getDataWhereTanpaIsaktif("jenis_komoditas_detil", "idjenis", $kode);
 		/*echo "<option value='X;X'>--Pilih Detail Jenis--</option>";
 
 		foreach ($kel as $kel) {
 			echo "<option value='".$kel['idjenisdetail'].';'.$kel['namadetail']."'>".$kel['namadetail']."</option>";
 		}*/
 		$i = 1;
+		$sudah =0;
 		foreach ($kel as $kel) {
-			if ($i == 1) {
-				$checked = " checked ";
-			} else {
+			$disable =""; 
+				$checked = " checked "; 
+			if($kel['isaktif'] == "0"){
+				$disable ="disabled";
 				$checked = "";
 			}
-			echo "<input $checked style='opacity: 100;' class='jenisdetail' type='radio' id='jenisdetail-" . $i . "' name='jenisdetail' value='" . $kel['idjenisdetail'] . ';' . $kel['namadetail'] . "'>";
-			echo "<label style='display:inline' for='jenisdetail-" . $i . "'>" . $kel['namadetail'] . "</label><br/>";
-
+			echo "<input $disable  $checked style='opacity: 100;' class='jenisdetail' type='radio' id='jenisdetail-" . $i . "' name='jenisdetail' value='" . $kel['idjenisdetail'] . ';' . $kel['namadetail'] . "'>";
+			echo "<label class='text-black' style='display:inline' for='jenisdetail-" . $i . "'>" . $kel['namadetail'] . "</label><br/>";
+			
+			if($kel['isaktif'] == "0"){
+				echo "<code>Tutup Sementara - " . $kel['keterangan'] . "</code><br/>";
+			
+			}
 			$i++;
 		}
 	}

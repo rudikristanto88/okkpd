@@ -10,7 +10,7 @@
                 <i class="material-icons">home</i>
                 Beranda</a>
               </li>
-              <li class="breadcrumb-item active">Kelola Komoditas</li>
+              <li class="breadcrumb-item active">Buka/Tutup Layanan Uji</li>
             </ul>
           </div>
         </div>

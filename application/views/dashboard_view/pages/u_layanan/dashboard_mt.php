@@ -57,7 +57,7 @@
                         <div class="icon m-b-10">
                             <div class="chart chart-bar"></div>
                         </div>
-                        <div class="text m-b-10">Kelola layanan Komoditas</div> 
+                        <div class="text m-b-10">Buka/Tutup Layanan Uji</div> 
                         <h3 class="m-b-0"><br/>
                         </h3>
                         <small class="displayblock">Proses<i class="fas fa-chevron-right"></i></small>
