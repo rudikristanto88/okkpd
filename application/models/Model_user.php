@@ -33,7 +33,7 @@ class Model_user extends MY_Model
     $this->db->select("*");
     $this->db->from($table);
     $this->db->where($where, $value);
-    $this->db->where("isaktif", 1);
+    // $this->db->where("isaktif", 1);
     $query = $this->db->get();
     return $query->result_array();
   }
