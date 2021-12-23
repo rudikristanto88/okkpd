@@ -17,7 +17,7 @@
         <thead>
             <tr>
                 <th width="70" >No.</th>
-                <th width="300">Nomor LHU</th>
+                <th width="300">Nomor Surat LHU</th>
                 <th>Nama Pemohon</th>
                 <th>Kab/Kota</th>
             </tr>
