@@ -60,7 +60,7 @@
                         <td><?php $tgl =  strtotime($ppc['tanggal_buat']); echo date("d",$tgl)."/".(date("m",$tgl))."/".date("Y",$tgl); ?></td>
                        
                         <td>
-                          <?php if($ppc['id_survey'] == "0"){
+                          <?php if($ppc['id_survey'] == "0" || $ppc['id_survey'] == null){
                             echo "<span class='label label-danger'>Belum</span>";
                           }else{
                             
