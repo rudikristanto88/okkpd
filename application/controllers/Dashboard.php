@@ -3349,7 +3349,8 @@ class Dashboard extends MY_Controller
 
 		$data['nama'] = $uploadnama;
 		$data['kode'] = $uploadkode;
-		$message = $this->load->view('default/email/notifikasi_sertifikat_terbit', $data, true);
+		$message = "Kepada Yth<br/>".$uploadnama."Layanan yang anda daftarkan dengan kode pendaftaran <b>".$uploadkode." telah disetujui.</b><br/>
+                  Sertifikat dapat diunduh pada halaman dashboard website okkpd anda.<br/>Terima Kasih.";//$this->load->view('default/email/notifikasi_sertifikat_terbit', $data, true);
 		$this->kirim_email("Pemberitahuan", $uploademail, $message);
 		if ($this->uploads($_FILES, 'gambar') == null) {
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Dokumen tidak dapat diunggah</div>");
