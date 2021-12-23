@@ -27,7 +27,7 @@
             foreach ($data as $element) : ?>
                 <tr>
                     <td><?= $index ?></td>
-                    <td><?= $element["kode_lhu"] ?></td>
+                    <td><?= $element["kodelhu"] ?></td>
                     <td><?= $element['nama_usaha'] ?></td>
                     <td><?= $element["kota"] ?></td>
                 </tr>
