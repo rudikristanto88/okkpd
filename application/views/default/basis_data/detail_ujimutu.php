@@ -31,7 +31,7 @@
                     <td><?= $element['nama_usaha'] ?></td>
                     <td><?= $element["kota"] ?></td>
                 </tr>
-            <?php endforeach; ?>
+            <?php $index++;endforeach; ?>
         </tbody>
     </table>
     <br />
