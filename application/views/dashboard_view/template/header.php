@@ -39,7 +39,6 @@
 <script src="<?= base_url() ?>assets/dashboard/js/rater.min.js"></script>
 
 
-
 <style media="screen">
   .form-control{
     height: auto;

@@ -33,6 +33,7 @@
                     <tr>
                       <th rowspan="2">No.</th>
                       <th rowspan="2">Nama Pemohon</th> 
+                      <th rowspan="2">Nama Usaha</th> 
                       <th rowspan="2">Kab/Kota</th>
                       <th colspan="4" style="text-align:center">Pengajuan Mutu</th>
                       
@@ -54,6 +55,7 @@
                         <td>
                           <?= $i ?>.
                         </td>
+                        <td><?= $ppc['nama_pemohon'] ?></td> 
                         <td><?= $ppc['nama_usaha'] ?></td> 
                         <td><?= $ppc['kota'] ?></td>
                         <td><?= $ppc['kode_pendaftaran'] ?>

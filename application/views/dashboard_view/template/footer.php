@@ -21,6 +21,9 @@
     <script type="text/javascript" src="<?= base_url() ?>assets/jquery.captcha.basic.min.js"></script>
 
 
+    <script src="<?= base_url() ?>assets/dashboard/js/jquery.signature.js"></script> 
+<link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/dashboard/css/jquery.signature.css"/>
+
 
     <script type="text/javascript">
     $(document).ready(function(){

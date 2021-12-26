@@ -517,6 +517,7 @@ class Dashboard extends MY_Controller
 			$satuan = $i->post("nama_satuan");
 
 			$kode_layanan = $i->post("kode_layanan");
+			$tandatangan = $i->post("tandatangan");
 			$id_identitas_usaha = $i->post("id_identitas_usaha");
 			$sSQL = "SELECT a.kode_kota FROM kota a left join identitas_usaha b on b.kota = a.nama_kota WHERE b.id_identitas_usaha = '" . $id_identitas_usaha . "' ";
 
@@ -541,7 +542,7 @@ class Dashboard extends MY_Controller
 				$kodependaftaran = sprintf("%03s", $noUrut) . "/" . $kodeKota . "/" . $month[$bulan] . "/" . $tahun;
 				$dat = array(
 					"kode_layanan" => $kode_layanan, "kode_pendaftaran" => $kodependaftaran, "id_identitas_usaha" => $id_identitas_usaha, "nama_dagang" => $nama_dagang[$i], "id_kemasan" => $id_kemasan[$i],
-					"idjenis" => $id_jenis[$i], "idjenisdetail" => $id_detail[$i]
+					"idjenis" => $id_jenis[$i], "idjenisdetail" => $id_detail[$i],"tandatangan" => $tandatangan
 				);
 				$this->model_user->insertData("layanan_ujimutu", $dat);
 			}
