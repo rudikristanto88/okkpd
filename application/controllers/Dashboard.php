@@ -3335,7 +3335,7 @@ class Dashboard extends MY_Controller
 		//$cetak = $this->load->view('hasilPrint', [], TRUE);
 		$cetak = $this->load->view('dashboard_view/cetak/lhu', $data, TRUE);
 		$mpdf->WriteHTML($cetak);
-		$mpdf->Output();
+		$mpdf->Output('DRAT_LHU_'.$data['hasil'][0]['kodelhu'], 'I');
 	}
 
 	function uploadLHU()

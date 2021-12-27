@@ -227,7 +227,9 @@ class Model_ujimutu extends CI_Model {
     $this->db->join('master_layanan c', "b.kode_layanan=c.kode_layanan");
     $this->db->join('jenis_komoditas d', "b.idjenis=d.idjenis");
     $this->db->join('jenis_komoditas_detil e', "b.idjenisdetail=e.idjenisdetail");
+    
 
+    $this->db->where("DATEDIFF(NOW(), tanggal_buat) BETWEEN '0' AND '7'");   
     $this->db->where("samplelab", 0);
     $this->db->order_by('b.kode_pendaftaran', 'desc');
     $query = $this->db->get();

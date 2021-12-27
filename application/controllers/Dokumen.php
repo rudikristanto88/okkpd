@@ -98,7 +98,13 @@ class Dokumen extends MY_Controller
       }
     }
     $data['tipe'] = $dokumen['tipe_sertifikat_produk'];
-    $data['nama'] = 'Sertifikat_' . str_replace(' ', '_', $dokumen['nama_usaha']) . '_' . $dokumen['kode_layanan'] . '_' . str_replace(' ', '_', $produk);
+    if($jenis == 'ujimutu'){
+      $data['nama'] = 'LHU_' . str_replace(' ', '_', $dokumen['kodelhu']);
+    
+    }else{
+      $data['nama'] = 'Sertifikat_' . str_replace(' ', '_', $dokumen['nama_usaha']) . '_' . $dokumen['kode_layanan'] . '_' . str_replace(' ', '_', $produk);
+          
+    }
     $data['dokumen'] = $dokumen['sertifikat_produk'];
     $this->load->view('dashboard_view/dokumen/lihat_dokumen', $data);
   }
