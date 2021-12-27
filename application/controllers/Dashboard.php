@@ -3299,6 +3299,7 @@ class Dashboard extends MY_Controller
 		}
 		$data['detail'] = $this->model_ujimutu->getDataUjiMutuLHUDetailByID($id_layanan);
 		$data['hasil'] = $this->model_ujimutu->getDataHasilUjiMutuLHUByID($id_layanan);
+		$lhu = $this->model_ujimutu->getDataHasilUjiMutuLHUByID($id_layanan);
 		$data['balai'] = $this->model_ujimutu->getPimpinanBalai();
 		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
@@ -3335,7 +3336,9 @@ class Dashboard extends MY_Controller
 		//$cetak = $this->load->view('hasilPrint', [], TRUE);
 		$cetak = $this->load->view('dashboard_view/cetak/lhu', $data, TRUE);
 		$mpdf->WriteHTML($cetak);
-		$mpdf->Output('DRAT_LHU_'.$data['hasil'][0]['kodelhu'], 'I');
+		$namafile = 'DRAT_LHU_'.str_replace(".","_",$data['detail'][0]['kodelhu']);
+		$mpdf->Output($namafile, 'D');
+		/*echo $namafile;*/
 	}
 
 	function uploadLHU()
