@@ -3337,7 +3337,7 @@ class Dashboard extends MY_Controller
 		$cetak = $this->load->view('dashboard_view/cetak/lhu', $data, TRUE);
 		$mpdf->WriteHTML($cetak);
 		$namafile = 'DRAT_LHU_'.str_replace(".","_",$data['detail'][0]['kodelhu']);
-		$mpdf->Output($namafile, 'D');
+		$mpdf->Output($namafile.'.pdf', 'D');
 		/*echo $namafile;*/
 	}
 
