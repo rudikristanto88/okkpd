@@ -3350,8 +3350,8 @@ class Dashboard extends MY_Controller
 
 		$data['nama'] = $uploadnama;
 		$data['kode'] = $uploadkode;
-		$message = "Kepada Yth ".$uploadnama."<br/> Layanan Ujimutu Pangan yang anda daftarkan dengan kode pendaftaran <b>".$uploadkode." telah disetujui.</b><br/>
-                  Sertifikat / Laporan Hasil Uji (LHU) telah terbit  telah terbit dan dapat diambil di kantor BPMKP Ungaran pada jam kerja.<br/>
+		$message = "Kepada Yth ".$uploadnama."<br/> Layanan Uji Mutu Pangan yang anda daftarkan dengan kode pendaftaran <b>".$uploadkode." telah disetujui.</b><br/>
+                  Sertifikat / Laporan Hasil Uji (LHU) telah terbit dan dapat diambil di kantor BPMKP Ungaran pada jam kerja.<br/>
 				  Untuk LHU versi berkas digital dapat diunduh pada halaman dashboard website okkpd Anda.<br/> 
 				  Terima Kasih.";//$this->load->view('default/email/notifikasi_sertifikat_terbit', $data, true);
 		$this->kirim_email("Pemberitahuan", $uploademail, $message);
