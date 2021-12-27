@@ -49,12 +49,12 @@
                         
                         <td>
                           <?php if($ppc['isaktif'] == 1):?>
-                            <button onclick="openModal(<?= $ppc['idjenisdetail'] ?>)" type="sumbit" name="button" class="btn btn-danger col-md-12">Non Aktif Komoditas</button>
+                            <button onclick="openModal(<?= $ppc['idjenisdetail'] ?>)" type="sumbit" name="button" class="btn btn-danger col-md-12">Non Aktif Uji Mutu</button>
                             <!--<a href="<?= base_url() ?>dashboard/survey?id=<?= $ppc['uid']?>" class="btn btn-primary">Isi Survey</a>-->
                             <?php else :?>
                               <form method="post" action="<?= base_url() ?>dashboard/aktif_statuskomoditas/">
                               <input type="hidden" name="kode" value="<?= $ppc['idjenisdetail'] ?>">
-                            <button  type="sumbit" name="button" class="btn btn-info col-md-12">Aktif Komoditas</button>
+                            <button  type="sumbit" name="button" class="btn btn-info col-md-12">Aktif Uji Mutu</button>
 
                             </form>
                             <?php endif?>
@@ -108,8 +108,8 @@
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> &nbsp;&nbsp;
-          <button type="submit" class="btn btn-info" name="hapus" value="1">Tambah</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button> &nbsp;&nbsp;
+          <button type="submit" class="btn btn-info" name="hapus" value="1">Simpan</button>
         </div>
       </form>
 
