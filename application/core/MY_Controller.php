@@ -125,11 +125,11 @@ class MY_Controller extends CI_Controller
         // Isi email
         $this->email->message($message);
 
-
+        $this->email->set_mailtype("html");
         if (!$this->email->send()) {
             echo $this->email->print_debugger(array('headers'));
         } else {
-            echo 'email terkirim';
+           // echo 'email terkirim';
         }
     }
 
