@@ -3411,10 +3411,15 @@ class Dashboard extends MY_Controller
 				}
 			}
 		}
+		$periode =  $this->model_admin->getDataWhere("master_periode", "isaktif", "1");
+
 		$param["saran"] = $input->post("saran");
 		$param["show_nama"] = $input->post("show_nama") == null ? 0 : 1;
+		$param["id_periode"] = $periode[0]["id"];
 		$answers = $input->post("kuesioner");
 		$id_survey = $this->model_admin->insertGetID("survey_data", $param);
+
+
 		if ($jenis == "ujimutu") {
 			$this->model_admin->updateData("layanan_ujimutu", $input->post("layanan"), "uid", array("id_survey" => $id_survey));
 		} else {
