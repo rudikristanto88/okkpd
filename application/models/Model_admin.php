@@ -275,7 +275,7 @@ class Model_admin extends MY_Model
 
   function getsertifikatUjiMutu($id = null, $unduh = false)
   {
-    $this->db->select("layanan.kode_layanan,identitas_usaha.nama_usaha,  layanan.sertifikat as sertifikat_produk,layanan.mime_type as tipe_sertifikat_produk");
+    $this->db->select("layanan.kode_layanan,identitas_usaha.nama_usaha,  layanan.sertifikat as sertifikat_produk,layanan.mime_type as tipe_sertifikat_produk,layanan.kodelhu");
     $this->db->from('layanan_ujimutu layanan'); 
     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
     if ($id != null) {

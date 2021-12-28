@@ -79,7 +79,7 @@ foreach ($identitas_usaha as $usaha);
                   <br/>
                   <div class="col-sm-12">
                     <div style="margin-bottom:10px;">
-                      <h2 class="card-inside-title" style="display:inline">Daftar Identitas Produk PSAT</h2> <button class="btn btn-primary fas fa-plus" type="button" data-toggle="modal" data-target="#modalTambah"></button>
+                      <h2 class="card-inside-title" style="display:inline">Daftar Permohonan Uji Mutu</h2> <button class="btn btn-primary fas fa-plus" type="button" data-toggle="modal" data-target="#modalTambah"></button>
                     </div>
                     <table class="table" id="tabel">
                       <thead>
@@ -241,6 +241,7 @@ foreach ($identitas_usaha as $usaha);
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">
+        <button type="button" class="btn btn-warning" id="clear">Clear</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
         <button type="button" class="btn btn-info" data-dismiss="modal"  id="tambahTandaTangan">Ajukan</button>
       </div>
@@ -308,6 +309,11 @@ $(document).ready(function(){
   
   sig.signature('clear');
   $("#tandatangan").val("");
+  $('#clear').on('click', function() { 
+
+    sig.signature('clear');
+  $("#tandatangan").val("");
+  });
   $('#tambahTandaTangan').on('click', function() { 
       $("#tandatangan").val(sig.signature('toDataURL'));
       

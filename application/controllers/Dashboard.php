@@ -3299,6 +3299,7 @@ class Dashboard extends MY_Controller
 		}
 		$data['detail'] = $this->model_ujimutu->getDataUjiMutuLHUDetailByID($id_layanan);
 		$data['hasil'] = $this->model_ujimutu->getDataHasilUjiMutuLHUByID($id_layanan);
+		$lhu = $this->model_ujimutu->getDataHasilUjiMutuLHUByID($id_layanan);
 		$data['balai'] = $this->model_ujimutu->getPimpinanBalai();
 		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
@@ -3335,7 +3336,9 @@ class Dashboard extends MY_Controller
 		//$cetak = $this->load->view('hasilPrint', [], TRUE);
 		$cetak = $this->load->view('dashboard_view/cetak/lhu', $data, TRUE);
 		$mpdf->WriteHTML($cetak);
-		$mpdf->Output();
+		$namafile = 'DRAT_LHU_'.str_replace(".","_",$data['detail'][0]['kodelhu']);
+		$mpdf->Output($namafile.'.pdf', 'D');
+		/*echo $namafile;*/
 	}
 
 	function uploadLHU()
@@ -3350,8 +3353,10 @@ class Dashboard extends MY_Controller
 
 		$data['nama'] = $uploadnama;
 		$data['kode'] = $uploadkode;
-		$message = "Kepada Yth<br/>".$uploadnama."Layanan yang anda daftarkan dengan kode pendaftaran <b>".$uploadkode." telah disetujui.</b><br/>
-                  Sertifikat dapat diunduh pada halaman dashboard website okkpd anda.<br/>Terima Kasih.";//$this->load->view('default/email/notifikasi_sertifikat_terbit', $data, true);
+		$message = "Kepada Yth ".$uploadnama."<br/> Layanan Uji Mutu Pangan yang anda daftarkan dengan kode pendaftaran <b>".$uploadkode." telah disetujui.</b><br/>
+                  Sertifikat / Laporan Hasil Uji (LHU) telah terbit dan dapat diambil di kantor BPMKP Ungaran pada jam kerja.<br/>
+				  Untuk LHU versi berkas digital dapat diunduh pada halaman dashboard website okkpd Anda.<br/> 
+				  Terima Kasih.";//$this->load->view('default/email/notifikasi_sertifikat_terbit', $data, true);
 		$this->kirim_email("Pemberitahuan", $uploademail, $message);
 		if ($this->uploads($_FILES, 'gambar') == null) {
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Dokumen tidak dapat diunggah</div>");
