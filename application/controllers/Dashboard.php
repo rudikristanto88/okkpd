@@ -3369,20 +3369,15 @@ class Dashboard extends MY_Controller
 	function survey()
 	{
 		$id_layanan = $this->input->get("uid") ?? 0;
-		$kode_layanan = $this->input->get("layanan") ?? 0;
 
 		$userdata = $this->session->userdata("dataLogin");
-		$layanan = $this->model_admin->getDataWhere($kode_layanan == "ujimutu" ? "layanan_ujimutu" : "layanan", "uid", $id_layanan);
 		$identitas_usaha = $this->model_admin->getDataWhere("identitas_usaha", "id_user", $userdata['id_user']);
-		// if (sizeof($identitas_usaha) == 0) {
-		// 	$this->session->set_flashdata("status", "<div class='alert alert-warning'>Anda tidak memiliki akses ke halaman ini</div>");
-		// 	redirect("dashboard");
-		// }
+		if (sizeof($identitas_usaha) == 0 || $id_layanan == 0) {
+			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Anda tidak memiliki akses ke halaman ini</div>");
+			redirect("dashboard");
+		}
 
-		if ($layanan[0]["kode_layanan"] == "prima_2" || $layanan[0]["kode_layanan"] == "prima_3")
-			$jenis = "okkpd";
-		else
-			$jenis = "ujimutu";
+		$jenis = "ujimutu";
 		$data["properties"] = array(
 			"jenis_kelamin" => data_jenis_kelamin(),
 			"pendidikan" => data_pendidikan(), "pekerjaan" => data_pekerjaan(), "pelayanan" => data_pelayanan($jenis)
@@ -3390,8 +3385,7 @@ class Dashboard extends MY_Controller
 		$data['id_layanan'] = $id_layanan;
 		$data['jenis'] = $jenis;
 		$data["identitas"] = data_identitas_survey($jenis);
-		$periode = date("Y");
-		$surveyData = $this->model_admin->getKuesioner($periode, $jenis);
+		$surveyData = $this->model_admin->getKuesioner($jenis);
 		$data['list_survey'] = array_filter($surveyData, function ($k) {
 			return $k["deleted"] == 0;
 		});
@@ -3413,6 +3407,7 @@ class Dashboard extends MY_Controller
 			}
 		}
 		$param["saran"] = $input->post("saran");
+		$param["show_nama"] = $input->post("show_nama") == null ? 0 : 1;
 		$answers = $input->post("kuesioner");
 		$id_survey = $this->model_admin->insertGetID("survey_data", $param);
 		if ($jenis == "ujimutu") {
@@ -3426,6 +3421,7 @@ class Dashboard extends MY_Controller
 			$param_survey["id_survey"] = $id_survey;
 			$param_survey["nilai"] = $element['pertanyaan'][0];
 			$param_survey["pertanyaan"] = $element['soal'][0];
+			$param_survey["nama_parameter"] = $element['parameter'][0];
 			$param_survey["kepentingan"] = array_key_exists("kepentingan", $element) ? $element['kepentingan'][0] : 0;
 			$this->model_admin->insertData("survey_kuesioner", $param_survey);
 		}

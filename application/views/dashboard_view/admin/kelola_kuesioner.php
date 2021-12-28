@@ -51,6 +51,7 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Pertanyaan</th>
+                                                    <th>Parameter</th>
                                                     <th>Jenis</th>
                                                     <th>Tipe</th>
                                                     <th></th>
@@ -63,9 +64,10 @@
                                                         <td><?= $i + 1 ?></td>
                                                         <td><?= $element['pertanyaan'] ?></td>
                                                         <td><?= $element['jenis'] ?></td>
+                                                        <td><?= $element['nama_parameter'] ?></td>
                                                         <td><?= $element['tipe'] ?></td>
                                                         <td>
-                                                            <button type="button" class="btn btn-info" data-toggle="modal" onclick="updateData('<?= $element['id'] ?>', '<?= $element['pertanyaan'] ?>', '<?= $element['jenis'] ?>', '<?= $element['tipe'] ?>')" data-target="#update">Update</button>
+                                                            <button type="button" class="btn btn-info" data-toggle="modal" onclick="updateData('<?= $element['id'] ?>', '<?= $element['pertanyaan'] ?>', '<?= $element['jenis'] ?>', '<?= $element['tipe'] ?>', '<?= $element['id_parameter'] ?>')" data-target="#update">Update</button>
                                                             <button type="button" class="btn btn-warning" data-toggle="modal" onclick="deleteData('<?= $element['id'] ?>')" data-target="#delete">Hapus</button>
                                                         </td>
                                                     </tr>
@@ -128,14 +130,14 @@
                             <div class="input-field">
                                 <input name="action" type="hidden" id="action">
                                 <input name="id" type="hidden" id="id">
-                                <input id="pertanyaan" name="pertanyaan" type="text" required>
+                                <input required id="pertanyaan" name="pertanyaan" type="text" required>
                                 <label for="pertanyaan">Pertanyaan</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="text-small">Jenis</label>
-                                <select class="form-control text-black" id="jenis" name="jenis">
+                                <select required class="form-control text-black" id="jenis" name="jenis">
                                     <?php foreach ($jenis as $element) : ?>
                                         <option value="<?= $element["key"] ?>"><?= $element["value"] ?></option>
                                     <?php endforeach; ?>
@@ -145,7 +147,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="text-small">Tipe Kuesioner</label>
-                                <select class="form-control text-black" id="tipe" name="tipe">
+                                <select required class="form-control text-black" id="tipe" name="tipe">
                                     <?php foreach ($tipe as $element) : ?>
                                         <option value="<?= $element ?>"><?= $element ?></option>
                                     <?php endforeach; ?>
@@ -154,8 +156,12 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="text-small">Periode</label>
-                                <input id="periode" name="periode" type="number" readonly value="<?= $periode ?>" required>
+                                <label class="text-small">Parameter</label>
+                                <select required class="form-control text-black" id="id_parameter" name="id_parameter">
+                                    <?php foreach ($list_parameter as $element) : ?>
+                                        <option value="<?= $element["id"] ?>" ><?= $element["nama_parameter"] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
 
@@ -180,6 +186,7 @@
         pertanyaan: '',
         jenis: 'ujimutu',
         tipe: 'Skor',
+        id_parameter: '0',
     }
 
     function deleteData(data) {
@@ -191,11 +198,11 @@
         $("#pertanyaan").val(data.pertanyaan);
         $("#jenis").val(data.jenis);
         $("#tipe").val(data.tipe);
-        console.log(data);
+        $("#id_parameter").val(data.id_parameter);
         $("#action").val(action);
     }
 
-    function updateData(id, pertanyaan, jenis, tipe, aspek) {
+    function updateData(id, pertanyaan, jenis, tipe, id_parameter) {
         action = "Ubah";
         $("#title").html(action + " Kuesioner");
         setModalUpdate({
@@ -203,6 +210,7 @@
             pertanyaan: pertanyaan,
             jenis: jenis,
             tipe: tipe,
+            id_parameter: id_parameter,
         })
     }
 

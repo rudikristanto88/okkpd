@@ -1393,7 +1393,7 @@ class Admin extends MY_Controller
   }
   public function kelola_kuesioner()
   {
-    $data['periode'] = $this->input->get("periode") ?? date("Y");
+    $data['list_parameter'] = $this->model_admin->getAllData("master_parameter");
     $data['jenis'] = array(array("key" => "ujimutu", "value" => "Uji Mutu"));
     $data['tipe'] = array("Skor", "Yes/No");
     $data['aspek'] = array("Mudah", "Cepat", "Berkualitas", "Kompeten", "Sopan", "Lengkap");;
@@ -1414,7 +1414,8 @@ class Admin extends MY_Controller
   {
     $input = $this->input;
     $id = $input->post('id');
-    $data = array("pertanyaan" => $input->post("pertanyaan"), "jenis" => $input->post("jenis"), "tipe" => $input->post("tipe"), "periode"=>$input->post("periode"));
+    $data = array("pertanyaan" => $input->post("pertanyaan"), "jenis" => $input->post("jenis"), "tipe" => $input->post("tipe"), "id_parameter"=>$input->post("id_parameter"));
+    var_dump($data);
     if ($input->post('action') == "Tambah") {
       $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambah</div>");
       $this->model_admin->insertData("master_kuesioner", $data);
@@ -1422,7 +1423,7 @@ class Admin extends MY_Controller
       $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil diubah</div>");
       $this->model_admin->updateData("master_kuesioner", $id, "id", $data);
     }
-    redirect('dashboard/kelola_kuesioner?periode='.$input->post("periode"));
+    redirect('dashboard/kelola_kuesioner');
   }
   
   function hasil_survey()
@@ -1513,9 +1514,7 @@ class Admin extends MY_Controller
     $input = $this->input;
     $id = $input->post('id');
     $data = array("nama_parameter" => $input->post("nama_parameter"), "isaktif" => $input->post("isaktif"));
-    if($input->post("isaktif") == 1){
-      $this->model_admin->updateData("master_parameter", "1", "isaktif", array("isaktif"=>0));
-    }
+    
     if ($input->post('action') == "Tambah") {
       $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambah</div>");
       $this->model_admin->insertData("master_parameter", $data);

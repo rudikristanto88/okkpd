@@ -345,8 +345,15 @@ class Model_admin extends MY_Model
 
   function getKuesioner($jenis = null){
     $whereJenis = $jenis != null ? " AND jenis = '".$jenis."'" : ""; 
-    $query = "SELECT * FROM master_kuesioner where deleted = 0 ".$whereJenis;
-    return $this->db->query($query)->result_array();
+    $this->db->select("master_kuesioner.*, master_parameter.id as id_parameter, master_parameter.nama_parameter");
+    $this->db->from("master_kuesioner");
+    $this->db->join("master_parameter","master_kuesioner.id_parameter = master_parameter.id");
+    $this->db->where("deleted","0");
+    if($jenis != null){
+      $this->db->where("jenis",$jenis);
+    }
+    $query = $this->db->get();
+    return $query->result_array();
   }
 
   function getDetailSurvey($id)
