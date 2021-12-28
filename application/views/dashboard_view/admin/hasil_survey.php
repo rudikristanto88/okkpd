@@ -94,7 +94,7 @@
                           </tr>
                       </tbody>
                     </table>
-                    <span style="font-size:12px">*Biaya tidak termasuk hitungan IKM </span>
+                    <span style="font-size:12px">*Keterangan: Biaya tidak termasuk hitungan IKM </span>
                     <div style="height:50px"></div>
                     <h5 class="mb-4 mt-8"><strong>Daftar</strong> Responden</h5>
                     <table class="table table-hover" id="table-datatable2">
