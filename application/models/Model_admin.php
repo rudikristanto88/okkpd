@@ -372,9 +372,12 @@ class Model_admin extends MY_Model
     }else if($nilai <= 88.3){
       $data["mutu_pelayanan"] = "B";
       $data["ukuran_kinerja"] = "Baik";
-    }else {
+    }else if($nilai <= 100){
       $data["mutu_pelayanan"] = "A";
       $data["ukuran_kinerja"] = "Sangat Baik";
+    }else{
+      $data["mutu_pelayanan"] = "-";
+      $data["ukuran_kinerja"] = "-";
     }
     return $data;
   }
