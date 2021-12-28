@@ -109,22 +109,6 @@ color: #66DC71;
 											  transparent 75%,
 											  transparent)
 }
-
-/*
-button {
-position: absolute;
-width: 100px;
-min-width: 100px;
-padding: 20px;
-margin: 20px;
-font-family: "Titillium Web", sans serif;
-border: none;
-color: white;
-font-size: 16px;
-text-align: center;
-} */
-
-
 </style>
 
 <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600,700' rel='stylesheet' type='text/css'>
@@ -133,16 +117,18 @@ text-align: center;
 <center><h3>Status Layanan <?= $kode ?></h3></center>
 <div style="overflow-x:scroll" class="scrollbar" id="style-6">
 
-<ul class="timelines" id="timeline" style="width:130%">
-  <?php if ($status['manager_adm'] != null): ?>
+<ul class="timelines" id="timeline" style="width:100%">
+  <?php if ($status['tanggalSampleLab'] != null): ?>
   <li class="li complete">
     <div class="timestamp">
-      <!-- <span class="author">Abhi Sharma</span> -->
-        <span class="date"><?= date('d', strtotime($status['manager_adm'])) .
+        <span class="date"><?= date(
+            'd',
+            strtotime($status['tanggalSampleLab'])
+        ) .
             ' ' .
-            $bulan[date('n', strtotime($status['manager_adm'])) - 1] .
+            $bulan[date('n', strtotime($status['tanggalSampleLab'])) - 1] .
             ' ' .
-            date('Y', strtotime($status['manager_adm'])) ?><span>
+            date('Y', strtotime($status['tanggalSampleLab'])) ?><span>
     </div>
     <div class="status">
       <h4>Manager Admin </h4>
@@ -150,31 +136,30 @@ text-align: center;
   </li>
 <?php endif; ?>
 
-<?php if ($status['w_inspeksi'] != null): ?>
+<?php if ($status['tanggalValidLab'] != null): ?>
 <li class="li complete">
   <div class="timestamp">
-    <!-- <span class="author">Abhi Sharma</span> -->
-    <span class="date"><?= date('d', strtotime($status['w_inspeksi'])) .
+    <span class="date"><?= date('d', strtotime($status['tanggalValidLab'])) .
         ' ' .
-        $bulan[date('n', strtotime($status['w_inspeksi'])) - 1] .
+        $bulan[date('n', strtotime($status['tanggalValidLab'])) - 1] .
         ' ' .
-        date('Y', strtotime($status['w_inspeksi'])) ?><span>
+        date('Y', strtotime($status['tanggalValidLab'])) ?><span>
   </div>
   <div class="status">
-    <h4>Inspeksi Layanan</h4>
+    <h4>Menunggu Layanan</h4>
   </div>
 </li>
 <?php endif; ?>
 
-<?php if ($status['w_ppc'] != null): ?>
+<?php if ($status['tanggalManTek'] != null): ?>
 <li class="li complete">
   <div class="timestamp">
-    <!-- <span class="author">Abhi Sharma</span> -->
-    <span class="date"><?= date('d', strtotime($status['w_ppc'])) .
+
+    <span class="date"><?= date('d', strtotime($status['tanggalManTek'])) .
         ' ' .
-        $bulan[date('n', strtotime($status['w_ppc'])) - 1] .
+        $bulan[date('n', strtotime($status['tanggalManTek'])) - 1] .
         ' ' .
-        date('Y', strtotime($status['w_ppc'])) ?><span>
+        date('Y', strtotime($status['tanggalManTek'])) ?><span>
   </div>
   <div class="status">
     <h4>Pengambilan Contoh</h4>
@@ -182,51 +167,21 @@ text-align: center;
 </li>
 <?php endif; ?>
 
-<?php if ($status['w_hasil_mt'] != null): ?>
+<?php if (
+    $status['tglcetak'] != null ||
+    $status['tglcetak'] != '0000-00-00'
+): ?>
 <li class="li complete">
   <div class="timestamp">
-    <!-- <span class="author">Abhi Sharma</span> -->
-    <span class="date"><?= date('d', strtotime($status['w_hasil_mt'])) .
+    
+    <span class="date"><?= date('d', strtotime($status['tglcetak'])) .
         ' ' .
-        $bulan[date('n', strtotime($status['w_hasil_mt'])) - 1] .
+        $bulan[date('n', strtotime($status['tglcetak'])) - 1] .
         ' ' .
-        date('Y', strtotime($status['w_hasil_mt'])) ?><span>
+        date('Y', strtotime($status['tglcetak'])) ?><span>
   </div>
   <div class="status">
     <h4>Uji Laboratorium</h4>
-  </div>
-</li>
-<?php endif; ?>
-
-<?php if ($status['w_komtek'] != null): ?>
-<li class="li complete">
-  <div class="timestamp">
-    <!-- <span class="author">Abhi Sharma</span> -->
-    <span class="date"><?= date('d', strtotime($status['w_komtek'])) .
-        ' ' .
-        $bulan[date('n', strtotime($status['w_komtek'])) - 1] .
-        ' ' .
-        date('Y', strtotime($status['w_komtek'])) ?><span>
-
-  </div>
-  <div class="status">
-    <h4>Komisi Teknis</h4>
-  </div>
-</li>
-<?php endif; ?>
-
-<?php if ($status['tanggal_ditolak'] != null): ?>
-<li class="li uncomplete">
-  <div class="timestamp">
-    <!-- <span class="author">Abhi Sharma</span> -->
-      <span class="date"><?= date('d', strtotime($status['tanggal_ditolak'])) .
-          ' ' .
-          $bulan[date('n', strtotime($status['tanggal_ditolak'])) - 1] .
-          ' ' .
-          date('Y', strtotime($status['tanggal_ditolak'])) ?><span>
-  </div>
-  <div class="status">
-    <h4>Ditolak</h4>
   </div>
 </li>
 <?php endif; ?>

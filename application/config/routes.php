@@ -71,6 +71,7 @@ $route['dashboard/unggah/dokumen_prima3/(:any)'] = 'dashboard/dokumen_prima3/$1'
 $route['dashboard/unggah'] = 'dashboard';
 $route['dashboard/info_layanan'] = 'admin/info_layanan';
 $route['dashboard/akun_pelaku_usaha'] = 'admin/akun_pelaku_usaha';
+$route['dashboard/akun_pelaku_usaha/detail'] = 'admin/akun_pelaku_usaha/true';
 $route['dashboard/gambar_slider'] = 'admin/gambar_slider';
 $route['dashboard/kontak_kami'] = 'admin/kontak_kami';
 $route['dashboard/kelola_dinas'] = 'admin/unit_dinas';
@@ -87,6 +88,15 @@ $route['dashboard/kelola_komoditas'] = 'admin/kelola_komoditas';
 $route['dashboard/hasil_survey'] = 'admin/hasil_survey';
 $route['dashboard/hasil_survey/detail'] = 'admin/hasil_survey_detail';
 
+$route['dashboard/kelola_periode'] = 'admin/kelola_periode';
+$route['dashboard/kelola_periode/hapus'] = 'admin/hapus_periode';
+$route['dashboard/kelola_periode/proses'] = 'admin/proses_periode';
+
+$route['dashboard/kelola_parameter'] = 'admin/kelola_parameter';
+$route['dashboard/kelola_parameter/hapus'] = 'admin/hapus_parameter';
+$route['dashboard/kelola_parameter/proses'] = 'admin/proses_parameter';
+
+$route['dashboard/master_parameter'] = 'admin/master_parameter';
 
 $route['dashboard/kelola_kuesioner'] = 'admin/kelola_kuesioner';
 $route['dashboard/kelola_kuesioner/hapus'] = 'admin/hapus_kuesioner';

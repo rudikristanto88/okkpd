@@ -92,11 +92,16 @@ class Admin extends MY_Controller
     }
   }
 
-  public function akun_pelaku_usaha()
+  public function akun_pelaku_usaha($detail = false)
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
-    $data['akun'] = $this->model_user->getdatawhere("user", 'kode_role', 'pelaku');
-    $this->loadView('dashboard_view/admin/akun_pelaku_usaha', $data);
+    $data['akun'] = $this->model_user->getUserDetail();
+
+    if($detail){
+      $this->loadView('dashboard_view/admin/detail_pelaku_usaha', $data);
+    }else{
+      $this->loadView('dashboard_view/admin/akun_pelaku_usaha', $data);
+    }
   }
 
   public function gambar_slider()
@@ -1387,7 +1392,7 @@ class Admin extends MY_Controller
     $data['jenis'] = array(array("key" => "ujimutu", "value" => "Uji Mutu"));
     $data['tipe'] = array("Skor", "Yes/No");
     $data['aspek'] = array("Mudah", "Cepat", "Berkualitas", "Kompeten", "Sopan", "Lengkap");;
-    $data['kuesioner'] = $this->model_admin->getKuesioner($data['periode']);
+    $data['kuesioner'] = $this->model_admin->getKuesioner();
     $this->loadView('dashboard_view/admin/kelola_kuesioner', $data);
   }
 
@@ -1414,12 +1419,23 @@ class Admin extends MY_Controller
     }
     redirect('dashboard/kelola_kuesioner?periode='.$input->post("periode"));
   }
+  
   function hasil_survey()
   {
-    $data['periode'] = $this->input->get("periode") ?? date("Y");
+    $data['list_periode'] = $this->model_admin->getAllData("master_periode");
+    $data['periode'] = $this->input->get("periode");
+    
+    if($data['periode'] == null){
+      foreach($data['list_periode'] as $periode){
+        if($periode['isaktif'] == 1){
+          $data['periode'] = $periode['id'];
+        }
+      }
+    }
+
     $jenis = $this->input->get("jenis") ?? "ujimutu";
     $data['report_survey'] = $this->model_admin->getReportSurvey($jenis, $data['periode']);
-    $data['hasil_survey'] = $this->model_admin->getSurvey($data['periode']);
+    $data['hasil_survey'] = $this->model_admin->getSurvey();
     $this->loadView('dashboard_view/admin/hasil_survey', $data);
   }
 
@@ -1447,5 +1463,69 @@ class Admin extends MY_Controller
     $data["identitas"] = data_identitas_survey($jenis);
 
     $this->loadView('dashboard_view/admin/hasil_survey_detail', $data);
+  }
+
+  function kelola_periode()
+  {
+    $data['kuesioner'] = $this->model_admin->getAllData("master_periode");
+    $this->loadView('dashboard_view/admin/kelola_periode', $data);
+  }
+
+  public function proses_periode()
+  {
+    $input = $this->input;
+    $id = $input->post('id');
+    $data = array("nama_periode" => $input->post("nama_periode"), "isaktif" => $input->post("isaktif"));
+    if($input->post("isaktif") == 1){
+      $this->model_admin->updateData("master_periode", "1", "isaktif", array("isaktif"=>0));
+    }
+    if ($input->post('action') == "Tambah") {
+      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambah</div>");
+      $this->model_admin->insertData("master_periode", $data);
+    } else {
+      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil diubah</div>");
+      $this->model_admin->updateData("master_periode", $id, "id", $data);
+    }
+    redirect('dashboard/kelola_periode');
+  }
+  
+  public function hapus_periode()
+  {
+    $id = $this->input->post('id');
+    $this->model_user->deleteData('master_periode', $id, 'id');
+    $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil dihapus</div>");
+    redirect('dashboard/kelola_periode');
+  }
+
+  function kelola_parameter()
+  {
+    $data['kuesioner'] = $this->model_admin->getAllData("master_parameter");
+    $this->loadView('dashboard_view/admin/kelola_parameter', $data);
+  }
+
+  public function proses_parameter()
+  {
+    $input = $this->input;
+    $id = $input->post('id');
+    $data = array("nama_parameter" => $input->post("nama_parameter"), "isaktif" => $input->post("isaktif"));
+    if($input->post("isaktif") == 1){
+      $this->model_admin->updateData("master_parameter", "1", "isaktif", array("isaktif"=>0));
+    }
+    if ($input->post('action') == "Tambah") {
+      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambah</div>");
+      $this->model_admin->insertData("master_parameter", $data);
+    } else {
+      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil diubah</div>");
+      $this->model_admin->updateData("master_parameter", $id, "id", $data);
+    }
+    redirect('dashboard/kelola_parameter');
+  }
+  
+  public function hapus_parameter()
+  {
+    $id = $this->input->post('id');
+    $this->model_user->deleteData('master_parameter', $id, 'id');
+    $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil dihapus</div>");
+    redirect('dashboard/kelola_parameter');
   }
 }

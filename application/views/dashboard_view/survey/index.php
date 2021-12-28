@@ -135,7 +135,7 @@
                                                                 $prop = $a == 0 ? "pertanyaan" : "kepentingan"; ?>
                                                                 <td>
                                                                     <fieldset class="starability-basic">
-                                                                        <?php for ($x = 0; $x <= 5; $x++) :
+                                                                        <?php for ($x = 0; $x <= 4; $x++) :
                                                                             $name = "kuesioner[soal-" . $index . "][" . $prop . "][]";
                                                                             $id = $prop . "-" . $index . "-" . $x ?>
                                                                             <?php if ($x == 0) : ?>

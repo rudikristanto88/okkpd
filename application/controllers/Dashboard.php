@@ -3374,10 +3374,10 @@ class Dashboard extends MY_Controller
 		$userdata = $this->session->userdata("dataLogin");
 		$layanan = $this->model_admin->getDataWhere($kode_layanan == "ujimutu" ? "layanan_ujimutu" : "layanan", "uid", $id_layanan);
 		$identitas_usaha = $this->model_admin->getDataWhere("identitas_usaha", "id_user", $userdata['id_user']);
-		if (sizeof($identitas_usaha) == 0) {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Anda tidak memiliki akses ke halaman ini</div>");
-			redirect("dashboard");
-		}
+		// if (sizeof($identitas_usaha) == 0) {
+		// 	$this->session->set_flashdata("status", "<div class='alert alert-warning'>Anda tidak memiliki akses ke halaman ini</div>");
+		// 	redirect("dashboard");
+		// }
 
 		if ($layanan[0]["kode_layanan"] == "prima_2" || $layanan[0]["kode_layanan"] == "prima_3")
 			$jenis = "okkpd";

@@ -45,10 +45,13 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Nama Akun</th>
                                         <th>Nama Pelaku Usaha</th>
-                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Nomor HP</th>
                                         <th>Status</th>
-                                        <th>Status</th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,10 +59,13 @@
                                     <tr>
                                         <td><?= $i; ?> </td>
                                         <td><?= $akun['nama_lengkap']; ?></td>
+                                        <td><?= $akun['nama_pemohon'] == '' || $akun['nama_pemohon'] == null ? '-' : ''; ?></td>
                                         <td><?= $akun['username']; ?></td>
+                                        <td><?= $akun['no_hp_pemohon'] == '' || $akun['no_hp_pemohon'] == null ? $akun['no_telp'] : $akun['no_hp_pemohon']; ?></td>
                                         <td><?php if($akun['status'] == 1){echo "Aktif"; $akun['status'] = 0;}else {echo 'Non Aktif';$akun['status'] = 1;} ?></td>
 
-                                        <td><a href="<?=base_url() ?>dashboard/user_nonaktif/pelaku/<?= $akun['id_user'] ?>/<?= $akun['status'] ?>" class="btn btn-warnin"> <button class="text-white"><?php if($akun['status'] == 1){echo "Aktifkan"; }else {echo 'Non Aktifkan';} ?></button></a></td>
+                                        <td><a href="<?=base_url() ?>dashboard/user_nonaktif/pelaku/<?= $akun['id_user'] ?>/<?= $akun['status'] ?>" class="<?= $akun['status'] == 1 ? 'btn btn-info' : 'btn btn-warning' ?> "> <?= $akun['status'] == 1 ? "Aktifkan" : 'Non Aktifkan'; ?></a></td>
+                                        <td><a href="<?=base_url() ?>dashboard/akun_pelaku_usaha/detail" class="btn btn-primary"> Detail </a></td>
 
                                     </tr>
                                   <?php $i++; endforeach; ?>
