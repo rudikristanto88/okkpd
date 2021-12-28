@@ -134,11 +134,15 @@ text-align: center;
 <div style="overflow-x:scroll" class="scrollbar" id="style-6">
 
 <ul class="timelines" id="timeline" style="width:130%">
-  <?php if($status['manager_adm'] != null): ?>
+  <?php if ($status['manager_adm'] != null): ?>
   <li class="li complete">
     <div class="timestamp">
       <!-- <span class="author">Abhi Sharma</span> -->
-        <span class="date"><?= date("d",strtotime($status['manager_adm'])).' '.$bulan[date("n",strtotime($status['manager_adm']))-1].' '. date("Y",strtotime($status['manager_adm'])) ?><span>
+        <span class="date"><?= date('d', strtotime($status['manager_adm'])) .
+            ' ' .
+            $bulan[date('n', strtotime($status['manager_adm'])) - 1] .
+            ' ' .
+            date('Y', strtotime($status['manager_adm'])) ?><span>
     </div>
     <div class="status">
       <h4>Manager Admin </h4>
@@ -146,11 +150,15 @@ text-align: center;
   </li>
 <?php endif; ?>
 
-<?php if($status['w_inspeksi'] != null): ?>
+<?php if ($status['w_inspeksi'] != null): ?>
 <li class="li complete">
   <div class="timestamp">
     <!-- <span class="author">Abhi Sharma</span> -->
-    <span class="date"><?= date("d",strtotime($status['w_inspeksi'])).' '.$bulan[date("n",strtotime($status['w_inspeksi']))-1].' '. date("Y",strtotime($status['w_inspeksi'])) ?><span>
+    <span class="date"><?= date('d', strtotime($status['w_inspeksi'])) .
+        ' ' .
+        $bulan[date('n', strtotime($status['w_inspeksi'])) - 1] .
+        ' ' .
+        date('Y', strtotime($status['w_inspeksi'])) ?><span>
   </div>
   <div class="status">
     <h4>Inspeksi Layanan</h4>
@@ -158,11 +166,15 @@ text-align: center;
 </li>
 <?php endif; ?>
 
-<?php if($status['w_ppc'] != null): ?>
+<?php if ($status['w_ppc'] != null): ?>
 <li class="li complete">
   <div class="timestamp">
     <!-- <span class="author">Abhi Sharma</span> -->
-    <span class="date"><?= date("d",strtotime($status['w_ppc'])).' '.$bulan[date("n",strtotime($status['w_ppc']))-1].' '. date("Y",strtotime($status['w_ppc'])) ?><span>
+    <span class="date"><?= date('d', strtotime($status['w_ppc'])) .
+        ' ' .
+        $bulan[date('n', strtotime($status['w_ppc'])) - 1] .
+        ' ' .
+        date('Y', strtotime($status['w_ppc'])) ?><span>
   </div>
   <div class="status">
     <h4>Pengambilan Contoh</h4>
@@ -170,11 +182,15 @@ text-align: center;
 </li>
 <?php endif; ?>
 
-<?php if($status['w_hasil_mt'] != null): ?>
+<?php if ($status['w_hasil_mt'] != null): ?>
 <li class="li complete">
   <div class="timestamp">
     <!-- <span class="author">Abhi Sharma</span> -->
-    <span class="date"><?= date("d",strtotime($status['w_hasil_mt'])).' '.$bulan[date("n",strtotime($status['w_hasil_mt']))-1].' '. date("Y",strtotime($status['w_hasil_mt'])) ?><span>
+    <span class="date"><?= date('d', strtotime($status['w_hasil_mt'])) .
+        ' ' .
+        $bulan[date('n', strtotime($status['w_hasil_mt'])) - 1] .
+        ' ' .
+        date('Y', strtotime($status['w_hasil_mt'])) ?><span>
   </div>
   <div class="status">
     <h4>Uji Laboratorium</h4>
@@ -182,11 +198,15 @@ text-align: center;
 </li>
 <?php endif; ?>
 
-<?php if($status['w_komtek'] != null): ?>
+<?php if ($status['w_komtek'] != null): ?>
 <li class="li complete">
   <div class="timestamp">
     <!-- <span class="author">Abhi Sharma</span> -->
-    <span class="date"><?= date("d",strtotime($status['w_komtek'])).' '.$bulan[date("n",strtotime($status['w_komtek']))-1].' '. date("Y",strtotime($status['w_komtek'])) ?><span>
+    <span class="date"><?= date('d', strtotime($status['w_komtek'])) .
+        ' ' .
+        $bulan[date('n', strtotime($status['w_komtek'])) - 1] .
+        ' ' .
+        date('Y', strtotime($status['w_komtek'])) ?><span>
 
   </div>
   <div class="status">
@@ -195,11 +215,15 @@ text-align: center;
 </li>
 <?php endif; ?>
 
-<?php if($status['tanggal_ditolak'] != null): ?>
+<?php if ($status['tanggal_ditolak'] != null): ?>
 <li class="li uncomplete">
   <div class="timestamp">
     <!-- <span class="author">Abhi Sharma</span> -->
-      <span class="date"><?= date("d",strtotime($status['tanggal_ditolak'])).' '.$bulan[date("n",strtotime($status['tanggal_ditolak']))-1].' '. date("Y",strtotime($status['tanggal_ditolak'])) ?><span>
+      <span class="date"><?= date('d', strtotime($status['tanggal_ditolak'])) .
+          ' ' .
+          $bulan[date('n', strtotime($status['tanggal_ditolak'])) - 1] .
+          ' ' .
+          date('Y', strtotime($status['tanggal_ditolak'])) ?><span>
   </div>
   <div class="status">
     <h4>Ditolak</h4>

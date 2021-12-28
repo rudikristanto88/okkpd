@@ -39,12 +39,8 @@
                         <form id="formTahun" method="get" action="<?= base_url() ?>dashboard/hasil_survey">
                         <select class="form-control text-black" name="periode" id="periode" style="color:black" onchange="lihatSurvey(this)">
                           <?php
-                          $year = date("Y");
-                          $selectedYear = $periode;
-                          for ($i = 0; $i < 4; $i++) { ?>
-                            <option <?php if (($year - $i) == $year || ($year - $i) == $periode) {
-                                      echo "selected";
-                                    } ?> value="<?= $year - $i ?>"><?= $year - $i ?></option>
+                          foreach ($list_periode as $period) { ?>
+                            <option <?= $period['id'] == $periode ? 'selected' : '' ?> value="<?= $period['id'] ?>"><?= $period['nama_periode'] ?></option>
                           <?php } ?>
                         </select>
                         </form>
@@ -53,7 +49,7 @@
                   </div>
 
                   <div class="body table-responsive">
-                    <table class="table table-hover" id="table-datatable">
+                    <table class="table table-hover mb-8" id="table-datatable">
                       <thead>
                         <tr>
                           <th style="vertical-align: middle;">No</th>
@@ -113,7 +109,7 @@
                         endforeach; ?>
                       </tbody>
                     </table>
-
+                    <h5 class="mb-4"><strong>Daftar</strong> Responden</h5>
                     <table class="table table-hover" id="table-datatable2">
                       <thead>
                         <tr>
@@ -134,7 +130,7 @@
                         foreach ($hasil_survey as $element) : ?>
                           <tr>
                             <td><?= $i ?>.</td>
-                            <td><?= $element['nama'] ?></td>
+                            <td><?= $element['show_nama'] == 0 ? 'NN' : $element['nama'] ?></td>
                             <td><?= $element['email'] ?></td>
                             <td><?= $element['umur'] ?></td>
                             <td><?= $element['no_telp'] ?></td>

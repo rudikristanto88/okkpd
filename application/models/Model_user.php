@@ -28,16 +28,6 @@ class Model_user extends MY_Model
     $query = $this->db->get();
     return $query->result_array();
   }
-  public function getDataWhere($table, $where, $value)
-  {
-    $this->db->select("*");
-    $this->db->from($table);
-    $this->db->where($where, $value);
-    // $this->db->where("isaktif", 1);
-    $query = $this->db->get();
-    return $query->result_array();
-  }
-
   
   public function getDataWhereTanpaIsaktif($table, $where, $value)
   {
@@ -48,13 +38,26 @@ class Model_user extends MY_Model
     return $query->result_array();
   }
 
-
   public function getProfile($id_profile)
   {
     $this->db->select("*");
     $this->db->from('user u');
     $this->db->join('master_role as c', "u.kode_role=c.kode_role");
     $this->db->where('id_user', $id_profile);
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+
+  public function getUserDetail($id_user)
+  {
+    $this->db->select("a.*, b.*");
+    $this->db->from('user a');
+    $this->db->join('identitas_usaha as b', "a.id_user=b.id_user","left");
+    $this->db->where('a.kode_role', 'pelaku');
+    if($id_user!=null){
+      $this->db->where('a.id_user', $id_user);
+    }
+    
     $query = $this->db->get();
     return $query->result_array();
   }
@@ -159,8 +162,6 @@ class Model_user extends MY_Model
     $query = $this->db->get();
     return $query->result_array();
   }
-
-
 
   public function getDataJenisInspeksi($role)
   {
@@ -419,9 +420,6 @@ class Model_user extends MY_Model
     $query = $this->db->get();
     return $query->result_array();
   }
-
-
-
 
   public function getDataLayanan($value)
   {

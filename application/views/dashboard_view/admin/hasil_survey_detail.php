@@ -50,7 +50,7 @@
                           if ($element[0] != "kecamatan" && $element[0] != "kota" && $element[0] != "provinsi") : ?>
                             <tr>
                               <td width="300"><?= $element[1] ?></td>
-                              <td>: <?= $data_survey[$element[0]] ?></td>
+                              <td>: <?= $element[0] == 'nama' ? $data_survey['show_nama'] == 0 ? 'NN' : $data_survey[$element[0]] : $data_survey[$element[0]] ?></td>
                             </tr>
                           <?php endif; ?>
                         <?php endforeach; ?>
@@ -75,20 +75,40 @@
                       </thead>
                       <tbody>
                         <?php $i = 1;
-                        foreach ($detail_survey as $element) : ?>
+                        
+                        function coba($nilai){
+                          if($nilai == 1){
+                            return "Tidak Baik/Tidak Puas/Tidak Mudah";
+                          }else if($nilai == 2){
+                            return "Kurang Baik/Kurang Puas/Kurang Mudah";
+                          }else if($nilai == 3){
+                            return "Baik/Puas/Mudah";
+                          }else if($nilai == 4){
+                            return "Sangat Baik/Sangat Puas/Sangat Mudah";
+                          }
+                        }
+
+                        foreach ($detail_survey as $element) : 
+                        
+                          $labelKepentingan = coba($element["nilai"]);
+                          $labelNilai = coba($element["kepentingan"]);
+                                                  
+                        ?>
                           <tr>
                             <td><?= $i ?>.</td>
                             <td><?= $element['pertanyaan'] ?></td>
                             <?php if ($element['tipe'] == "Skor") : ?>
                               <td>
                                 <div id="star-rating" class="rating" data-rate-value=<?= $element["nilai"] ?>>
-                                  <span><?= $element["nilai"] ?></span>
                                 </div>
+                                <span style="font-size:10px"><?= $labelNilai ?></span>
+
                               </td>
                               <td>
                                 <div id="star-rating" class="rating" data-rate-value=<?= $element["kepentingan"] ?>>
-                                  <span><?= $element["kepentingan"] ?></span>
                                 </div>
+                                <span style="font-size:10px"><?= $labelKepentingan ?></span>
+
                               </td>
                             <?php else :
                               $progressYa = $element['nilai'] * 100;
@@ -146,7 +166,7 @@
 
 <script>
   var options = {
-    max_value: 5,
+    max_value: 4,
     step_size: 0.1,
     readonly: true,
     selected_symbol_type: 'utf8_star',

@@ -37,15 +37,20 @@ class Model_dokumen extends MY_Model
     $query = $this->db->get();
     return $query->result_array();
   }
-  public function getStatusLayanan($kode_pendaftaran)
+  public function getStatusLayanan($kode_pendaftaran, $jenis_layanan = "okkpd")
   {
-    $this->db->select("manager_adm,w_inspeksi,w_ppc,w_hasil_mt,w_komtek,w_diterima,tanggal_ditolak");
-    $this->db->from('layanan');
+    if($jenis_layanan == "okkpd"){
+      $this->db->select("manager_adm,w_inspeksi,w_ppc,w_hasil_mt,w_komtek,w_diterima,tanggal_ditolak");
+      $this->db->from('layanan');
+    }else{
+      $this->db->select("kode_pendaftaran,tanggal_buat,sampleLab,tanggalSampleLab,validLab,tanggalValidLab,validManTek,tanggalManTek, tglcetak");
+      $this->db->from('layanan_ujimutu');
+    }
+    
     $this->db->where("kode_pendaftaran", $kode_pendaftaran);
     $query = $this->db->get();
     return $query->result_array();
   }
-
 
   public function getDataSertifikat($jenis)
   {

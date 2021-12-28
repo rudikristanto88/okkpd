@@ -36,7 +36,6 @@ class Model_admin extends MY_Model
     return $query->result_array();
   }
 
-
   public function getDataIdentitas($kode_layanan, $id_layanan)
   {
     $this->db->select("c.nama_layanan,b.*");
@@ -324,13 +323,14 @@ class Model_admin extends MY_Model
     $param = $jenis == null ? "" : " AND jenis = '" . $jenis . "'";
     $query = "SELECT master_kuesioner.*, coalesce(result.avg_nilai,0) avg_nilai, coalesce(result.avg_kepentingan,0) avg_kepentingan 
     FROM master_kuesioner
+    JOIN master_parameter on master_kuesioner.id_parameter = master_parameter.id
     LEFT JOIN (SELECT id_kuesioner, ROUND(AVG(nilai),2) AS avg_nilai, Round(AVG(kepentingan),2) AS avg_kepentingan 
     FROM survey_kuesioner
     JOIN survey_data ON survey_kuesioner.id_survey = survey_data.id
-    AND YEAR(survey_data.tanggal_survey) = ".$periode."
+    AND survey_data.id_periode = ".$periode."
     GROUP BY id_kuesioner) result
     ON master_kuesioner.id = result.id_kuesioner
-    WHERE deleted = 0 AND STATUS = 1 AND periode = ".$periode."
+    WHERE deleted = 0 AND STATUS = 1 
     " . $param . "
     ORDER BY urutan";
     return $this->db->query($query)->result_array();
@@ -338,16 +338,22 @@ class Model_admin extends MY_Model
 
   function getSurvey($periode = null)
   {
-    $where = $periode != null ? "Where YEAR(survey_data.tanggal_survey) = ".$periode : "";
+    $where = $periode != null ? "Where survey_data.id_periode = ".$periode : "";
     $query = "SELECT * FROM survey_data ".$where;
     return $this->db->query($query)->result_array();
   }
 
-  function getKuesioner($periode = null,$jenis = null){
-    $periode = $periode == null ? date("Y") : $periode;
+  function getKuesioner($jenis = null){
     $whereJenis = $jenis != null ? " AND jenis = '".$jenis."'" : ""; 
-    $query = "SELECT * FROM master_kuesioner where periode = ".$periode." and deleted = 0 ".$whereJenis;
-    return $this->db->query($query)->result_array();
+    $this->db->select("master_kuesioner.*, master_parameter.id as id_parameter, master_parameter.nama_parameter");
+    $this->db->from("master_kuesioner");
+    $this->db->join("master_parameter","master_kuesioner.id_parameter = master_parameter.id");
+    $this->db->where("deleted","0");
+    if($jenis != null){
+      $this->db->where("jenis",$jenis);
+    }
+    $query = $this->db->get();
+    return $query->result_array();
   }
 
   function getDetailSurvey($id)

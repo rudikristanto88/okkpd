@@ -9,7 +9,7 @@
                                 <i class="material-icons">home</i>
                                 Home</a>
                         </li>
-                        <li class="breadcrumb-item active">Kelola Kuesioner</li>
+                        <li class="breadcrumb-item active">Kelola Periode</li>
                     </ul>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                                     ?>
                                     <div class="header">
                                         <h2>
-                                            <strong>Kelola</strong> Kuesioner
+                                            <strong>Kelola</strong> Periode
                                         </h2>
                                         <ul class="header-dropdown m-r--5">
                                             <li class="dropdown">
@@ -44,17 +44,15 @@
                                             </li>
                                         </ul>
                                     </div>
-                                   
+
                                     <div class="table-responsive">
                                         <table class="table table-hover" id="table-datatable" class="display">
                                             <thead>
                                                 <tr>
-                                                    <th>No</th>
-                                                    <th>Pertanyaan</th>
-                                                    <th>Parameter</th>
-                                                    <th>Jenis</th>
-                                                    <th>Tipe</th>
-                                                    <th></th>
+                                                    <th width="100">No</th>
+                                                    <th>Nama Periode</th>
+                                                    <th>Aktif</th>
+                                                    <th width="200"></th>
                                                 </tr>
                                             </thead>
                                             <tbody id="body_table">
@@ -62,16 +60,13 @@
                                                 foreach ($kuesioner as $element) : ?>
                                                     <tr>
                                                         <td><?= $i + 1 ?></td>
-                                                        <td><?= $element['pertanyaan'] ?></td>
-                                                        <td><?= $element['jenis'] ?></td>
-                                                        <td><?= $element['nama_parameter'] ?></td>
-                                                        <td><?= $element['tipe'] ?></td>
+                                                        <td><?= $element['nama_periode'] ?></td>
+                                                        <td><?= $element['isaktif'] ? 'Aktif' : 'Tidak Aktif' ?></td>
                                                         <td>
-                                                            <button type="button" class="btn btn-info" data-toggle="modal" onclick="updateData('<?= $element['id'] ?>', '<?= $element['pertanyaan'] ?>', '<?= $element['jenis'] ?>', '<?= $element['tipe'] ?>', '<?= $element['id_parameter'] ?>')" data-target="#update">Update</button>
+                                                            <button type="button" class="btn btn-info" data-toggle="modal" onclick="updateData('<?= $element['id'] ?>', '<?= $element['nama_periode'] ?>', '<?= $element['isaktif'] ?>')" data-target="#update">Update</button>
                                                             <button type="button" class="btn btn-warning" data-toggle="modal" onclick="deleteData('<?= $element['id'] ?>')" data-target="#delete">Hapus</button>
                                                         </td>
                                                     </tr>
-
                                                 <?php $i++;
                                                 endforeach; ?>
                                             </tbody>
@@ -87,7 +82,6 @@
         </div>
         <!-- #END# Input -->
     </div>
-
 </section>
 
 <div id="delete" class="modal fade" role="dialog">
@@ -95,7 +89,8 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="text-black">Hapus Kuesioner</h5>
+            <h5 class="text-black">Hapus Periode</h5>
+
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -104,67 +99,44 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 &nbsp;&nbsp;
-                <form action="<?= base_url() ?>index.php/dashboard/kelola_kuesioner/hapus" method="post">
+                <form action="<?= base_url() ?>index.php/dashboard/kelola_periode/hapus" method="post">
                     <input type="hidden" name="id" id="id_hapus">
                     <button type="submit" class="btn btn-danger">Hapus</button>
-
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 
 <div id="update" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-sm" style="max-width:600px">
         <!-- Modal content-->
-        <form action="<?= base_url() ?>index.php/dashboard/kelola_kuesioner/proses" method="post">
+        <form action="<?= base_url() ?>index.php/dashboard/kelola_periode/proses" method="post">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 id="title" class="text-black"></h5>
+                 <h5 id="title" class="text-black"></h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="row clearfix">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 mb-4">
                             <div class="input-field">
                                 <input name="action" type="hidden" id="action">
                                 <input name="id" type="hidden" id="id">
-                                <input required id="pertanyaan" name="pertanyaan" type="text" required>
-                                <label for="pertanyaan">Pertanyaan</label>
+                                <input id="nama_periode" name="nama_periode" type="text" required>
+                                <label for="nama_periode">Nama Periode</label>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             <div class="form-group">
-                                <label class="text-small">Jenis</label>
-                                <select required class="form-control text-black" id="jenis" name="jenis">
-                                    <?php foreach ($jenis as $element) : ?>
-                                        <option value="<?= $element["key"] ?>"><?= $element["value"] ?></option>
-                                    <?php endforeach; ?>
+                                <label class="text-small">Aktif</label>
+                                <select class="form-control text-black" id="isaktif" name="isaktif">
+                                        <option value="1">Aktif</option>
+                                        <option value="0">Tidak</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="text-small">Tipe Kuesioner</label>
-                                <select required class="form-control text-black" id="tipe" name="tipe">
-                                    <?php foreach ($tipe as $element) : ?>
-                                        <option value="<?= $element ?>"><?= $element ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="text-small">Parameter</label>
-                                <select required class="form-control text-black" id="id_parameter" name="id_parameter">
-                                    <?php foreach ($list_parameter as $element) : ?>
-                                        <option value="<?= $element["id"] ?>" ><?= $element["nama_parameter"] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-
+                        
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -174,19 +146,17 @@
                 </div>
             </div>
         </form>
-
     </div>
 </div>
 
 
 <script type="text/javascript">
     var action = "Tambah";
-    var defaultKuesioner = {
+
+    var defaultPeriode = {
         id: 0,
-        pertanyaan: '',
-        jenis: 'ujimutu',
-        tipe: 'Skor',
-        id_parameter: '0',
+        nama_periode: '',
+        isaktif: 0,
     }
 
     function deleteData(data) {
@@ -195,28 +165,25 @@
 
     function setModalUpdate(data) {
         $("#id").val(data.id);
-        $("#pertanyaan").val(data.pertanyaan);
-        $("#jenis").val(data.jenis);
-        $("#tipe").val(data.tipe);
-        $("#id_parameter").val(data.id_parameter);
+        $("#nama_periode").val(data.nama_periode);
+        $("#isaktif").val(data.isaktif);
         $("#action").val(action);
     }
 
-    function updateData(id, pertanyaan, jenis, tipe, id_parameter) {
+    function updateData(id, nama_periode, isaktif, tipe, aspek) {
         action = "Ubah";
-        $("#title").html(action + " Kuesioner");
+        $("#title").html(action + " Periode");
+
         setModalUpdate({
             id: id,
-            pertanyaan: pertanyaan,
-            jenis: jenis,
-            tipe: tipe,
-            id_parameter: id_parameter,
+            nama_periode: nama_periode,
+            isaktif: isaktif
         })
     }
 
     function tambahData() {
         action = "Tambah";
-        $("#title").html(action + " Kuesioner");
-        setModalUpdate(defaultKuesioner);
+        $("#title").html(action + " Periode");
+        setModalUpdate(defaultPeriode);
     }
 </script>

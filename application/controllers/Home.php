@@ -384,20 +384,7 @@ class Home extends MY_Controller
 
 		$this->loadViewHome('default/hs', $data);
 	}
-	//
-	// public function penerbitan_hygne_sanitation()
-	// {
-	// 	$data['islogin'] = false;
-	//
-	// 	if($this->session->userdata("dataLogin") != null){
-	// 		$data['islogin'] = true;
-	// 	}
-	// 	$this->load->view('default/template/header',$data);
-	// 	$this->load->view('default/template/navigation-small');
-	// 	$this->load->view('default/hs');
-	// 	$this->load->view('default/template/footer');
-	// }
-
+	
 	public function aktivasi()
 	{
 		$email_to = 'yogaadidr@gmail.com';
@@ -415,18 +402,23 @@ class Home extends MY_Controller
 		}
 	}
 
-
 	public function getStatusLayanan()
 	{
 		$kode_pendaftaran = $this->input->post("nomor_pendaftaran");
-		$hasil = $this->model_dokumen->getStatusLayanan($kode_pendaftaran);
+		$jenis_layanan = strpos($kode_pendaftaran, 'BPMKP/PSAT') ? 'ujimutu' : 'okkpd';
+
+		$hasil = $this->model_dokumen->getStatusLayanan($kode_pendaftaran, $jenis_layanan);
 		if (sizeof($hasil) < 1) {
 			echo "<div class='alert alert-warning'>Tidak ditemukan informasi layanan dengan nomor pendaftaran <b>" . $kode_pendaftaran . "</b></div>";
 		} else {
 			foreach ($hasil as $data['status']);
 			$data['kode'] = $kode_pendaftaran;
 			$data['bulan'] = $this->bulan;
-			$this->load->view('default/timeline', $data);
+			if($jenis_layanan == 'okkpd'){
+				$this->load->view('default/timeline', $data);
+			}else{
+				$this->load->view('default/timeline_ujimutu', $data);
+			}
 		}
 	}
 
