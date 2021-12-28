@@ -405,7 +405,7 @@ class Home extends MY_Controller
 	public function getStatusLayanan()
 	{
 		$kode_pendaftaran = $this->input->post("nomor_pendaftaran");
-		$jenis_layanan = strpos($kode_pendaftaran, 'BPMKP/PSAT') ? 'ujimutu' : 'okkpd';
+		$jenis_layanan = strpos($kode_pendaftaran, '/SKA/') || strpos($kode_pendaftaran, '/UNG/') ? 'ujimutu' : 'okkpd';
 
 		$hasil = $this->model_dokumen->getStatusLayanan($kode_pendaftaran, $jenis_layanan);
 		if (sizeof($hasil) < 1) {
