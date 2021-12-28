@@ -1415,7 +1415,6 @@ class Admin extends MY_Controller
     $input = $this->input;
     $id = $input->post('id');
     $data = array("pertanyaan" => $input->post("pertanyaan"), "jenis" => $input->post("jenis"), "tipe" => $input->post("tipe"), "id_parameter"=>$input->post("id_parameter"));
-    var_dump($data);
     if ($input->post('action') == "Tambah") {
       $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambah</div>");
       $this->model_admin->insertData("master_kuesioner", $data);
@@ -1440,8 +1439,11 @@ class Admin extends MY_Controller
     }
 
     $jenis = $this->input->get("jenis") ?? "ujimutu";
-    $data['report_survey'] = $this->model_admin->getReportSurvey($jenis, $data['periode']);
+    $data['report_survey'] = $this->model_admin->getReportSurvey($data['periode']);
     $data['hasil_survey'] = $this->model_admin->getSurvey();
+
+    // var_dump($data['report_survey']);
+
     $this->loadView('dashboard_view/admin/hasil_survey', $data);
   }
 

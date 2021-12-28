@@ -49,67 +49,53 @@
                   </div>
 
                   <div class="body table-responsive">
-                    <table class="table table-hover mb-8" id="table-datatable">
+                    <table class="table table-hover mb-8" >
                       <thead>
                         <tr>
                           <th style="vertical-align: middle;">No</th>
-                          <th width="auto" style="vertical-align: middle;">Pertnyaan</th>
-                          <td width="250">Kinerja</td>
-                          <td width="250">Tingkat Kepuasan</td>
+                          <th width="400" style="vertical-align: middle;">Unsur Pelayanan</th>
+                          <td width="250">Nilai IKM</td>
+                          <td width="250">Nilai Konversi</td>
+                          <td width="250">Mutu Pelayanan</td>
+                          <td width="250">Ukuran Kinerja</td>
                         </tr>
 
                       </thead>
                       <tbody>
                         <?php $i = 1;
-                        foreach ($report_survey as $element) : ?>
+                        $total_ikm = 0;
+                        $total_konversi = 0;
+                        foreach ($report_survey['data'] as $element) : ?>
                           <tr>
                             <td><?= $i ?>.</td>
-                            <td><?= $element['pertanyaan'] ?></td>
-                            <?php if ($element['tipe'] == "Skor") : ?>
-                              <td>
-                                <div id="star-rating" class="rating" data-rate-value=<?= $element["avg_nilai"] ?>>
-                                  <span><?= $element["avg_nilai"] ?></span>
-                                </div>
-                              </td>
-                              <td>
-                                <div id="star-rating" class="rating" data-rate-value=<?= $element["avg_kepentingan"] ?>>
-                                  <span><?= $element["avg_kepentingan"] ?></span>
-                                </div>
-                              </td>
-                            <?php else :
-                              $progressYa = $element['avg_nilai'] * 100;
-                              $progressTidak = 100 - ($progressYa); ?>
-                              <td>
-                                <div class="row">
-                                  <div class="col-md-3">Ya</div>
-                                  <div class="col-md-9">
-                                    <div class="progress">
-                                      <div class="progress-bar" role="progressbar" aria-valuenow="<?= $progressYa  ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $progressYa ?>%">
-                                        <?= $progressYa  ?>%</div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-md-3">Tidak</div>
-                                  <div class="col-md-9">
-                                    <div class="progress">
-                                      <div class="progress-bar" role="progressbar" aria-valuenow="<?= $progressTidak  ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $progressTidak ?>%">
-                                        <?= $progressTidak  ?>%</div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                              </td>
-                              <td></td>
-                            <?php endif; ?>
-
+                            <td><?= $element['nama_parameter'] ?></td>
+                            <td><?= $element['avg_nilai'] ?></td>
+                            <td><?= $element['nilai_konversi'] ?></td>
+                            <td><?= $element['mutu_pelayanan'] ?></td>
+                            <td><?= $element['ukuran_kinerja'] ?></td>
                           </tr>
-
                         <?php $i++;
                         endforeach; ?>
+                        <tr>
+                            <td ></td>
+                            <td ><b>JUMLAH</b></td>
+                            <td><?= $report_survey['total_nilai'] ?></td>
+                            <td><?= $report_survey['total_konversi'] ?></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                         <tr>
+                           <td ></td>
+                           <td ><b>NILAI IKM</b></td>
+                            <td><?= $report_survey['avg_total_nilai'] ?></td>
+                            <td><?= $report_survey['avg_total_konversi'] ?></td>
+                            <td><?= $report_survey['mutu_pelayanan'] ?></td>
+                            <td><?= $report_survey['ukuran_kinerja'] ?></td>
+                          </tr>
                       </tbody>
                     </table>
-                    <h5 class="mb-4"><strong>Daftar</strong> Responden</h5>
+                    <div style="height:50px"></div>
+                    <h5 class="mb-4 mt-8"><strong>Daftar</strong> Responden</h5>
                     <table class="table table-hover" id="table-datatable2">
                       <thead>
                         <tr>

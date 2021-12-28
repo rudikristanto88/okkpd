@@ -126,6 +126,7 @@
 
                       </tbody>
                     </table>
+                    
                     <table width="100%" class="table table-hover" style="margin-top:50px">
                       <thead>
                         <tr>
@@ -138,8 +139,8 @@
                         <tr>
                           <td>No</td>
                           <td>Pertanyaan</td>
-                          <td width="250">Kinerja</td>
-                          <td width="250">Tingkat Kepuasan</td>
+                          <td width="250">Kinerja / Kenyataannya</td>
+                          <td width="250">Tingkat Kepentingan</td>
                         </tr>
                         <?php
                         $index = 1;

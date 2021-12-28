@@ -317,23 +317,66 @@ class Model_admin extends MY_Model
     return $query->result_array();
   }
 
-  function getReportSurvey($jenis = null, $periode = null)
+  function getReportSurvey($periode)
   {
-    $periode = $periode == null ? date("Y") : $periode;
-    $param = $jenis == null ? "" : " AND jenis = '" . $jenis . "'";
-    $query = "SELECT master_kuesioner.*, coalesce(result.avg_nilai,0) avg_nilai, coalesce(result.avg_kepentingan,0) avg_kepentingan 
-    FROM master_kuesioner
-    JOIN master_parameter on master_kuesioner.id_parameter = master_parameter.id
-    LEFT JOIN (SELECT id_kuesioner, ROUND(AVG(nilai),2) AS avg_nilai, Round(AVG(kepentingan),2) AS avg_kepentingan 
-    FROM survey_kuesioner
-    JOIN survey_data ON survey_kuesioner.id_survey = survey_data.id
-    AND survey_data.id_periode = ".$periode."
-    GROUP BY id_kuesioner) result
-    ON master_kuesioner.id = result.id_kuesioner
-    WHERE deleted = 0 AND STATUS = 1 
-    " . $param . "
-    ORDER BY urutan";
-    return $this->db->query($query)->result_array();
+    $query = "SELECT master_parameter.nama_parameter, master_parameter.id as id_parameter,
+    AVG(nilai) avg_nilai, AVG(kepentingan) avg_kepentingan
+    FROM `survey_data`
+    join survey_kuesioner on survey_data.id = survey_kuesioner.id_survey
+    join master_kuesioner on survey_kuesioner.id_kuesioner = master_kuesioner.id
+    join master_parameter on master_kuesioner.id_parameter = master_parameter.id
+    where id_periode = ".$periode."
+    and master_kuesioner.jenis = 'ujimutu'
+    group by id_parameter
+    order by master_parameter.id";
+    $report = $this->db->query($query)->result_array();
+
+    $data = array();
+    $result = array();
+    $total_ikm = 0;
+    $total_konversi = 0;
+    foreach($report as $element){
+      $element["nilai_konversi"] = $element["avg_nilai"] * 25;
+
+      $total_ikm += $element["avg_nilai"];
+      $total_konversi += $element["nilai_konversi"];
+
+      $mutu = $this->getMutuPelayanan($element["nilai_konversi"]);
+      $element["mutu_pelayanan"] = $mutu["mutu_pelayanan"];
+      $element["ukuran_kinerja"] = $mutu["ukuran_kinerja"];
+
+      array_push($data, $element);
+    }
+    $result["total_nilai"] = $total_ikm;
+    $result["avg_total_nilai"] = $total_ikm / sizeof($report);
+    $result["total_konversi"] = $total_konversi;
+    $result["avg_total_konversi"] = $total_konversi / sizeof($report);
+
+    $total_mutu = $this->getMutuPelayanan($result["avg_total_konversi"]);
+
+    $result["mutu_pelayanan"] = $total_mutu["mutu_pelayanan"];
+    $result["ukuran_kinerja"] = $total_mutu["ukuran_kinerja"];
+    $result["data"] = $data;
+
+    return $result;
+  }
+
+  private function getMutuPelayanan($nilai){
+    $data = array();
+    if($nilai <= 64.9){
+      $data["mutu_pelayanan"] = "D";
+      $data["ukuran_kinerja"] = "Tidak Baik";
+    }else if($nilai <= 76.6){
+      $data["mutu_pelayanan"] = "C";
+      $data["ukuran_kinerja"] = "Kurang Baik";
+    }else if($nilai <= 88.3){
+      $data["mutu_pelayanan"] = "B";
+      $data["ukuran_kinerja"] = "Baik";
+    }else {
+      $data["mutu_pelayanan"] = "A";
+      $data["ukuran_kinerja"] = "Sangat Baik";
+    }
+    return $data;
   }
 
   function getSurvey($periode = null)
