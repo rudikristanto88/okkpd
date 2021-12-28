@@ -386,7 +386,8 @@ order by master_parameter.id";
   function getSurvey($periode = null)
   {
     $where = $periode != null ? "Where survey_data.id_periode = " . $periode : "";
-    $query = "SELECT * FROM survey_data " . $where;
+    $query = "SELECT `survey_data`.*, layanan_ujimutu.kodelhu as nomor_sertifikat FROM `survey_data`
+    left join layanan_ujimutu on survey_data.id = layanan_ujimutu.id_survey " . $where;
     return $this->db->query($query)->result_array();
   }
 

@@ -107,6 +107,7 @@
                           <th style="vertical-align: middle;">Alamat</th>
                           <th style="vertical-align: middle;">Pendidikan</th>
                           <th style="vertical-align: middle;">Layanan</th>
+                          <th style="vertical-align: middle;">Nomor Sertifikat</th>
                           <th style="vertical-align: middle;">Tanggal</th>
                           <th style="vertical-align: middle;"></th>
                         </tr>
@@ -122,7 +123,8 @@
                             <td><?= $element['no_telp'] ?></td>
                             <td><?= $element['alamat'] ?></td>
                             <td><?= $element['pendidikan'] ?></td>
-                            <td><?= $element['kode_layanan'] ?></td>
+                            <td><?= $element['kode_layanan'] == 'lab_ungaran' ? 'Pelayanan Laboratorium Ungaran' : 'Pelayanan Laboratorium Surakarta' ?></td>
+                            <td><?= $element['nomor_sertifikat'] ?></td>
                             <td><?= $element['tanggal_survey'] ?></td>
                             <td><a href="<?= base_url() ?>dashboard/hasil_survey/detail?id=<?= $element["id"] ?>" class="btn btn-primary">Detail</a></td>
                           </tr>
