@@ -1438,9 +1438,8 @@ class Admin extends MY_Controller
       }
     }
 
-    $jenis = $this->input->get("jenis") ?? "ujimutu";
     $data['report_survey'] = $this->model_admin->getReportSurvey($data['periode']);
-    $data['hasil_survey'] = $this->model_admin->getSurvey();
+    $data['hasil_survey'] = $this->model_admin->getSurvey($data['periode']);
 
     // var_dump($data['report_survey']);
 

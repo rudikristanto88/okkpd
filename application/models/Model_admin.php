@@ -326,6 +326,7 @@ class Model_admin extends MY_Model
     join survey_kuesioner on survey_data.id = survey_kuesioner.id_survey
     where id_periode = " . $periode . " 
     group by id_kuesioner) as hasil_kuesioner on master_kuesioner.id = hasil_kuesioner.id_kuesioner
+    where isaktif = 1
     order by master_parameter.id";
 
     $report = $this->db->query($query)->result_array();

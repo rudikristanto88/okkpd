@@ -51,7 +51,7 @@
                                                 <tr>
                                                     <th width="100">No</th>
                                                     <th>Nama Parameter</th>
-                                                    <th>Aktif</th>
+                                                    <th>Unsur Hitungan</th>
                                                     <th width="200"></th>
                                                 </tr>
                                             </thead>
@@ -61,7 +61,7 @@
                                                     <tr>
                                                         <td><?= $i + 1 ?></td>
                                                         <td><?= $element['nama_parameter'] ?></td>
-                                                        <td><?= $element['isaktif'] ? 'Aktif' : 'Tidak Aktif' ?></td>
+                                                        <td><?= $element['isaktif'] ? 'Ya' : 'Tidak' ?></td>
                                                         <td>
                                                             <button type="button" class="btn btn-info" data-toggle="modal" onclick="updateData('<?= $element['id'] ?>', '<?= $element['nama_parameter'] ?>', '<?= $element['isaktif'] ?>')" data-target="#update">Update</button>
                                                             <button type="button" class="btn btn-warning" data-toggle="modal" onclick="deleteData('<?= $element['id'] ?>')" data-target="#delete">Hapus</button>
@@ -129,10 +129,10 @@
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label class="text-small">Aktif</label>
+                                <label class="text-small">Unsur Hitungan</label>
                                 <select class="form-control text-black" id="isaktif" name="isaktif">
-                                        <option value="1">Aktif</option>
-                                        <option value="0">Tidak</option>
+                                    <option value="1">Ya</option>
+                                    <option value="0">Tidak</option>
                                 </select>
                             </div>
                         </div>
