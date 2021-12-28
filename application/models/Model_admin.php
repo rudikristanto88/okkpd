@@ -209,19 +209,19 @@ class Model_admin extends MY_Model
     return $query->result_array();
   }
 
-   /// function to fetch sertifikat of layanan SPPB
-   function getsertifikatSPPB($id = null, $unduh = false)
-   {
-     $this->db->select("*,detail_identitas_sppb.nomor_sertifikat,detail_identitas_sppb.sertifikat as sertifikat_produk, detail_identitas_sppb.mime_type as tipe_sertifikat_produk");
-     $this->db->from('detail_identitas_sppb');
-     $this->db->join('layanan', "detail_identitas_sppb.id_layanan = layanan.uid");
-     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
-     if ($id != null) {
-       $this->db->where("detail_identitas_sppb.id", $id);
-     }
-     $query = $this->db->get();
-     return $query->result_array();
-   }
+  /// function to fetch sertifikat of layanan SPPB
+  function getsertifikatSPPB($id = null, $unduh = false)
+  {
+    $this->db->select("*,detail_identitas_sppb.nomor_sertifikat,detail_identitas_sppb.sertifikat as sertifikat_produk, detail_identitas_sppb.mime_type as tipe_sertifikat_produk");
+    $this->db->from('detail_identitas_sppb');
+    $this->db->join('layanan', "detail_identitas_sppb.id_layanan = layanan.uid");
+    $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
+    if ($id != null) {
+      $this->db->where("detail_identitas_sppb.id", $id);
+    }
+    $query = $this->db->get();
+    return $query->result_array();
+  }
 
   /// function to fetch sertifikat of layanan PSAT
   function getsertifikatPSAT($id = null, $unduh = false)
@@ -276,7 +276,7 @@ class Model_admin extends MY_Model
   function getsertifikatUjiMutu($id = null, $unduh = false)
   {
     $this->db->select("layanan.kode_layanan,identitas_usaha.nama_usaha,  layanan.sertifikat as sertifikat_produk,layanan.mime_type as tipe_sertifikat_produk,layanan.kodelhu");
-    $this->db->from('layanan_ujimutu layanan'); 
+    $this->db->from('layanan_ujimutu layanan');
     $this->db->join('identitas_usaha', "layanan.id_identitas_usaha = identitas_usaha.id_identitas_usaha");
     if ($id != null) {
       $this->db->where("uid", $id);
@@ -284,7 +284,7 @@ class Model_admin extends MY_Model
     $query = $this->db->get();
     return $query->result_array();
   }
-  
+
   function getKeluhanSaran($jenis)
   {
     $this->db->select("*");
@@ -319,24 +319,24 @@ class Model_admin extends MY_Model
 
   function getReportSurvey($periode)
   {
-    $query = "SELECT master_parameter.nama_parameter, master_parameter.id as id_parameter,
-    AVG(nilai) avg_nilai, AVG(kepentingan) avg_kepentingan
-    FROM `survey_data`
-    join survey_kuesioner on survey_data.id = survey_kuesioner.id_survey
-    join master_kuesioner on survey_kuesioner.id_kuesioner = master_kuesioner.id
-    join master_parameter on master_kuesioner.id_parameter = master_parameter.id
-    where id_periode = ".$periode."
-    and master_kuesioner.jenis = 'ujimutu'
-    group by id_parameter
-    order by master_parameter.id";
+    $query = "SELECT master_parameter.*, avg_nilai, avg_kepentingan FROM `master_parameter`
+LEFT JOIN master_kuesioner on master_parameter.id = master_kuesioner.id_parameter
+LEFT JOIN (SELECT AVG(nilai) avg_nilai, AVG(kepentingan) avg_kepentingan, id_kuesioner
+FROM `survey_data`
+join survey_kuesioner on survey_data.id = survey_kuesioner.id_survey
+where id_periode = " . $periode . " 
+group by id_kuesioner) as hasil_kuesioner on master_kuesioner.id = hasil_kuesioner.id_kuesioner
+order by master_parameter.id";
+
     $report = $this->db->query($query)->result_array();
 
     $data = array();
     $result = array();
     $total_ikm = 0;
     $total_konversi = 0;
-    foreach($report as $element){
-      $element["nilai_konversi"] = $element["avg_nilai"] * 25;
+    foreach ($report as $element) {
+      $element["avg_nilai"] = round($element["avg_nilai"],2);
+      $element["nilai_konversi"] = round($element["avg_nilai"] * 25,2);
 
       $total_ikm += $element["avg_nilai"];
       $total_konversi += $element["nilai_konversi"];
@@ -347,35 +347,36 @@ class Model_admin extends MY_Model
 
       array_push($data, $element);
     }
-    $result["total_nilai"] = $total_ikm;
-    $result["avg_total_nilai"] = $total_ikm / sizeof($report);
-    $result["total_konversi"] = $total_konversi;
-    $result["avg_total_konversi"] = $total_konversi / sizeof($report);
+    $result["total_nilai"] = round($total_ikm,2);
+    $result["avg_total_nilai"] = round($total_ikm / sizeof($report),2);
+    $result["total_konversi"] = round($total_konversi,2);
+    $result["avg_total_konversi"] = round($total_konversi / sizeof($report),2);
 
     $total_mutu = $this->getMutuPelayanan($result["avg_total_konversi"]);
 
-    $result["mutu_pelayanan"] = $total_mutu["mutu_pelayanan"];
-    $result["ukuran_kinerja"] = $total_mutu["ukuran_kinerja"];
+    $result["mutu_pelayanan"] = round($total_mutu["mutu_pelayanan"],2);
+    $result["ukuran_kinerja"] = round($total_mutu["ukuran_kinerja"],2);
     $result["data"] = $data;
 
     return $result;
   }
 
-  private function getMutuPelayanan($nilai){
+  private function getMutuPelayanan($nilai)
+  {
     $data = array();
-    if($nilai <= 64.9){
+    if ($nilai <= 64.9) {
       $data["mutu_pelayanan"] = "D";
       $data["ukuran_kinerja"] = "Tidak Baik";
-    }else if($nilai <= 76.6){
+    } else if ($nilai <= 76.6) {
       $data["mutu_pelayanan"] = "C";
       $data["ukuran_kinerja"] = "Kurang Baik";
-    }else if($nilai <= 88.3){
+    } else if ($nilai <= 88.3) {
       $data["mutu_pelayanan"] = "B";
       $data["ukuran_kinerja"] = "Baik";
-    }else if($nilai <= 100){
+    } else if ($nilai <= 100) {
       $data["mutu_pelayanan"] = "A";
       $data["ukuran_kinerja"] = "Sangat Baik";
-    }else{
+    } else {
       $data["mutu_pelayanan"] = "-";
       $data["ukuran_kinerja"] = "-";
     }
@@ -384,19 +385,19 @@ class Model_admin extends MY_Model
 
   function getSurvey($periode = null)
   {
-    $where = $periode != null ? "Where survey_data.id_periode = ".$periode : "";
-    $query = "SELECT * FROM survey_data ".$where;
+    $where = $periode != null ? "Where survey_data.id_periode = " . $periode : "";
+    $query = "SELECT * FROM survey_data " . $where;
     return $this->db->query($query)->result_array();
   }
 
-  function getKuesioner($jenis = null){
-    $whereJenis = $jenis != null ? " AND jenis = '".$jenis."'" : ""; 
+  function getKuesioner($jenis = null)
+  {
     $this->db->select("master_kuesioner.*, master_parameter.id as id_parameter, master_parameter.nama_parameter");
     $this->db->from("master_kuesioner");
-    $this->db->join("master_parameter","master_kuesioner.id_parameter = master_parameter.id");
-    $this->db->where("deleted","0");
-    if($jenis != null){
-      $this->db->where("jenis",$jenis);
+    $this->db->join("master_parameter", "master_kuesioner.id_parameter = master_parameter.id");
+    $this->db->where("deleted", "0");
+    if ($jenis != null) {
+      $this->db->where("jenis", $jenis);
     }
     $query = $this->db->get();
     return $query->result_array();
