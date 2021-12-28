@@ -111,6 +111,40 @@ color: #66DC71;
 }
 </style>
 
+<?php 
+
+function setTanggal($bulan, $tanggal){
+  return $tanggal == null || $tanggal == '0000-00-00' ? '-' : date('d', strtotime($tanggal))
+    . ' '
+    . $bulan[date('n', strtotime($tanggal)) - 1]
+    . ' '
+    . date('Y', strtotime($tanggal));
+}
+
+$data = array(
+  array(
+    "tanggal" => setTanggal($bulan, $status['tanggalSampleLab']),
+    "status" => $status['sampleLab'],
+    "title" => $status['sampleLab'] == 0 ? 'Menunggu Sample' : 'Sample Diterima'
+  ),
+  array(
+    "tanggal" => setTanggal($bulan, $status['tanggalValidLab']),
+    "status" => $status['validLab'],
+    "title" => $status['validLab'] == 0 ? 'Menunggu Validasi' : 'Tervalidasi'
+  ),
+  array(
+    "tanggal" => setTanggal($bulan, $status['tanggalManTek']),
+    "status" => $status['validManTek'],
+    "title" => $status['validManTek'] == 0 || $status['validManTek'] == 2 ? 'Menunggu Hasil' : 'Validasi Manager Teknis'
+  ),
+  array(
+    "tanggal" => setTanggal($bulan, $status['tglcetak']),
+    "status" => $status['tglcetak'] == '0000-00-00' ? 0 : 1,
+    "title" => $status['tglcetak'] == '0000-00-00' ? 'Proses Validasi LHU' : 'Sudah Terbit'
+  )
+);
+?>
+
 <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600,700' rel='stylesheet' type='text/css'>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -118,73 +152,19 @@ color: #66DC71;
 <div style="overflow-x:scroll" class="scrollbar" id="style-6">
 
 <ul class="timelines" id="timeline" style="width:100%">
-  <?php if ($status['tanggalSampleLab'] != null): ?>
-  <li class="li complete">
+
+<?php foreach($data as $element): ?>
+  <li class="li <?= $element['status'] == '1' ? 'complete' : 'uncomplete' ?>">
     <div class="timestamp">
-        <span class="date"><?= date(
-            'd',
-            strtotime($status['tanggalSampleLab'])
-        ) .
-            ' ' .
-            $bulan[date('n', strtotime($status['tanggalSampleLab'])) - 1] .
-            ' ' .
-            date('Y', strtotime($status['tanggalSampleLab'])) ?><span>
+        <span class="date"><?= $element['tanggal'] ?><span>
     </div>
     <div class="status">
-      <h4>Manager Admin </h4>
+      <h5><?= $element['title']  ?>  </h5>
     </div>
   </li>
-<?php endif; ?>
+<?php endforeach; ?>
 
-<?php if ($status['tanggalValidLab'] != null): ?>
-<li class="li complete">
-  <div class="timestamp">
-    <span class="date"><?= date('d', strtotime($status['tanggalValidLab'])) .
-        ' ' .
-        $bulan[date('n', strtotime($status['tanggalValidLab'])) - 1] .
-        ' ' .
-        date('Y', strtotime($status['tanggalValidLab'])) ?><span>
-  </div>
-  <div class="status">
-    <h4>Menunggu Layanan</h4>
-  </div>
-</li>
-<?php endif; ?>
-
-<?php if ($status['tanggalManTek'] != null): ?>
-<li class="li complete">
-  <div class="timestamp">
-
-    <span class="date"><?= date('d', strtotime($status['tanggalManTek'])) .
-        ' ' .
-        $bulan[date('n', strtotime($status['tanggalManTek'])) - 1] .
-        ' ' .
-        date('Y', strtotime($status['tanggalManTek'])) ?><span>
-  </div>
-  <div class="status">
-    <h4>Pengambilan Contoh</h4>
-  </div>
-</li>
-<?php endif; ?>
-
-<?php if (
-    $status['tglcetak'] != null ||
-    $status['tglcetak'] != '0000-00-00'
-): ?>
-<li class="li complete">
-  <div class="timestamp">
-    
-    <span class="date"><?= date('d', strtotime($status['tglcetak'])) .
-        ' ' .
-        $bulan[date('n', strtotime($status['tglcetak'])) - 1] .
-        ' ' .
-        date('Y', strtotime($status['tglcetak'])) ?><span>
-  </div>
-  <div class="status">
-    <h4>Uji Laboratorium</h4>
-  </div>
-</li>
-<?php endif; ?>
+</ul>
 
 </div>
 

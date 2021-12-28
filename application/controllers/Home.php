@@ -384,20 +384,7 @@ class Home extends MY_Controller
 
 		$this->loadViewHome('default/hs', $data);
 	}
-	//
-	// public function penerbitan_hygne_sanitation()
-	// {
-	// 	$data['islogin'] = false;
-	//
-	// 	if($this->session->userdata("dataLogin") != null){
-	// 		$data['islogin'] = true;
-	// 	}
-	// 	$this->load->view('default/template/header',$data);
-	// 	$this->load->view('default/template/navigation-small');
-	// 	$this->load->view('default/hs');
-	// 	$this->load->view('default/template/footer');
-	// }
-
+	
 	public function aktivasi()
 	{
 		$email_to = 'yogaadidr@gmail.com';
