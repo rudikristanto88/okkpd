@@ -9,8 +9,8 @@
                                     <i class="material-icons">home</i>
                                     Beranda</a>
                             </li>
+                            <li class="breadcrumb-item active"><a href="<?= base_url() ?>dashboard/akun_pelaku_usaha">Kelola Akun Pelaku Usaha </a></li>
                             <li class="breadcrumb-item active">Identitas Usaha</li>
-
                         </ul>
                     </div>
                 </div>
@@ -22,58 +22,72 @@
                         <div class="header">
                             <h2>
                                 <strong>Identitas Usaha</strong></h2>
-                           
                         </div>
                         <div class="body">
-                          <?php
-                          if($this->session->flashdata("status")){
-                            echo $this->session->flashdata("status");
-                          }
-                          ?>
-
-
-                          <?php if($datalogin['punya_usaha'] == 0 && $datalogin['kode_role'] == "pelaku"):
-                            echo '<span>Daftarkan usaha anda</span><br/>';
-                            echo '<a href="'.base_url().'dashboard/daftar_usaha" id="btn-daftar" class="btn btn-primary">Daftar</a>';
-                          else: ?>
-
+                          <?php if ($this->session->flashdata('status')) {
+                              echo $this->session->flashdata('status');
+                          } ?>
                           <table class="table">
                             <tr>
                               <th width="200px;">Jenis Usaha :</th>
-                              <th><input class="text-white" type="text" value="<?=$usaha['jenis_usaha'] ?>" /> </th>
+                              <th><input class="text-white" type="text" readonly value="<?= $akun[
+                                  'jenis_usaha'
+                              ] ?>" /> </th>
                             </tr>
                               <tr>
                                 <th>Nama Usaha :</th>
-                                <th><input class="text-white" type="text" value="<?=$usaha['nama_usaha'] ?>" /> </th>
+                                <th><input class="text-white" type="text" readonly value="<?= $akun[
+                                    'nama_usaha'
+                                ] ?>" /> </th>
+                              </tr>
+                              <tr>
+                                <th>Nama Akun :</th>
+                                <th><input class="text-white" type="text" readonly value="<?= $akun[
+                                    'nama_lengkap'
+                                ] ?>" /> </th>
+                              </tr>
+                              <tr>
+                                <th>Nama Pelaku Usaha :</th>
+                                <th><input class="text-white" type="text" readonly value="<?= $akun[
+                                    'nama_pemohon'
+                                ] ?>" /> </th>
+                              </tr>
+                              <tr>
+                                <th>Email :</th>
+                                <th><input class="text-white" type="text" readonly value="<?= $akun[
+                                    'username'
+                                ] ?>" /> </th>
+                              </tr>
+                              <tr>
+                                <th>Nama Akun :</th>
+                                <th><input class="text-white" type="text" readonly value="<?= $akun[
+                                    'nama_lengkap'
+                                ] ?>" /> </th>
                               </tr>
                               <tr>
                                 <th>Alamat Usaha :</th>
-                                <th><input class="text-white" type="text" readonly value="<?=$usaha['alamat_usaha']." RT ".$usaha['rt']." RW ".$usaha['rw']." Kec. ".$usaha['kecamatan']." Kel. ".$usaha['kelurahan'].", ".$usaha['kota']." Jawa Tengah" ?>" /></th>
+                                <th><input class="text-white" type="text" readonly value="<?= $akun[
+                                    'alamat_usaha'
+                                ] .
+                                    ' RT ' .
+                                    $akun['rt'] .
+                                    ' RW ' .
+                                    $akun['rw'] .
+                                    ' Kec. ' .
+                                    $akun['kecamatan'] .
+                                    ' Kel. ' .
+                                    $akun['kelurahan'] .
+                                    ', ' .
+                                    $akun['kota'] .
+                                    ' Jawa Tengah' ?>" /></th>
                               </tr>
                               <tr>
                                 <th>Nomor Telepon Usaha</th>
-                                <th><input class="text-white" type="text" value="<?=$usaha['no_telp'] ?>" /> </th>
+                                <th><input class="text-white" type="text" readonly value="<?= $akun[
+                                    'no_telp'
+                                ] ?>" /> </th>
                               </tr>
-                              <tr>
-                                <th style="vertical-align:top">Foto KTP</th>
-                                <th><input class="text-white" type="text" value="<?=$usaha['no_telp'] ?>" /> </th>
-                                <th>: <?php echo '<img src="data:image/jpeg;base64,'.base64_encode( $usaha['foto_ktp'] ).'" style="width:200px;"/>'; ?></th>
-                              </tr>
-                              <tr>
-                                <th>Foto NPWP</th>
-                                <th>: <?php echo '<img src="data:image/jpeg;base64,'.base64_encode( $usaha['foto_npwp'] ).'" style="width:200px;"/>'; ?></th>
-                              </tr>
-                              <tr>
-                                <th>Kop Surat</th>
-                                <th>: <?php echo '<img src="data:image/jpeg;base64,'.base64_encode( $usaha['kop_surat'] ).'" style="width:200px;"/>'; ?></th>
-                              </tr>
-
                           </table>
-
-                          <!-- <a href="" class="btn btn-info">Simpan data</a><br/><br/> -->
-
-                          <?php endif; ?>
-
                         </div>
                     </div>
                 </div>

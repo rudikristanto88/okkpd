@@ -9,7 +9,7 @@
                 <i class="material-icons">home</i>
                 Beranda</a>
               </li>
-              <li class="breadcrumb-item active">Dashboard</li>
+              
               <li class="breadcrumb-item active">Gambar Slider</li>
             </ul>
           </div>

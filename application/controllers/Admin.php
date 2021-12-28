@@ -92,12 +92,17 @@ class Admin extends MY_Controller
     }
   }
 
-  public function akun_pelaku_usaha($detail = false)
+  public function akun_pelaku_usaha($id = null)
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
-    $data['akun'] = $this->model_user->getUserDetail();
+    $data['akun'] = $this->model_user->getUserDetail($id);
 
-    if($detail){
+    if($id != null){
+      if(sizeof($data['akun'])==0 || $data['akun'][0]['nama_pemohon'] == ''){
+        $this->session->set_flashdata("status", "<div class='alert alert-warning'>Akun belum mendaftarkan usaha</div>");
+				header("location:" . base_url(). 'dashboard/akun_pelaku_usaha');
+      }
+      $data['akun'] = $data['akun'][0];
       $this->loadView('dashboard_view/admin/detail_pelaku_usaha', $data);
     }else{
       $this->loadView('dashboard_view/admin/akun_pelaku_usaha', $data);

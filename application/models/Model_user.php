@@ -48,12 +48,16 @@ class Model_user extends MY_Model
     return $query->result_array();
   }
 
-  public function getUserDetail()
+  public function getUserDetail($id_user)
   {
     $this->db->select("a.*, b.*");
     $this->db->from('user a');
     $this->db->join('identitas_usaha as b', "a.id_user=b.id_user","left");
     $this->db->where('a.kode_role', 'pelaku');
+    if($id_user!=null){
+      $this->db->where('a.id_user', $id_user);
+    }
+    
     $query = $this->db->get();
     return $query->result_array();
   }
