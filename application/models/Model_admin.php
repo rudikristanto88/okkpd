@@ -354,8 +354,8 @@ order by master_parameter.id";
 
     $total_mutu = $this->getMutuPelayanan($result["avg_total_konversi"]);
 
-    $result["mutu_pelayanan"] = round($total_mutu["mutu_pelayanan"],2);
-    $result["ukuran_kinerja"] = round($total_mutu["ukuran_kinerja"],2);
+    $result["mutu_pelayanan"] = $total_mutu["mutu_pelayanan"];
+    $result["ukuran_kinerja"] = $total_mutu["ukuran_kinerja"];
     $result["data"] = $data;
 
     return $result;
