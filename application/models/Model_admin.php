@@ -320,13 +320,13 @@ class Model_admin extends MY_Model
   function getReportSurvey($periode)
   {
     $query = "SELECT master_parameter.*, avg_nilai, avg_kepentingan FROM `master_parameter`
-LEFT JOIN master_kuesioner on master_parameter.id = master_kuesioner.id_parameter
-LEFT JOIN (SELECT AVG(nilai) avg_nilai, AVG(kepentingan) avg_kepentingan, id_kuesioner
-FROM `survey_data`
-join survey_kuesioner on survey_data.id = survey_kuesioner.id_survey
-where id_periode = " . $periode . " 
-group by id_kuesioner) as hasil_kuesioner on master_kuesioner.id = hasil_kuesioner.id_kuesioner
-order by master_parameter.id";
+    LEFT JOIN master_kuesioner on master_parameter.id = master_kuesioner.id_parameter
+    LEFT JOIN (SELECT AVG((nilai + kepentingan) / 2) avg_nilai, AVG(kepentingan) avg_kepentingan, id_kuesioner
+    FROM `survey_data`
+    join survey_kuesioner on survey_data.id = survey_kuesioner.id_survey
+    where id_periode = " . $periode . " 
+    group by id_kuesioner) as hasil_kuesioner on master_kuesioner.id = hasil_kuesioner.id_kuesioner
+    order by master_parameter.id";
 
     $report = $this->db->query($query)->result_array();
 
@@ -335,11 +335,16 @@ order by master_parameter.id";
     $total_ikm = 0;
     $total_konversi = 0;
     foreach ($report as $element) {
-      $element["avg_nilai"] = round($element["avg_nilai"],2);
-      $element["nilai_konversi"] = round($element["avg_nilai"] * 25,2);
-
-      $total_ikm += $element["avg_nilai"];
-      $total_konversi += $element["nilai_konversi"];
+      if($element["nama_parameter"] == 'Biaya'){
+        $element["avg_nilai"] = round( 1 - $element["avg_nilai"],2);
+        $element["nilai_konversi"] = round($element["avg_nilai"] * 100,2);
+      }else{
+        $element["avg_nilai"] = round($element["avg_nilai"],2);
+        $element["nilai_konversi"] = round($element["avg_nilai"] * 25,2);
+  
+        $total_ikm += $element["avg_nilai"];
+        $total_konversi += $element["nilai_konversi"];
+      }
 
       $mutu = $this->getMutuPelayanan($element["nilai_konversi"]);
       $element["mutu_pelayanan"] = $mutu["mutu_pelayanan"];

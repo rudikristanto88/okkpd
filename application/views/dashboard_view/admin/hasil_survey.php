@@ -76,21 +76,21 @@
                           </tr>
                         <?php $i++;
                         endforeach; ?>
-                        <tr>
+                         <tr style="font-size:16px">
                             <td ></td>
                             <td ><b>JUMLAH</b></td>
-                            <td><?= $report_survey['total_nilai'] ?></td>
-                            <td><?= $report_survey['total_konversi'] ?></td>
+                            <td><b><?= $report_survey['total_nilai'] ?></b></td>
+                            <td><b><?= $report_survey['total_konversi'] ?></b></td>
                             <td></td>
                             <td></td>
                           </tr>
-                         <tr>
+                         <tr style="font-size:16px">
                            <td ></td>
                            <td ><b>NILAI IKM</b></td>
-                            <td><?= $report_survey['avg_total_nilai'] ?></td>
-                            <td><?= $report_survey['avg_total_konversi'] ?></td>
-                            <td><?= $report_survey['mutu_pelayanan'] ?></td>
-                            <td><?= $report_survey['ukuran_kinerja'] ?></td>
+                            <td><b><?= $report_survey['avg_total_nilai'] ?></b></td>
+                            <td><b><?= $report_survey['avg_total_konversi'] ?></b></td>
+                            <td><b><?= $report_survey['mutu_pelayanan'] ?></b></td>
+                            <td><b><?= $report_survey['ukuran_kinerja'] ?></b></td>
                           </tr>
                       </tbody>
                     </table>
