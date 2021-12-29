@@ -61,7 +61,7 @@ if (strpos($domain, 'localhost') !== false || $domain == 'cli')
    define('ENVIRONMENT', 'development');
 }
 else {
-   define('ENVIRONMENT', 'development');
+   define('ENVIRONMENT', 'production');
 }
 
 // define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
