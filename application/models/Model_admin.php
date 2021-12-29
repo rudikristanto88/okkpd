@@ -431,6 +431,14 @@ class Model_admin extends MY_Model
     return $this->db->query($query)->result_array();
   }
 
+  function getAllPeriode(){
+    $query = "SELECT master_periode.*, total_survey FROM master_periode
+    LEFT JOIN (select id_periode, count(*) total_survey from survey_data group by id_periode) as survey_data ON survey_data.id_periode = master_periode.id
+    group by master_periode.id
+    order by id desc";
+    return $this->db->query($query)->result_array();
+  }
+
   function duplicateSurvey($old_periode, $new_periode)
   {
     $query = "INSERT INTO master_kuesioner (pertanyaan, jenis, deleted, tipe, status,id_parameter, nama_parameter,hitungan, id_periode)

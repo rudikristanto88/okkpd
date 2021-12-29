@@ -1535,7 +1535,7 @@ class Admin extends MY_Controller
 
   function kelola_periode()
   {
-    $data['kuesioner'] = $this->model_admin->getAllData("master_periode", "id", "desc");
+    $data['kuesioner'] = $this->model_admin->getAllPeriode();
     $this->loadView('dashboard_view/admin/kelola_periode', $data);
   }
 

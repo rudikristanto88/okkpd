@@ -54,8 +54,8 @@
                                                 <tr>
                                                     <th width="100">No</th>
                                                     <th>Nama Periode</th>
-                                                    <th>Aktif</th>
-                                                    <th width="250"></th>
+                                                    <th>Status</th>
+                                                    <th width="250">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="body_table">
@@ -66,11 +66,12 @@
                                                         <td><?= $element['nama_periode'] ?></td>
                                                         <td><?= $element['isaktif'] ? 'Aktif' : 'Tidak Aktif' ?></td>
                                                         <td>
-                                                        <?php if($element['isaktif']  == 0) : ?>
+                                                        <?php if($element['isaktif']  == 0 && $element['total_survey'] == 0) : ?>
                                                             <button type="button" class="btn btn-info" data-toggle="modal" onclick="updateData('<?= $element['id'] ?>', '<?= $element['nama_periode'] ?>', '<?= $element['isaktif'] ?>')" data-target="#update">Update</button>
                                                             <button type="button" class="btn btn-warning" data-toggle="modal" onclick="deleteData('<?= $element['id'] ?>')" data-target="#delete">Hapus</button>
                                                             <button type="button" class="btn btn-success" data-toggle="modal" onclick="aktifkanData('<?= $element['id'] ?>')" data-target="#aktif">Aktifkan</button>
-                                                            <?php endif; ?>
+                                                        <?php endif; ?>
+
                                                         </td>
                                                     </tr>
                                                 <?php $i++;
@@ -124,7 +125,8 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Apakah anda yakin untuk mengaktifkan periode ini?</p>
+                <p>Anda Yakin Dilanjutkan Proses ini? 
+Jika Anda pilih Ya, maka fasilitas Update dan Hapus akan ditutup, sekaliguas Peride SKM yang lain akan di-Non Aktifkan</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
