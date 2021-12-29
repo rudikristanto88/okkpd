@@ -9,7 +9,7 @@
                                 <i class="material-icons">home</i>
                                 Home</a>
                         </li>
-                        <li class="breadcrumb-item active">Kelola Periode</li>
+                        <li class="breadcrumb-item active">Kelola Periode dan Aktivasi Lembar SKM</li>
                     </ul>
                 </div>
             </div>
