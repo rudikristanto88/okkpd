@@ -337,11 +337,13 @@ class Model_admin extends MY_Model
     $total_ikm = 0;
     $total_konversi = 0;
     $total_nilai = 0;
+    $total_kepentingan = 0;
     $exclude_column = "";
     foreach ($report as $element) {
       if($element['hitungan'] == 0){
-
         $exclude_column .= $exclude_column == "" ? $element['nama_parameter'] : ", ".$element['nama_parameter'];
+      }else{
+        
       }
 
       if ($element["tipe"] != "Skor") {
@@ -351,9 +353,12 @@ class Model_admin extends MY_Model
         $element["avg_total"] = round($element["avg_total"], 2);
         $element["nilai_konversi"] = round($element["avg_total"] * 25, 2);
 
-        $total_ikm += $element["avg_total"];
-        $total_nilai += $element["avg_nilai"];
-        $total_konversi += $element["nilai_konversi"];
+        if($element['hitungan'] == 1){
+          $total_ikm += $element["avg_total"];
+          $total_nilai += $element["avg_nilai"];
+          $total_kepentingan += $element["avg_kepentingan"];
+          $total_konversi += $element["nilai_konversi"];
+        }
       }
 
       $mutu = $this->getMutuPelayanan($element["nilai_konversi"]);
@@ -372,7 +377,7 @@ class Model_admin extends MY_Model
     $result["mutu_pelayanan"] = $total_mutu["mutu_pelayanan"];
     $result["ukuran_kinerja"] = $total_mutu["ukuran_kinerja"];
     $result["index_kepuasan"] = $total_nilai / 8 * 25;
-    $result["index_kepentingan"] = $total_konversi / 8 * 25;
+    $result["index_kepentingan"] = $total_kepentingan / 8 * 25;
     $result["exclude_column"] = $exclude_column;
     $result["data"] = $data;
     return $result;
