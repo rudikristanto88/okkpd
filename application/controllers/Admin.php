@@ -1396,12 +1396,15 @@ class Admin extends MY_Controller
     $data['periode'] = $this->input->get("periode");
     $data['nama_periode'] = "";
 
-    foreach ($data['list_periode'] as $periode) {
-      if ($data['periode'] == null) {
+    if ($data['periode'] == null) {
+      foreach ($data['list_periode'] as $periode) {
         if ($periode['isaktif'] == 1) {
           $data['periode'] = $periode['id'];
         }
       }
+    }
+
+    foreach($data["list_periode"] as $periode){
       if($periode["id"] == $data["periode"]){
         $data['nama_periode'] = $periode['nama_periode'];
       }
