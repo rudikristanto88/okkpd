@@ -182,6 +182,13 @@
                             </div>
                         </div>
 
+                        <div class="col-sm-6">
+                            <div class="input-field">
+                                <input type="text" value="<?= $nama_periode ?>" readonly>
+                                <label for="pertanyaan">Periode</label>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -198,6 +205,7 @@
 
 <script type="text/javascript">
     var action = "Tambah";
+
     var defaultKuesioner = {
         id: 0,
         pertanyaan: '',
@@ -239,4 +247,5 @@
     function lihatSurvey(tahun) {
         $("#formTahun").submit();
     }
+
 </script>

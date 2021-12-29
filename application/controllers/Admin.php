@@ -1394,12 +1394,16 @@ class Admin extends MY_Controller
   {
     $data['list_periode'] = $this->model_admin->getAllData("master_periode", "id", "desc");
     $data['periode'] = $this->input->get("periode");
+    $data['nama_periode'] = "";
 
-    if ($data['periode'] == null) {
-      foreach ($data['list_periode'] as $periode) {
+    foreach ($data['list_periode'] as $periode) {
+      if ($data['periode'] == null) {
         if ($periode['isaktif'] == 1) {
           $data['periode'] = $periode['id'];
         }
+      }
+      if($periode["id"] == $data["periode"]){
+        $data['nama_periode'] = $periode['nama_periode'];
       }
     }
 
