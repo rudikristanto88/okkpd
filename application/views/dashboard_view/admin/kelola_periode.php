@@ -161,7 +161,7 @@
                         <div class="col-sm-12" id="selectPeriode">
                             <div class="form-group">
                                 <label class="text-small">Periode</label>
-                                <select required class="form-control text-black" id="old_periode" name="old_periode">
+                                <select class="form-control text-black" id="old_periode" name="old_periode">
                                     <?php foreach ($kuesioner as $element) : ?>
                                         <option value="<?= $element["id"] ?>"><?= $element["nama_periode"] ?></option>
                                     <?php endforeach; ?>

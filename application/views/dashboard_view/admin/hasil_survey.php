@@ -31,7 +31,33 @@
                 <div class="card">
                   <div class="header">
                     <h2><strong>Hasil</strong> Survey</h2>
+                    <ul class="header-dropdown m-r--5">
+                      <li class="dropdown">
+                        <button
+                          href="javascript:void(0);"
+                          class="btn btn-secondary dropdown-toggle"
+                          data-toggle="dropdown"
+                          role="button"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          <span>Aksi</span> <i class="material-icons">more_vert</i>
+                        </button>
+                        <ul class="dropdown-menu pull-right">
+                          <li>
+                            <a
+                              style="cursor: pointer"
+                              data-toggle="modal"
+                              onclick="tambahData()"
+                              data-target="#update"
+                              >Unduh</a
+                            >
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
                   </div>
+                  
                   <div class="container-fluid">
                     <div class="row">
                       <div class="col-md-12">Periode</div>
