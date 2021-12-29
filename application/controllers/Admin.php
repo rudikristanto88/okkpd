@@ -73,7 +73,6 @@ class Admin extends MY_Controller
 
         $cek = sizeof($this->model_user->getDataWhere('info_layanan', 'kode_layanan', $jenis));
         $hasil = "";
-        echo $cek;
         if ($cek > 0) {
           $data = array($data_ubah => $value);
           $hasil = $this->model_user->updateData('info_layanan', $jenis, 'kode_layanan', $data);

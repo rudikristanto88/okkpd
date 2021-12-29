@@ -155,12 +155,12 @@
                                 <input name="id" type="hidden" id="id">
                                 <input name="isaktif" type="hidden"  value="0">
                                 <input id="nama_periode" name="nama_periode" type="text" required>
-                                <label for="nama_periode">Nama Periode</label>
+                                <label for="nama_periode">Nama Periode Baru (Target)</label>
                             </div>
                         </div>
                         <div class="col-sm-12" id="selectPeriode">
                             <div class="form-group">
-                                <label class="text-small">Periode</label>
+                                <label class="text-small">Pilih Periode (Source)</label>
                                 <select class="form-control text-black" id="old_periode" name="old_periode">
                                     <?php foreach ($kuesioner as $element) : ?>
                                         <option value="<?= $element["id"] ?>"><?= $element["nama_periode"] ?></option>
@@ -179,7 +179,6 @@
         </form>
     </div>
 </div>
-
 
 <script type="text/javascript">
     var action = "Tambah";
