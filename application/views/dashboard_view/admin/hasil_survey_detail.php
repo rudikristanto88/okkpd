@@ -50,7 +50,8 @@
                           if ($element[0] != "kecamatan" && $element[0] != "kota" && $element[0] != "provinsi") : ?>
                             <tr>
                               <td width="300"><?= $element[1] ?></td>
-                              <td>: <?= $element[0] == 'nama' ? $data_survey['show_nama'] == 0 ? 'NN' : $data_survey[$element[0]] : $data_survey[$element[0]] ?></td>
+                              <td>: <?= $element[0] != 'kode_layanan' ? $data_survey['show_nama'] == 0 ? 'NN' : $data_survey[$element[0]] : 
+                              $data_survey[$element[0]] ?></td>
                             </tr>
                           <?php endif; ?>
                         <?php endforeach; ?>
@@ -139,6 +140,11 @@
                           </tr>
                         <?php $i++;
                         endforeach; ?>
+                        <tr>
+                          <td style="vertical-align: middle;"></td>
+                          <td width="auto" style="vertical-align: middle;">Masukan / Saran</td>
+                          <td colspan="2"><?= $data_survey['saran'] ?></td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>

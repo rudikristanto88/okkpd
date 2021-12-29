@@ -409,7 +409,12 @@ class Model_admin extends MY_Model
   function getSurvey($periode = null)
   {
     $where = $periode != null ? "Where survey_data.id_periode = " . $periode : "";
-    $query = "SELECT `survey_data`.*, layanan_ujimutu.kodelhu as nomor_sertifikat FROM `survey_data`
+    $query = "SELECT `survey_data`.*, layanan_ujimutu.kodelhu as nomor_sertifikat, coalesce(have_data,0) have_data FROM `survey_data`
+    left join (SELECT 1 as have_data,id_survey FROM `survey_kuesioner` join master_kuesioner on survey_kuesioner.id_kuesioner = master_kuesioner.id
+    where master_kuesioner.id_periode = 8
+    and tipe = 'Yes/No'
+    and nilai = 1 
+    group by id_survey) survey_kuesioner on survey_data.id = survey_kuesioner.id_survey
     left join layanan_ujimutu on survey_data.id = layanan_ujimutu.id_survey " . $where;
     return $this->db->query($query)->result_array();
   }

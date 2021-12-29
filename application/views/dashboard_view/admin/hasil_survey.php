@@ -153,14 +153,14 @@
                       <tbody>
                         <?php $i = 1;
                         foreach ($hasil_survey as $element) : ?>
-                          <tr>
+                          <tr <?=  $element['have_data'] == 1 ? "style='color:yellow'" : "" ?>>
                             <td><?= $i ?>.</td>
                             <td><?= $element['show_nama'] == 0 ? 'NN' : $element['nama'] ?></td>
-                            <td><?= $element['email'] ?></td>
-                            <td><?= $element['umur'] ?></td>
-                            <td><?= $element['no_telp'] ?></td>
-                            <td><?= $element['alamat'] ?></td>
-                            <td><?= $element['pendidikan'] ?></td>
+                            <td><?= $element['show_nama'] == 0 ? 'NN' : $element['email'] ?></td>
+                            <td><?= $element['show_nama'] == 0 ? 'NN' : $element['umur'] ?></td>
+                            <td><?= $element['show_nama'] == 0 ? 'NN' : $element['no_telp'] ?></td>
+                            <td><?= $element['show_nama'] == 0 ? 'NN' : $element['alamat'] ?></td>
+                            <td><?= $element['show_nama'] == 0 ? 'NN' : $element['pendidikan'] ?></td>
                             <td><?= $element['kode_layanan'] == 'lab_ungaran' ? 'Pelayanan Laboratorium Ungaran' : 'Pelayanan Laboratorium Surakarta' ?></td>
                             <td><?= $element['nomor_sertifikat'] ?></td>
                             <td><?= $element['tanggal_survey'] ?></td>
