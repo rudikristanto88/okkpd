@@ -184,7 +184,7 @@
 
                         <div class="col-sm-6">
                             <div class="input-field">
-                                <input type="text" value="<?= $nama_periode ?>" readonly>
+                                <input type="text" id="nama_periode" readonly>
                                 <label for="pertanyaan">Periode</label>
                             </div>
                         </div>
@@ -205,7 +205,7 @@
 
 <script type="text/javascript">
     var action = "Tambah";
-
+    var selectedPeriode = "";
     var defaultKuesioner = {
         id: 0,
         pertanyaan: '',
@@ -219,6 +219,8 @@
     }
 
     function setModalUpdate(data) {
+        selectedPeriode = $( "#periode option:selected" ).text();
+        $("#nama_periode").val(selectedPeriode);
         $("#id").val(data.id);
         $("#pertanyaan").val(data.pertanyaan);
         $("#jenis").val(data.jenis);

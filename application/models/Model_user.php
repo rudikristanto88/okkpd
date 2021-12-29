@@ -476,9 +476,8 @@ class Model_user extends MY_Model
     $this->db->where('id_user', $id_user);
     $query = $this->db->get();
     foreach ($query->result_array() as $value);
-    return $value['foto_profil'];
+    return $value['foto_profil'] ?? "";
   }
-
 
   public function getDetailSyaratTeknis($layanan)
   {
