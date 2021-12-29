@@ -50,7 +50,7 @@
                               data-toggle="modal"
                               onclick="tambahData()"
                               data-target="#update"
-                              >Unduh</a
+                              >Unduh Laporan</a
                             >
                           </li>
                         </ul>

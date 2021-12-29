@@ -1404,6 +1404,9 @@ class Admin extends MY_Controller
     }
 
     foreach($data["list_periode"] as $periode){
+      if($data["periode"] == ""){
+        $data['periode'] = $periode['id'];
+      }
       if($periode["id"] == $data["periode"]){
         $data['nama_periode'] = $periode['nama_periode'];
       }
@@ -1435,7 +1438,7 @@ class Admin extends MY_Controller
 
     $data = array(
       "pertanyaan" => $input->post("pertanyaan"), "jenis" => $input->post("jenis"), "tipe" => $input->post("tipe"),
-      "nama_parameter" => $parameter["nama_parameter"], "hitungan" => $parameter["isaktif"] , "id_periode" => $input->post("id_periode")
+      "nama_parameter" => $parameter["nama_parameter"],"id_parameter" => $input->post("id_parameter"), "hitungan" => $parameter["isaktif"] , "id_periode" => $input->post("id_periode")
     );
 
     if ($input->post('action') == "Tambah") {
