@@ -31,7 +31,8 @@
                 <div class="card">
                   <div class="header">
                     <h2><strong>Hasil</strong> Survey</h2>
-                    <ul class="header-dropdown m-r--5">
+
+                    <ul class="header-dropdown m-r--5" style="width:100">
                       <li class="dropdown">
                         <button
                           href="javascript:void(0);"

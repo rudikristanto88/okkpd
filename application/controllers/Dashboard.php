@@ -3373,9 +3373,11 @@ class Dashboard extends MY_Controller
 	{
 		$data['list_periode'] = $this->model_admin->getAllData("master_periode", "id", "desc");
 		$data['periode'] = "";
+		$isaktif = false;
 
 		foreach ($data['list_periode'] as $periode) {
 			if ($periode['isaktif'] == 1) {
+				$isaktif = true;
 				$data['periode'] = $periode['id'];
 			}
 		}
@@ -3384,6 +3386,11 @@ class Dashboard extends MY_Controller
 
 		$userdata = $this->session->userdata("dataLogin");
 		$identitas_usaha = $this->model_admin->getDataWhere("identitas_usaha", "id_user", $userdata['id_user']);
+		if (!$isaktif) {
+			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Maaf, skm belum disiapkan oleh admin</div>");
+			redirect("dashboard");
+		}
+		
 		if (sizeof($identitas_usaha) == 0 || $id_layanan == 0) {
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Anda tidak memiliki akses ke halaman ini</div>");
 			redirect("dashboard");

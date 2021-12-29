@@ -1500,6 +1500,39 @@ class Admin extends MY_Controller
     $this->loadView('dashboard_view/admin/hasil_survey_detail', $data);
   }
 
+  function cetakSurvey(){
+		$this->db->trans_begin();
+		$this->db->trans_commit();
+  
+		$this->load->library('ciqrcode'); //pemanggilan library QR CODE
+
+		$config['cacheable']    = true; //boolean, the default is true
+		$config['cachedir']     = './assets/'; //string, the default is application/cache/
+		$config['errorlog']     = './assets/'; //string, the default is application/logs/
+		$config['imagedir']     = ''; //direktori penyimpanan qr code
+		$config['quality']      = true; //boolean, the default is true
+		$config['size']         = '1024'; //interger, the default is 1024
+		$config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+		$config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+		$this->ciqrcode->initialize($config);
+	
+		$cetak = $this->loadView('dashboard_view/cetak/hasil_survey', $data, TRUE);
+		$mpdf = new \Mpdf\Mpdf([
+			'margin_left' => 15,
+			'margin_right' => 15,
+			'margin_top' => 5,
+			'margin_bottom' => 5,
+			'margin_header' => 9,
+			'margin_footer' => 9
+		]);
+		//$cetak = $this->load->view('hasilPrint', [], TRUE);
+		$cetak = $this->load->view('dashboard_view/cetak/hasil_survey', $data, TRUE);
+		$mpdf->WriteHTML($cetak);
+		$namafile = 'HASIL_SURVEY';
+		$mpdf->Output($namafile . '.pdf', 'D');
+		/*echo $namafile;*/
+  }
+
   function kelola_periode()
   {
     $data['kuesioner'] = $this->model_admin->getAllData("master_periode", "id", "desc");

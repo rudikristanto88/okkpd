@@ -319,14 +319,15 @@ class Model_admin extends MY_Model
 
   function getReportSurvey($periode)
   {
-    $query = "SELECT tipe, nama_parameter,avg_total, avg_nilai, avg_kepentingan, hitungan from master_kuesioner
-    LEFT JOIN (SELECT AVG((nilai + kepentingan) / 2) avg_total, AVG(nilai) avg_nilai, AVG(kepentingan) avg_kepentingan, id_kuesioner
+    $query = "SELECT tipe, nama_parameter,avg_total, avg_nilai, avg_kepentingan, hitungan, jumlah_responden from master_kuesioner
+    LEFT JOIN (SELECT AVG((nilai + kepentingan) / 2) avg_total, AVG(nilai) avg_nilai, AVG(kepentingan) avg_kepentingan, id_kuesioner,
+        count(*) jumlah_responden
         FROM `survey_data`
         join survey_kuesioner on survey_data.id = survey_kuesioner.id_survey
         group by id_kuesioner) as hasil_kuesioner on master_kuesioner.id = hasil_kuesioner.id_kuesioner
         where id_periode = '" . $periode . "'
         group by nama_parameter
-    order by nama_parameter asc";
+    order by id_parameter asc, hitungan desc";
 
     $report = $this->db->query($query)->result_array();
 
@@ -343,8 +344,8 @@ class Model_admin extends MY_Model
       }
 
       if ($element["tipe"] != "Skor") {
-        $element["avg_total"] = round(1 - $element["avg_total"], 2);
-        $element["nilai_konversi"] = round($element["avg_total"] * 100, 2);
+        $element["avg_total"] = $element["jumlah_responden"] > 0 ? round(1 - $element["avg_total"], 2) : 0;
+        $element["nilai_konversi"] = $element["jumlah_responden"] > 0 ? round($element["avg_total"] * 100, 2) : 0;
       } else {
         $element["avg_total"] = round($element["avg_total"], 2);
         $element["nilai_konversi"] = round($element["avg_total"] * 25, 2);
@@ -432,8 +433,8 @@ class Model_admin extends MY_Model
 
   function duplicateSurvey($old_periode, $new_periode)
   {
-    $query = "INSERT INTO master_kuesioner (pertanyaan, jenis, deleted, tipe, status, nama_parameter, id_periode)
-    SELECT pertanyaan, jenis, deleted, tipe, status, nama_parameter, '" . $new_periode . "' FROM master_kuesioner
+    $query = "INSERT INTO master_kuesioner (pertanyaan, jenis, deleted, tipe, status,id_parameter, nama_parameter,hitungan, id_periode)
+    SELECT pertanyaan, jenis, deleted, tipe, status, id_parameter, nama_parameter,hitungan, '" . $new_periode . "' FROM master_kuesioner
     WHERE id_periode = '" . $old_periode . "'";
     return $this->db->query($query);
   }
