@@ -126,7 +126,7 @@
             </div>
             <div class="modal-body">
                 <p>Anda Yakin Dilanjutkan Proses ini? 
-Jika Anda pilih Ya, maka fasilitas Update dan Hapus akan ditutup, sekaliguas Peride SKM yang lain akan di-Non Aktifkan</p>
+Jika Anda pilih Ya, maka fasilitas Update dan Hapus akan ditutup, sekaligus Peride SKM yang lain akan di-Non Aktifkan</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
