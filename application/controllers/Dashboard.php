@@ -9,7 +9,6 @@ class Dashboard extends MY_Controller
 		$this->load->helper('url_helper');
 		$this->load->helper('data_helper');
 		$this->load->helper(array('form', 'url'));
-		$this->load->library('session');
 		$this->load->model('model_user');
 		$this->load->model('model_admin');
 		$this->load->model('model_dokumen');

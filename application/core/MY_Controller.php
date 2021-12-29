@@ -9,7 +9,6 @@ class MY_Controller extends CI_Controller
     $this->load->library('Pdf');
     $this->load->helper('url_helper');
     $this->load->helper(array('form', 'url'));
-    $this->load->library('session');
     $this->load->model('model_user');
     $this->load->model('model_admin');
     $this->load->library('email');

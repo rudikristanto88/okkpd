@@ -6,7 +6,6 @@ class Email extends MY_Controller {
   		parent::__construct();
   		$this->load->helper('url_helper');
   		$this->load->helper(array('form', 'url'));
-      $this->load->library('session');
   		$this->load->library('email');
       $this->load->model('model_ujimutu');
   	}
