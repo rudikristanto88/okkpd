@@ -435,7 +435,7 @@ class Model_admin extends MY_Model
   {
     $query = "INSERT INTO master_kuesioner (pertanyaan, jenis, deleted, tipe, status,id_parameter, nama_parameter,hitungan, id_periode)
     SELECT pertanyaan, jenis, deleted, tipe, status, id_parameter, nama_parameter,hitungan, '" . $new_periode . "' FROM master_kuesioner
-    WHERE id_periode = '" . $old_periode . "'";
+    WHERE id_periode = '" . $old_periode . "' and deleted = 0";
     return $this->db->query($query);
   }
 }
