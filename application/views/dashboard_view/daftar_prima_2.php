@@ -176,7 +176,7 @@ foreach ($identitas_usaha as $usaha);
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
         <button type="button" class="btn btn-info" data-dismiss="modal" onClick="tambahKomoditas()">Tambah</button>
       </div>
 

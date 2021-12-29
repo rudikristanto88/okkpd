@@ -150,7 +150,6 @@
                             <td><?= $index ?>.</td>
                             <td><?= $element['pertanyaan'] ?>
                               <input type="hidden" name="kuesioner[soal-<?= $index ?>][soal][]" value="<?= $element['pertanyaan'] ?>" />
-                              <input type="hidden" name="kuesioner[soal-<?= $index ?>][parameter][]" value="<?= $element['nama_parameter'] ?>" />
                             </td>
                             <?php if (
                               $element['tipe'] ===

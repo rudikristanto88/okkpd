@@ -44,7 +44,23 @@
                                             </li>
                                         </ul>
                                     </div>
-                                   
+
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">Periode</div>
+                                            <div class="col-md-4">
+                                                <form id="formTahun" method="get" action="<?= base_url() ?>dashboard/kelola_kuesioner">
+                                                    <select class="form-control text-black" name="periode" id="periode" style="color:black" onchange="lihatSurvey(this)">
+                                                        <?php
+                                                        foreach ($list_periode as $period) { ?>
+                                                            <option <?= $period['id'] == $periode ? 'selected' : '' ?> value="<?= $period['id'] ?>"><?= $period['nama_periode'] ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="table-responsive">
                                         <table class="table table-hover" id="table-datatable" class="display">
                                             <thead>
@@ -52,7 +68,7 @@
                                                     <th>No</th>
                                                     <th>Pertanyaan</th>
                                                     <th>Parameter</th>
-                                                    <th>Jenis</th>
+                                                    <th>Unsur Hitungan</th>
                                                     <th>Tipe</th>
                                                     <th></th>
                                                 </tr>
@@ -63,11 +79,11 @@
                                                     <tr>
                                                         <td><?= $i + 1 ?></td>
                                                         <td><?= $element['pertanyaan'] ?></td>
-                                                        <td><?= $element['jenis'] ?></td>
                                                         <td><?= $element['nama_parameter'] ?></td>
+                                                        <td><?= $element['hitungan'] == 1 ? 'Ya' : 'Tidak' ?></td>
                                                         <td><?= $element['tipe'] ?></td>
                                                         <td>
-                                                            <button type="button" class="btn btn-info" data-toggle="modal" onclick="updateData('<?= $element['id'] ?>', '<?= $element['pertanyaan'] ?>', '<?= $element['jenis'] ?>', '<?= $element['tipe'] ?>', '<?= $element['id_parameter'] ?>')" data-target="#update">Update</button>
+                                                            <button type="button" class="btn btn-info" data-toggle="modal" onclick="updateData('<?= $element['id'] ?>', '<?= $element['pertanyaan'] ?>', '<?= $element['jenis'] ?>', '<?= $element['tipe'] ?>', '<?= $element['nama_parameter'] ?>')" data-target="#update">Update</button>
                                                             <button type="button" class="btn btn-warning" data-toggle="modal" onclick="deleteData('<?= $element['id'] ?>')" data-target="#delete">Hapus</button>
                                                         </td>
                                                     </tr>
@@ -95,14 +111,14 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="text-black">Hapus Kuesioner</h5>
+                <h5 class="text-black">Hapus Kuesioner</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <p>Apakah anda yakin untuk menghapus data ini?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                 &nbsp;&nbsp;
                 <form action="<?= base_url() ?>index.php/dashboard/kelola_kuesioner/hapus" method="post">
                     <input type="hidden" name="id" id="id_hapus">
@@ -121,7 +137,7 @@
         <form action="<?= base_url() ?>index.php/dashboard/kelola_kuesioner/proses" method="post">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 id="title" class="text-black"></h5>
+                    <h5 id="title" class="text-black"></h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -130,6 +146,7 @@
                             <div class="input-field">
                                 <input name="action" type="hidden" id="action">
                                 <input name="id" type="hidden" id="id">
+                                <input id="id_periode" name="id_periode" type="hidden" value="<?= $periode ?>">
                                 <input required id="pertanyaan" name="pertanyaan" type="text" required>
                                 <label for="pertanyaan">Pertanyaan</label>
                             </div>
@@ -159,7 +176,7 @@
                                 <label class="text-small">Parameter</label>
                                 <select required class="form-control text-black" id="id_parameter" name="id_parameter">
                                     <?php foreach ($list_parameter as $element) : ?>
-                                        <option value="<?= $element["id"] ?>" ><?= $element["nama_parameter"] ?></option>
+                                        <option value="<?= $element["id"] ?>"><?= $element["nama_parameter"] ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -168,7 +185,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                     <button type="submit" class="btn btn-danger">Simpan</button>
                     &nbsp;&nbsp;
                 </div>
@@ -186,7 +203,7 @@
         pertanyaan: '',
         jenis: 'ujimutu',
         tipe: 'Skor',
-        id_parameter: '0',
+        nama_parameter: '0',
     }
 
     function deleteData(data) {
@@ -198,11 +215,10 @@
         $("#pertanyaan").val(data.pertanyaan);
         $("#jenis").val(data.jenis);
         $("#tipe").val(data.tipe);
-        $("#id_parameter").val(data.id_parameter);
         $("#action").val(action);
     }
 
-    function updateData(id, pertanyaan, jenis, tipe, id_parameter) {
+    function updateData(id, pertanyaan, jenis, tipe, nama_parameter) {
         action = "Ubah";
         $("#title").html(action + " Kuesioner");
         setModalUpdate({
@@ -210,7 +226,7 @@
             pertanyaan: pertanyaan,
             jenis: jenis,
             tipe: tipe,
-            id_parameter: id_parameter,
+            nama_parameter: nama_parameter,
         })
     }
 
@@ -218,5 +234,9 @@
         action = "Tambah";
         $("#title").html(action + " Kuesioner");
         setModalUpdate(defaultKuesioner);
+    }
+
+    function lihatSurvey(tahun) {
+        $("#formTahun").submit();
     }
 </script>

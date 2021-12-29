@@ -174,7 +174,7 @@
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> &nbsp;&nbsp;
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button> &nbsp;&nbsp;
           <button type="submit" class="btn btn-info" name="upload" value="1">Tambah</button>
         </div>
       </form>
@@ -207,7 +207,7 @@
           <input type="hidden" name="kode_layanan" id="kode_layanan_beku">
           <input type="hidden" name="id" id="uid_beku">
           <input type="hidden" name="status" id="status">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> &nbsp;&nbsp;
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button> &nbsp;&nbsp;
           <button type="submit" class="btn btn-info" name="upload" value="1">Simpan</button>
         </div>
       </form>

@@ -126,7 +126,7 @@
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>&nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>&nbsp;&nbsp;&nbsp;
         <button type="submit" class="btn btn-info">Ubah</button>
       </div>
     </form>

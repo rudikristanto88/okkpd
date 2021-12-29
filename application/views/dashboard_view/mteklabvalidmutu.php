@@ -112,7 +112,7 @@
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> &nbsp;&nbsp;
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button> &nbsp;&nbsp;
           <button type="submit" class="btn btn-warning" name="Tolak" value="1">Tolak</button> &nbsp;&nbsp;
           <button type="submit" class="btn btn-info" name="Simpan" value="2">Setuju</button>
         </div>

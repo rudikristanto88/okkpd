@@ -319,15 +319,14 @@ class Model_admin extends MY_Model
 
   function getReportSurvey($periode)
   {
-    $query = "SELECT master_parameter.*, avg_nilai, avg_kepentingan FROM `master_parameter`
-    LEFT JOIN master_kuesioner on master_parameter.id = master_kuesioner.id_parameter
-    LEFT JOIN (SELECT AVG((nilai + kepentingan) / 2) avg_nilai, AVG(kepentingan) avg_kepentingan, id_kuesioner
-    FROM `survey_data`
-    join survey_kuesioner on survey_data.id = survey_kuesioner.id_survey
-    where id_periode = " . $periode . " 
-    group by id_kuesioner) as hasil_kuesioner on master_kuesioner.id = hasil_kuesioner.id_kuesioner
-    where isaktif = 1
-    order by master_parameter.id";
+    $query = "SELECT tipe, nama_parameter,avg_total, avg_nilai, avg_kepentingan, hitungan from master_kuesioner
+    LEFT JOIN (SELECT AVG((nilai + kepentingan) / 2) avg_total, AVG(nilai) avg_nilai, AVG(kepentingan) avg_kepentingan, id_kuesioner
+        FROM `survey_data`
+        join survey_kuesioner on survey_data.id = survey_kuesioner.id_survey
+        group by id_kuesioner) as hasil_kuesioner on master_kuesioner.id = hasil_kuesioner.id_kuesioner
+        where id_periode = '" . $periode . "'
+        group by nama_parameter
+    order by nama_parameter asc";
 
     $report = $this->db->query($query)->result_array();
 
@@ -335,15 +334,23 @@ class Model_admin extends MY_Model
     $result = array();
     $total_ikm = 0;
     $total_konversi = 0;
+    $total_nilai = 0;
+    $exclude_column = "";
     foreach ($report as $element) {
-      if($element["nama_parameter"] == 'Biaya'){
-        $element["avg_nilai"] = round( 1 - $element["avg_nilai"],2);
-        $element["nilai_konversi"] = round($element["avg_nilai"] * 100,2);
-      }else{
-        $element["avg_nilai"] = round($element["avg_nilai"],2);
-        $element["nilai_konversi"] = round($element["avg_nilai"] * 25,2);
-  
-        $total_ikm += $element["avg_nilai"];
+      if($element['hitungan'] == 0){
+
+        $exclude_column .= $exclude_column == "" ? $element['nama_parameter'] : ", ".$element['nama_parameter'];
+      }
+
+      if ($element["tipe"] != "Skor") {
+        $element["avg_total"] = round(1 - $element["avg_total"], 2);
+        $element["nilai_konversi"] = round($element["avg_total"] * 100, 2);
+      } else {
+        $element["avg_total"] = round($element["avg_total"], 2);
+        $element["nilai_konversi"] = round($element["avg_total"] * 25, 2);
+
+        $total_ikm += $element["avg_total"];
+        $total_nilai += $element["avg_nilai"];
         $total_konversi += $element["nilai_konversi"];
       }
 
@@ -353,17 +360,19 @@ class Model_admin extends MY_Model
 
       array_push($data, $element);
     }
-    $result["total_nilai"] = round($total_ikm,2);
-    $result["avg_total_nilai"] = round($total_ikm / sizeof($report),2);
-    $result["total_konversi"] = round($total_konversi,2);
-    $result["avg_total_konversi"] = round($total_konversi / sizeof($report),2);
+    $result["total_nilai"] = round($total_ikm, 2);
+    $result["avg_total_nilai"] = sizeof($report) > 0 ? round($total_ikm / sizeof($report), 2) : 0 ;
+    $result["total_konversi"] = sizeof($report) > 0 ? round($total_konversi, 2) : 0 ;
+    $result["avg_total_konversi"] = sizeof($report) > 0 ? round($total_konversi / sizeof($report), 2) : 0 ;
 
     $total_mutu = $this->getMutuPelayanan($result["avg_total_konversi"]);
 
     $result["mutu_pelayanan"] = $total_mutu["mutu_pelayanan"];
     $result["ukuran_kinerja"] = $total_mutu["ukuran_kinerja"];
+    $result["index_kepuasan"] = $total_nilai / 8 * 25;
+    $result["index_kepentingan"] = $total_konversi / 8 * 25;
+    $result["exclude_column"] = $exclude_column;
     $result["data"] = $data;
-
     return $result;
   }
 
@@ -397,24 +406,35 @@ class Model_admin extends MY_Model
     return $this->db->query($query)->result_array();
   }
 
-  function getKuesioner($jenis = null)
+  function getKuesioner($periode, $jenis = null)
   {
-    $this->db->select("master_kuesioner.*, master_parameter.id as id_parameter, master_parameter.nama_parameter");
+    $this->db->select("master_kuesioner.*");
     $this->db->from("master_kuesioner");
-    $this->db->join("master_parameter", "master_kuesioner.id_parameter = master_parameter.id");
     $this->db->where("deleted", "0");
+    $this->db->where("id_periode", $periode);
     if ($jenis != null) {
       $this->db->where("jenis", $jenis);
     }
+    $this->db->order_by("id", "asc");
+    $this->db->order_by("hitungan", "desc");
+
     $query = $this->db->get();
     return $query->result_array();
   }
 
   function getDetailSurvey($id)
   {
-    $query = "SELECT master_kuesioner.id, survey_kuesioner.pertanyaan,master_kuesioner.jenis, master_kuesioner.tipe,master_kuesioner.urutan, survey_kuesioner.nilai, survey_kuesioner.kepentingan, survey_kuesioner.jawaban FROM survey_kuesioner
+    $query = "SELECT master_kuesioner.id, master_kuesioner.pertanyaan,master_kuesioner.jenis, master_kuesioner.tipe,survey_kuesioner.nilai, survey_kuesioner.kepentingan, survey_kuesioner.jawaban FROM survey_kuesioner
     JOIN master_kuesioner ON survey_kuesioner.id_kuesioner = master_kuesioner.id
     WHERE id_survey = $id";
     return $this->db->query($query)->result_array();
+  }
+
+  function duplicateSurvey($old_periode, $new_periode)
+  {
+    $query = "INSERT INTO master_kuesioner (pertanyaan, jenis, deleted, tipe, status, nama_parameter, id_periode)
+    SELECT pertanyaan, jenis, deleted, tipe, status, nama_parameter, '" . $new_periode . "' FROM master_kuesioner
+    WHERE id_periode = '" . $old_periode . "'";
+    return $this->db->query($query);
   }
 }

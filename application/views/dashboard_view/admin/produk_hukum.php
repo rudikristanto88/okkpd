@@ -105,7 +105,7 @@
         <p>Apakah anda yakin untuk menghapus data ini?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
         &nbsp;&nbsp;
         <form action="<?= base_url() ?>admin/hapus_produk_hukum" method="post">
           <input type="hidden" name="id_produk" id="id_produk">

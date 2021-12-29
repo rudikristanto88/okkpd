@@ -236,20 +236,19 @@ class Dashboard extends MY_Controller
 			echo "<option value='".$kel['idjenisdetail'].';'.$kel['namadetail']."'>".$kel['namadetail']."</option>";
 		}*/
 		$i = 1;
-		$sudah =0;
+		$sudah = 0;
 		foreach ($kel as $kel) {
-			$disable =""; 
-				$checked = " checked "; 
-			if($kel['isaktif'] == "0"){
-				$disable ="disabled";
+			$disable = "";
+			$checked = " checked ";
+			if ($kel['isaktif'] == "0") {
+				$disable = "disabled";
 				$checked = "";
 			}
 			echo "<input $disable  $checked style='opacity: 100;' class='jenisdetail' type='radio' id='jenisdetail-" . $i . "' name='jenisdetail' value='" . $kel['idjenisdetail'] . ';' . $kel['namadetail'] . "'>";
 			echo "<label class='text-black' style='display:inline' for='jenisdetail-" . $i . "'>" . $kel['namadetail'] . "</label><br/>";
-			
-			if($kel['isaktif'] == "0"){
+
+			if ($kel['isaktif'] == "0") {
 				echo "<code>Tutup Sementara - " . $kel['keterangan'] . "</code><br/>";
-			
 			}
 			$i++;
 		}
@@ -542,7 +541,7 @@ class Dashboard extends MY_Controller
 				$kodependaftaran = sprintf("%03s", $noUrut) . "/" . $kodeKota . "/" . $month[$bulan] . "/" . $tahun;
 				$dat = array(
 					"kode_layanan" => $kode_layanan, "kode_pendaftaran" => $kodependaftaran, "id_identitas_usaha" => $id_identitas_usaha, "nama_dagang" => $nama_dagang[$i], "id_kemasan" => $id_kemasan[$i],
-					"idjenis" => $id_jenis[$i], "idjenisdetail" => $id_detail[$i],"tandatangan" => $tandatangan
+					"idjenis" => $id_jenis[$i], "idjenisdetail" => $id_detail[$i], "tandatangan" => $tandatangan
 				);
 				$this->model_user->insertData("layanan_ujimutu", $dat);
 			}
@@ -3336,8 +3335,8 @@ class Dashboard extends MY_Controller
 		//$cetak = $this->load->view('hasilPrint', [], TRUE);
 		$cetak = $this->load->view('dashboard_view/cetak/lhu', $data, TRUE);
 		$mpdf->WriteHTML($cetak);
-		$namafile = 'DRAT_LHU_'.str_replace(".","_",$data['detail'][0]['kodelhu']);
-		$mpdf->Output($namafile.'.pdf', 'D');
+		$namafile = 'DRAT_LHU_' . str_replace(".", "_", $data['detail'][0]['kodelhu']);
+		$mpdf->Output($namafile . '.pdf', 'D');
 		/*echo $namafile;*/
 	}
 
@@ -3353,10 +3352,10 @@ class Dashboard extends MY_Controller
 
 		$data['nama'] = $uploadnama;
 		$data['kode'] = $uploadkode;
-		$message = "Kepada Yth ".$uploadnama."<br/> Layanan Uji Mutu Pangan yang anda daftarkan dengan kode pendaftaran <b>".$uploadkode." telah disetujui.</b><br/>
+		$message = "Kepada Yth " . $uploadnama . "<br/> Layanan Uji Mutu Pangan yang anda daftarkan dengan kode pendaftaran <b>" . $uploadkode . " telah disetujui.</b><br/>
                   Sertifikat / Laporan Hasil Uji (LHU) telah terbit dan dapat diambil di kantor BPMKP Ungaran pada jam kerja.<br/>
 				  Untuk LHU versi berkas digital dapat diunduh pada halaman dashboard website okkpd Anda.<br/> 
-				  Terima Kasih.";//$this->load->view('default/email/notifikasi_sertifikat_terbit', $data, true);
+				  Terima Kasih."; //$this->load->view('default/email/notifikasi_sertifikat_terbit', $data, true);
 		$this->kirim_email("Pemberitahuan", $uploademail, $message);
 		if ($this->uploads($_FILES, 'gambar') == null) {
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Dokumen tidak dapat diunggah</div>");
@@ -3373,6 +3372,15 @@ class Dashboard extends MY_Controller
 
 	function survey()
 	{
+		$data['list_periode'] = $this->model_admin->getAllData("master_periode", "id", "desc");
+		$data['periode'] = "";
+
+		foreach ($data['list_periode'] as $periode) {
+			if ($periode['isaktif'] == 1) {
+				$data['periode'] = $periode['id'];
+			}
+		}
+
 		$id_layanan = $this->input->get("uid") ?? 0;
 
 		$userdata = $this->session->userdata("dataLogin");
@@ -3390,7 +3398,7 @@ class Dashboard extends MY_Controller
 		$data['id_layanan'] = $id_layanan;
 		$data['jenis'] = $jenis;
 		$data["identitas"] = data_identitas_survey($jenis);
-		$surveyData = $this->model_admin->getKuesioner($jenis);
+		$surveyData = $this->model_admin->getKuesioner($data['periode'],$jenis);
 		$data['list_survey'] = array_filter($surveyData, function ($k) {
 			return $k["deleted"] == 0;
 		});
@@ -3430,8 +3438,6 @@ class Dashboard extends MY_Controller
 			$param_survey["id_kuesioner"] = $element['pertanyaan'][1];
 			$param_survey["id_survey"] = $id_survey;
 			$param_survey["nilai"] = $element['pertanyaan'][0];
-			$param_survey["pertanyaan"] = $element['soal'][0];
-			$param_survey["nama_parameter"] = $element['parameter'][0];
 			$param_survey["kepentingan"] = array_key_exists("kepentingan", $element) ? $element['kepentingan'][0] : 0;
 			$this->model_admin->insertData("survey_kuesioner", $param_survey);
 		}
@@ -3439,22 +3445,23 @@ class Dashboard extends MY_Controller
 		redirect("dashboard");
 	}
 
-	function u_layanan_kelolakomuditas(){
+	function u_layanan_kelolakomuditas()
+	{
 		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$data['sample'] = $this->model_ujimutu->getKelolaKomunitas();
 		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
 		$this->loadView("dashboard_view/pages/u_layanan/kelola_form", $data);
 	}
 
-	
+
 	public function ubah_statuskomoditas()
 	{
 		$kode = $this->input->post('id_layanan');
-		$keterangan = $this->input->post('keterangan');   
+		$keterangan = $this->input->post('keterangan');
 		$arr = array();
 
-			$arr['isaktif'] = "0"; 
-			$arr['keterangan'] = $keterangan; 
+		$arr['isaktif'] = "0";
+		$arr['keterangan'] = $keterangan;
 
 		if ($this->model_user->updateData('jenis_komoditas_detil', $kode, 'idjenisdetail', $arr)) {
 			$this->session->set_flashdata("status", "Data berhasil diubah.");
@@ -3468,11 +3475,11 @@ class Dashboard extends MY_Controller
 
 	public function aktif_statuskomoditas()
 	{
-		$kode = $this->input->post('kode'); 
+		$kode = $this->input->post('kode');
 		$arr = array();
 
-			$arr['isaktif'] = "1"; 
-			$arr['keterangan'] = ""; 
+		$arr['isaktif'] = "1";
+		$arr['keterangan'] = "";
 
 		if ($this->model_user->updateData('jenis_komoditas_detil', $kode, 'idjenisdetail', $arr)) {
 			$this->session->set_flashdata("status", "Data berhasil diubah.");

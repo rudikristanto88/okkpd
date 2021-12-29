@@ -91,6 +91,7 @@ $route['dashboard/hasil_survey/detail'] = 'admin/hasil_survey_detail';
 $route['dashboard/kelola_periode'] = 'admin/kelola_periode';
 $route['dashboard/kelola_periode/hapus'] = 'admin/hapus_periode';
 $route['dashboard/kelola_periode/proses'] = 'admin/proses_periode';
+$route['dashboard/kelola_periode/aktifkan'] = 'admin/aktifkan_periode';
 
 $route['dashboard/kelola_parameter'] = 'admin/kelola_parameter';
 $route['dashboard/kelola_parameter/hapus'] = 'admin/hapus_parameter';

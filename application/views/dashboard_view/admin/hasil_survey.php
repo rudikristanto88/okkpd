@@ -69,7 +69,7 @@
                           <tr>
                             <td><?= $i ?>.</td>
                             <td><?= $element['nama_parameter'] ?></td>
-                            <td><?= $element['avg_nilai'] ?></td>
+                            <td><?= $element['avg_total'] ?></td>
                             <td><?= $element['nilai_konversi'] ?></td>
                             <td><?= $element['mutu_pelayanan'] ?></td>
                             <td><?= $element['ukuran_kinerja'] ?></td>
@@ -92,9 +92,19 @@
                             <td><b><?= $report_survey['mutu_pelayanan'] ?></b></td>
                             <td><b><?= $report_survey['ukuran_kinerja'] ?></b></td>
                           </tr>
+                          <tr style="font-size:16px">
+                           <td ></td>
+                           <td ><b>Indeks Kepuasan</b></td>
+                            <td colspan="4"><b><?= $report_survey['index_kepuasan'] ?>%</b></td>
+                          </tr>
+                          <tr style="font-size:16px">
+                           <td ></td>
+                           <td ><b>Indeks Kepentingan</b></td>
+                            <td colspan="4"><b><?= $report_survey['index_kepentingan'] ?>%</b></td>
+                          </tr>
                       </tbody>
                     </table>
-                    <span style="font-size:12px">*Keterangan: Biaya tidak termasuk hitungan IKM </span>
+                    <span style="font-size:12px"><?= $report_survey['exclude_column'] == "" ? "" : "Keterangan: ".$report_survey['exclude_column']." tidak termasuk hitungan IKM" ?>  </span>
                     <div style="height:50px"></div>
                     <h5 class="mb-4 mt-8"><strong>Daftar</strong> Responden</h5>
                     <table class="table table-hover" id="table-datatable2">

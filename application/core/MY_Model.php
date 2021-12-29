@@ -39,10 +39,13 @@ class MY_Model extends CI_Model
         return $this->db->delete($table);
     }
 
-    public function getAllData($table)
+    public function getAllData($table, $order_by = null, $order_type = "asc")
     {
         $this->db->select("*");
         $this->db->from($table);
+        if($order_by != null){
+            $this->db->order_by($order_by, $order_type);
+        }
         $query = $this->db->get();
         return $query->result_array();
     }

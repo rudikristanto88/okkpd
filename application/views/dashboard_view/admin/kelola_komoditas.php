@@ -108,7 +108,7 @@
         <p>Apakah anda yakin untuk menghapus data ini?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
         &nbsp;&nbsp;
         <form action="<?= base_url() ?>admin/hapus_komoditas/sektor" method="post">
           <input type="hidden" name="id_sektor" id="id_hapus">

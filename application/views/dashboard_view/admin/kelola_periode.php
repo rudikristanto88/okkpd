@@ -40,6 +40,9 @@
                                                     <li>
                                                         <a style="cursor:pointer;" data-toggle="modal" onclick="tambahData()" data-target="#update">Tambah</a>
                                                     </li>
+                                                    <li>
+                                                        <a style="cursor:pointer;" data-toggle="modal" onclick="salinData()" data-target="#update">Salin</a>
+                                                    </li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -52,7 +55,7 @@
                                                     <th width="100">No</th>
                                                     <th>Nama Periode</th>
                                                     <th>Aktif</th>
-                                                    <th width="200"></th>
+                                                    <th width="250"></th>
                                                 </tr>
                                             </thead>
                                             <tbody id="body_table">
@@ -63,8 +66,11 @@
                                                         <td><?= $element['nama_periode'] ?></td>
                                                         <td><?= $element['isaktif'] ? 'Aktif' : 'Tidak Aktif' ?></td>
                                                         <td>
+                                                        <?php if($element['isaktif']  == 0) : ?>
                                                             <button type="button" class="btn btn-info" data-toggle="modal" onclick="updateData('<?= $element['id'] ?>', '<?= $element['nama_periode'] ?>', '<?= $element['isaktif'] ?>')" data-target="#update">Update</button>
                                                             <button type="button" class="btn btn-warning" data-toggle="modal" onclick="deleteData('<?= $element['id'] ?>')" data-target="#delete">Hapus</button>
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" onclick="aktifkanData('<?= $element['id'] ?>')" data-target="#aktif">Aktifkan</button>
+                                                            <?php endif; ?>
                                                         </td>
                                                     </tr>
                                                 <?php $i++;
@@ -89,7 +95,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="text-black">Hapus Periode</h5>
+                <h5 class="text-black">Hapus Periode</h5>
 
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
@@ -97,11 +103,35 @@
                 <p>Apakah anda yakin untuk menghapus data ini?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                 &nbsp;&nbsp;
-                <form action="<?= base_url() ?>index.php/dashboard/kelola_periode/hapus" method="post">
+                <form action="<?= base_url() ?>dashboard/kelola_periode/hapus" method="post">
                     <input type="hidden" name="id" id="id_hapus">
                     <button type="submit" class="btn btn-danger">Hapus</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="aktif" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm" style="max-width: 600px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="text-black">Aktifkan Periode</h5>
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Apakah anda yakin untuk mengaktifkan periode ini?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                &nbsp;&nbsp;
+                <form action="<?= base_url() ?>dashboard/kelola_periode/aktifkan" method="post">
+                    <input type="hidden" name="id" id="id_aktif">
+                    <button type="submit" class="btn btn-danger">Aktifkan</button>
                 </form>
             </div>
         </div>
@@ -114,7 +144,7 @@
         <form action="<?= base_url() ?>index.php/dashboard/kelola_periode/proses" method="post">
             <div class="modal-content">
                 <div class="modal-header">
-                 <h5 id="title" class="text-black"></h5>
+                    <h5 id="title" class="text-black"></h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -123,24 +153,25 @@
                             <div class="input-field">
                                 <input name="action" type="hidden" id="action">
                                 <input name="id" type="hidden" id="id">
+                                <input name="isaktif" type="hidden"  value="0">
                                 <input id="nama_periode" name="nama_periode" type="text" required>
                                 <label for="nama_periode">Nama Periode</label>
                             </div>
                         </div>
-                        <div class="col-sm-12">
+                        <div class="col-sm-12" id="selectPeriode">
                             <div class="form-group">
-                                <label class="text-small">Aktif</label>
-                                <select class="form-control text-black" id="isaktif" name="isaktif">
-                                        <option value="1">Aktif</option>
-                                        <option value="0">Tidak</option>
+                                <label class="text-small">Periode</label>
+                                <select required class="form-control text-black" id="old_periode" name="old_periode">
+                                    <?php foreach ($kuesioner as $element) : ?>
+                                        <option value="<?= $element["id"] ?>"><?= $element["nama_periode"] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                     <button type="submit" class="btn btn-danger">Simpan</button>
                     &nbsp;&nbsp;
                 </div>
@@ -163,17 +194,20 @@
         $("#id_hapus").val(data);
     }
 
+    function aktifkanData(id) {
+        $("#id_aktif").val(id);
+    }
+
     function setModalUpdate(data) {
+        $("#title").html(action + " Periode");
         $("#id").val(data.id);
         $("#nama_periode").val(data.nama_periode);
-        $("#isaktif").val(data.isaktif);
         $("#action").val(action);
     }
 
-    function updateData(id, nama_periode, isaktif, tipe, aspek) {
+    function updateData(id, nama_periode, isaktif) {
         action = "Ubah";
-        $("#title").html(action + " Periode");
-
+        $("#selectPeriode").css("display","none");
         setModalUpdate({
             id: id,
             nama_periode: nama_periode,
@@ -183,7 +217,13 @@
 
     function tambahData() {
         action = "Tambah";
-        $("#title").html(action + " Periode");
+        $("#selectPeriode").css("display","none");
+        setModalUpdate(defaultPeriode);
+    }
+
+    function salinData() {
+        action = "Salin";
+        $("#selectPeriode").css("display","block");
         setModalUpdate(defaultPeriode);
     }
 </script>
