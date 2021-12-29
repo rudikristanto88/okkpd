@@ -9,7 +9,7 @@
                                 <i class="material-icons">home</i>
                                 Home</a>
                         </li>
-                        <li class="breadcrumb-item active">Kelola Periode dan Aktivasi Lembar SKM</li>
+                        <li class="breadcrumb-item active">Kelola Periode dan Aktivasi Lembar Kuesioner SKM</li>
                     </ul>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                                     ?>
                                     <div class="header">
                                         <h2>
-                                            <strong>Kelola</strong> Periode
+                                            <strong>Kelola</strong> Periode dan Aktivasi Lembar Kuesioner SKM
                                         </h2>
                                         <ul class="header-dropdown m-r--5">
                                             <li class="dropdown">
