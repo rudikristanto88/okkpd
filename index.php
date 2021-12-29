@@ -56,14 +56,13 @@
  */
 $domain = ! empty($_SERVER['HTTP_HOST']) ? strtolower($_SERVER['HTTP_HOST']) : 'cli';
 
-// if (strpos($domain, 'localhost') !== false || $domain == 'cli')
-// {
-//    define('ENVIRONMENT', 'development');
-// }
-// else {
-//    define('ENVIRONMENT', 'production');
+if (strpos($domain, 'localhost') !== false || $domain == 'cli')
+{
+   define('ENVIRONMENT', 'development');
 }
-define('ENVIRONMENT', 'development');
+else {
+   define('ENVIRONMENT', 'development');
+}
 
 // define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 
