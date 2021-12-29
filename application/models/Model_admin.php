@@ -326,6 +326,7 @@ class Model_admin extends MY_Model
         join survey_kuesioner on survey_data.id = survey_kuesioner.id_survey
         group by id_kuesioner) as hasil_kuesioner on master_kuesioner.id = hasil_kuesioner.id_kuesioner
         where id_periode = '" . $periode . "'
+        and deleted = 0
         group by nama_parameter
     order by id_parameter asc, hitungan desc";
 
