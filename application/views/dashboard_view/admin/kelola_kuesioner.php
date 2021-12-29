@@ -70,7 +70,7 @@
                                                     <th>Parameter</th>
                                                     <th>Unsur Hitungan</th>
                                                     <th>Tipe</th>
-                                                    <th></th>
+                                                    <th width="200">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="body_table">

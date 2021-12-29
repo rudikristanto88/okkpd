@@ -69,7 +69,7 @@
                                                         <?php if($element['isaktif']  == 0 && $element['total_survey'] == 0) : ?>
                                                             <button type="button" class="btn btn-info" data-toggle="modal" onclick="updateData('<?= $element['id'] ?>', '<?= $element['nama_periode'] ?>', '<?= $element['isaktif'] ?>')" data-target="#update">Update</button>
                                                             <button type="button" class="btn btn-warning" data-toggle="modal" onclick="deleteData('<?= $element['id'] ?>')" data-target="#delete">Hapus</button>
-                                                            <button type="button" class="btn btn-success" data-toggle="modal" onclick="aktifkanData('<?= $element['id'] ?>')" data-target="#aktif">Aktifkan</button>
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" onclick="aktifkanData('<?= $element['id'] ?>','<?= $element['total_kuesioner'] ?>')" <?= $element['total_kuesioner'] > 0 ? 'data-target="#aktif"' : '' ?>>Aktifkan</button>
                                                         <?php endif; ?>
 
                                                         </td>
@@ -120,7 +120,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="text-black">Aktifkan Periode</h5>
+                <h5 class="text-black">Aktifkan Periode SKM</h5>
 
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
@@ -195,7 +195,10 @@ Jika Anda pilih Ya, maka fasilitas Update dan Hapus akan ditutup, sekaligus Peri
         $("#id_hapus").val(data);
     }
 
-    function aktifkanData(id) {
+    function aktifkanData(id, total_kuesioner) {
+        if(total_kuesioner == 0){
+            alert("Maaf...Daftar Kuesioner belum ada/masih kosong. Untuk aktifkan Periode SKM wajib mengisi kuesioner.");
+        }
         $("#id_aktif").val(id);
     }
 

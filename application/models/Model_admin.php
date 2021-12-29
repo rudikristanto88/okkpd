@@ -439,8 +439,9 @@ class Model_admin extends MY_Model
   }
 
   function getAllPeriode(){
-    $query = "SELECT master_periode.*, total_survey FROM master_periode
+    $query = "SELECT master_periode.*, total_survey, total_kuesioner FROM master_periode
     LEFT JOIN (select id_periode, count(*) total_survey from survey_data group by id_periode) as survey_data ON survey_data.id_periode = master_periode.id
+    LEFT JOIN (select id_periode, count(*) total_kuesioner from master_kuesioner group by id_periode) as master_kuesioner ON master_kuesioner.id_periode = master_periode.id
     group by master_periode.id
     order by id desc";
     return $this->db->query($query)->result_array();
