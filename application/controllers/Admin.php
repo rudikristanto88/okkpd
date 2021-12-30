@@ -228,9 +228,7 @@ class Admin extends MY_Controller
       redirect("admin/tambah_identitas_kepala_dinas", "redirect");
     }
 
-    if ($foto_kepala_dinas_temp != null) {
-      $foto_kepala_dinas = file_get_contents($foto_kepala_dinas_temp['full_path']);
-    }
+    $foto_kepala_dinas = $foto_kepala_dinas_temp != null ? file_get_contents($foto_kepala_dinas_temp['full_path']) : "";
 
     $hasil = "";
     if ($jenis == 'tambah') {
