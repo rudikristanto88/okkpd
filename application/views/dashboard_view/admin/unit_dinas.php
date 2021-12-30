@@ -10,7 +10,7 @@
                 Beranda</a>
               </li>
               
-              <li class="breadcrumb-item active">Kelola Dinas</li>
+              <li class="breadcrumb-item active">Kepala BPMKP</li>
             </ul>
           </div>
         </div>
@@ -30,7 +30,7 @@
                           }
                           ?>
                             <h2>
-                                <strong>Unit</strong> Dinas</h2>
+                                <strong>Kepala</strong> BPMKP</h2>
                             <ul class="header-dropdown m-r--5">
                               <li class="dropdown">
                                   <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"

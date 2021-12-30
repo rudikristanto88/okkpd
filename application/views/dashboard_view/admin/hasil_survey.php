@@ -49,7 +49,7 @@
                             <a
                               style="cursor: pointer"
                               data-toggle="modal"
-                              onclick="tambahData()"
+                              onclick="alert('Maaf fitur unduh laporan belum tersedia')"
                               data-target="#update"
                               >Unduh Laporan</a
                             >
