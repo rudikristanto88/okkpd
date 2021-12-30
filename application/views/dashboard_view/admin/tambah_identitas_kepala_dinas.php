@@ -18,7 +18,7 @@ if($jenis == 'ubah'){
                 Beranda</a>
               </li>
               
-              <li class="breadcrumb-item active">Tambahkan Identitas Kepala Dinas</li>
+              <li class="breadcrumb-item active">Tambah Identitas Kepala BPMKP</li>
             </ul>
           </div>
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -34,7 +34,7 @@ if($jenis == 'ubah'){
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="card">
                     <div class="body">
-                      <h2 class="card-inside-title">Kelola Identitas Kepala Dinas</h2>
+                      <h2 class="card-inside-title">Identitas Kepala BPMKP</h2>
                       <?php
                       $attribute = array("class"=>"text-white");
                       echo form_open_multipart('admin/kelola_identitas/'.$jenis,$attribute);?>

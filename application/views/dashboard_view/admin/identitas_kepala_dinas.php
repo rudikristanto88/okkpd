@@ -10,7 +10,7 @@
                 Beranda</a>
               </li>
               
-              <li class="breadcrumb-item active">Identitas Kepala Dinas</li>
+              <li class="breadcrumb-item active">Kepala BPMKP</li>
             </ul>
           </div>
         </div>
@@ -25,7 +25,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                <strong>Kepala</strong> Dinas</h2>
+                                <strong>Kepala</strong> BPMKP</h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <button href="javascript:void(0);" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

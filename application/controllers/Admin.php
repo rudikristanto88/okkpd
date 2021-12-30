@@ -216,7 +216,6 @@ class Admin extends MY_Controller
       $status = 0;
     }
 
-
     if ($akhir_menjabat == '1970-01-01' || $akhir_menjabat == '0000-00-00') {
       $akhir_menjabat = null;
     }
@@ -224,7 +223,7 @@ class Admin extends MY_Controller
     $max = 1000000;
     $foto_kepala_dinas_temp = $this->uploads($_FILES, 'foto_kepala_dinas');
 
-    if ($_FILES['panduan']['size'] > $max) {
+    if ($_FILES['foto_kepala_dinas']['size'] > $max) {
       $this->session->set_flashdata("status", "<div class='alert alert-warning'>File terlalu besar</div>");
       redirect("admin/tambah_identitas_kepala_dinas", "redirect");
     }
@@ -232,7 +231,6 @@ class Admin extends MY_Controller
     if ($foto_kepala_dinas_temp != null) {
       $foto_kepala_dinas = file_get_contents($foto_kepala_dinas_temp['full_path']);
     }
-
 
     $hasil = "";
     if ($jenis == 'tambah') {
