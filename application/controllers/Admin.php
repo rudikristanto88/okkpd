@@ -183,7 +183,7 @@ class Admin extends MY_Controller
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
     $data['role'] = $this->model_user->getAllData("master_role");
-    $data['identitas'] = $this->model_admin->getAllData("identitas_kepala_dinas");
+    $data['identitas'] = $this->model_admin->getAllData("identitas_kepala_dinas", "nama_kepala_dinas","asc");
     $this->loadView('dashboard_view/admin/identitas_kepala_dinas', $data);
   }
 
@@ -231,26 +231,22 @@ class Admin extends MY_Controller
     $foto_kepala_dinas = $foto_kepala_dinas_temp != null ? file_get_contents($foto_kepala_dinas_temp['full_path']) : "";
 
     $hasil = "";
+    $arr = array(
+      "pangkat" => $pangkat,
+      "nama_kepala_dinas" => $nama_kepala_dinas,
+      "t_jabatan_awal" => $awal_menjabat,
+      "t_jabatan_akhir" => $akhir_menjabat,
+      "status" => $status,
+      "foto" => $foto_kepala_dinas
+    );
     if ($jenis == 'tambah') {
-      $arr = array(
-        "nip" => $nip,
-        "pangkat" => $pangkat,
-        "nama_kepala_dinas" => $nama_kepala_dinas,
-        "t_jabatan_awal" => $awal_menjabat,
-        "t_jabatan_akhir" => $akhir_menjabat,
-        "foto" => $foto_kepala_dinas
-      );
+      $arr['nip'] = $nip;
+      $arr['status'] = 0;
       $hasil = $this->model_admin->insertData("identitas_kepala_dinas", $arr);
     } else if ($jenis == 'ubah') {
-      $arr = array(
-        "nip" => $nip,
-        "pangkat" => $pangkat,
-        "nama_kepala_dinas" => $nama_kepala_dinas,
-        "t_jabatan_awal" => $awal_menjabat,
-        "t_jabatan_akhir" => $akhir_menjabat,
-        "status" => $status,
-        "foto" => $foto_kepala_dinas
-      );
+      if($status == 1){
+        $this->model_admin->updateData("identitas_kepala_dinas", "1", "status", array("status" => 0));
+      }
       $hasil = $this->model_admin->updateData("identitas_kepala_dinas", $nip, 'nip', $arr);
     }
 
