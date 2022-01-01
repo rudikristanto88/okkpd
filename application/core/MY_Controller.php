@@ -53,18 +53,17 @@ class MY_Controller extends CI_Controller
   // $is_pelaku = pelaku usaha atau bukan. jika pelaku, wajib isi $user
   protected function checkUser($is_pelaku = false, $user = null, $redirect = "home")
   {
-    if (getenv("MODE") == "DEVELOPMENT") {
-      $allow = true;
-      if ($is_pelaku) {
-        $allowed_user = explode(",", getenv("ALLOWED_USER"));
-        if (!in_array($user, $allowed_user)) $allow = false;
-      }
-      if(!$allow){
-        $this->session->set_flashdata("status", "<div class='alert alert-warning'>Maaf, Aplikasi OKKPD dan UJI MUTU PANGAN sedang dalam tahap perbaikan. Terima Kasih</div>");
-        redirect($redirect, "redirect");
-      }
-    }
-    
+    // if (getenv("MODE") == "DEVELOPMENT") {
+    //   $allow = true;
+    //   if ($is_pelaku) {
+    //     $allowed_user = explode(",", getenv("ALLOWED_USER"));
+    //     if (!in_array($user, $allowed_user)) $allow = false;
+    //   }
+    //   if(!$allow){
+    //     $this->session->set_flashdata("status", "<div class='alert alert-warning'>Maaf, Aplikasi OKKPD dan UJI MUTU PANGAN sedang dalam tahap perbaikan. Terima Kasih</div>");
+    //     redirect($redirect, "redirect");
+    //   }
+    // }
   }
 
   protected function loadViewHome($halaman, $data, $with_navigation = true)

@@ -54,7 +54,7 @@ class Home extends MY_Controller
 	{
 		$data['islogin'] = false;
 		$data['kota'] = $this->model_user->getDataKota();
-		$this->checkUser(true, "", "home/pendaftaran_online");
+		// $this->checkUser(true, "", "home/pendaftaran_online");
 
 		if ($this->session->userdata("dataLogin") != null) {
 			$data['islogin'] = true;
