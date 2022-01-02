@@ -239,7 +239,8 @@ class Model_ujimutu extends CI_Model {
   public function getPimpinanBalai()
   {
     $this->db->select("a.*");
-    $this->db->from('identitas_kepala_balai as a');  
+    $this->db->from('identitas_kepala_dinas as a');  
+    $this->db->where('a.status',"1"); 
     $query = $this->db->get();
     return $query->result_array();
   }
