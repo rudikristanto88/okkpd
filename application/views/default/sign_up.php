@@ -21,22 +21,22 @@
 
                                     </div>
                                     <div class="form-container">
-                                      <label for="">Password</label>
+                                      <label for="">Password *</label>
                                       <input type="password" name="password" id="sign_up_password" value="" class="form-input form-block" required>
                                     </div>
                                     <div class="form-container">
-                                      <label for="">Ulangi Password</label>
+                                      <label for="">Ulangi Password *</label>
                                       <input type="password"  value="" id="sign_up_password_retype" class="form-input form-block" required>
                                     </div>
                                     <div id="retype_password_status"></div>
                                     <hr>
                                     <h5>Profil Akun</h5>
                                     <div class="form-container">
-                                      <label for="">Nama Lengkap</label>
+                                      <label for="">Nama Lengkap *</label>
                                       <input type="text" name="nama_lengkap" value="" class="form-input form-block" required>
                                     </div>
                                     <div class="form-container">
-                                      <label for="">Alamat</label>
+                                      <label for="">Alamat *</label>
                                       <textarea name="alamat" rows="6" cols="80" class="form-input form-block" required></textarea>
                                     </div>
                                     <div class="row">
@@ -48,7 +48,7 @@
                                       </div>
                                       <div class="col-md-6">
                                         <div class="form-container">
-                                          <label for="">Kota / Kabupaten</label>
+                                          <label for="">Kota / Kabupaten *</label>
                                           <select class="form-input form-block" name="kode_kota">
                                             <?php foreach ($kota as $kota) : ?>
                                             <option value="<?= $kota['kode_kota']; ?>"><?= $kota['nama_kota']; ?></option>
@@ -60,11 +60,11 @@
                                     </div>
                                     <div class="form-container">
                                       <label for="">Nomor KTP</label>
-                                      <input type="text" name="nomor_ktp" class="form-input form-block" required>
+                                      <input type="text" name="nomor_ktp" class="form-input form-block">
                                     </div>
                                     <div class="form-container">
                                       <label for="">SIUP</label>
-                                      <input type="text" name="siup" value="" class="form-input form-block" required>
+                                      <input type="text" name="siup" value="" class="form-input form-block">
                                     </div>
                                     <!-- <div class="form-container">
                                       <label for="">Gambar KTP (Scan/Foto)</label>
