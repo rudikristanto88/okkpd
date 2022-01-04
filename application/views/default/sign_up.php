@@ -74,7 +74,7 @@
                                       <input type="submit" style="margin-top:12px;" class="btn btn-primary btn-block" name="" value="Daftar">
                                       
                                     </div>
-                                    (*) Kolom wajib diisi
+                                    Keterangan: (*) Wajib diisi
                                   </form>
                                 </div>
                               </div>

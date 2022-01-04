@@ -189,7 +189,7 @@ if ($menu == 'ubah') {
 
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label for="kota">Kota *</label>
+                  <label for="kota">Kab/Kota *</label>
                   <select class="form-control  text-white" name="kota" id="kota" required>
                     <?php foreach ($kota as $kota) : ?>
                       <option value="<?= $kota['kode_kota'] . ";" . $kota['nama_kota'] ?>" <?php if ($kotanya == $kota['nama_kota']) {
