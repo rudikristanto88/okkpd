@@ -131,15 +131,6 @@ class Home extends MY_Controller
 		}
 	}
 
-
-	public function kirimTestEmail()
-	{
-		$subject = $_GET["subject"] ?? "Test";
-		$email_to = $_GET["receiver"] ?? "develop.yogaadidr@gmail.com";
-		$message = $_GET["message"] ?? "Test";
-		$this->kirim_email($subject, $email_to, $message);
-	}
-
 	public function berita($slug)
 	{
 		if ($slug == null) {

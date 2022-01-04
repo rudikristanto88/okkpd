@@ -72,8 +72,9 @@
                                     </div> -->
                                     <div class="form-container">
                                       <input type="submit" style="margin-top:12px;" class="btn btn-primary btn-block" name="" value="Daftar">
-
+                                      
                                     </div>
+                                    (*) Kolom wajib diisi
                                   </form>
                                 </div>
                               </div>

@@ -81,10 +81,13 @@ if ($menu == 'ubah') {
                 <span style="font-size:12px">(*) Wajib diisi</span>
                 <div class="input-field">
                   <input type="hidden" name="id_identitas_usaha" value="<?= $id_identitas_usaha ?>">
+                  <input id="nama_unit_kerja" type="hidden" name="nama_unit_kerja" class="text-white" data-length="10" value="<?= $unit_kerja ?>" readonly value=" ">
+                  <input id="nama_pimpinan_unit_kerja" type="hidden" name="nama_pimpinan_unit_kerja" class="text-white" value="<?= $nama_pimpinan ?>" data-length="10" readonly value=" ">
 
                   <div class="form-group">
+                  <label for="kecamatan">Pilih Jenis Usaha *</label>
                     <?php if ($menu == 'tambah') { ?>
-                      <select class="form-control" name="jenis_usaha" id="jenis_usaha" required <?php if ($menu == 'ubah') {
+                      <select class="form-control text-white" name="jenis_usaha" id="jenis_usaha" required <?php if ($menu == 'ubah') {
                                                                                                   echo 'readonly';
                                                                                                 } ?>>
                         <option value="Perorangan">Perorangan</option>
@@ -116,8 +119,8 @@ if ($menu == 'ubah') {
               </div>
               <div class="col-sm-6">
                 <div class="input-field">
-                  <input id="no_ktp_pemohon" type="text" name="no_ktp_pemohon" class="text-white" value="<?= $nomor_ktp ?>" data-length="10" required>
-                  <label for="no_ktp_pemohon">Nomor KTP Pemohon</label>
+                  <input id="no_ktp_pemohon" type="text" name="no_ktp_pemohon" class="text-white" value="<?= $nomor_ktp ?>" data-length="10">
+                  <label for="no_ktp_pemohon">Nomor KTP Pemohon <span id="npwp_required">(Tidak Wajib)</span></label>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -128,7 +131,7 @@ if ($menu == 'ubah') {
                       <input type="file" name="foto_ktp">
                     </div>
                     <div class="file-path-wrapper">
-                      <input class="file-path validate text-white" type="text" placeholder="Foto KTP">
+                      <input class="file-path validate text-white" type="text" placeholder="Foto KTP (Tidak Wajib)">
                     </div>
                   </div>
                 </div>
@@ -147,7 +150,7 @@ if ($menu == 'ubah') {
                       <input type="file" name="foto_npwp">
                     </div>
                     <div class="file-path-wrapper">
-                      <input class="file-path validate text-white" type="text" placeholder="Foto NPWP">
+                      <input class="file-path validate text-white" type="text" placeholder="Foto NPWP (Tidak Wajib)">
                     </div>
                   </div>
                 </div>
@@ -225,39 +228,6 @@ if ($menu == 'ubah') {
                   <label for="no_hp_pemohon">Nomor Whatsapp Aktif Telepon *</label>
                 </div>
               </div>
-              <div class="col-sm-12" id="kop">
-                <div class="input-field">
-                  <div class="file-field input-field">
-                    <div class="btn">
-                      <span>Upload File</span>
-                      <input type="file" name="kop_surat" id="kop_surat">
-                    </div>
-                    <div class="file-path-wrapper">
-                      <input class="file-path validate text-white" type="text" placeholder="Kop Surat">
-                      <span>Ukuran yang dianjurkan 1150 px X 250 px</span>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="col-sm-6">
-                <div class="input-field">
-                  <input id="nama_unit_kerja" <?php if ($menu == 'ubah') {
-                                                echo 'readonly';
-                                              } ?> type="text" name="nama_unit_kerja" class="text-white" data-length="10" value="<?= $unit_kerja ?>" readonly value=" ">
-                  <!-- <label for="nama_unit_kerja">Nama Unit Kerja</label> -->
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="input-field">
-                  <input id="nama_pimpinan_unit_kerja" <?php if ($menu == 'ubah') {
-                                                          echo 'readonly';
-                                                        } ?> type="text" name="nama_pimpinan_unit_kerja" class="text-white" value="<?= $nama_pimpinan ?>" data-length="10" readonly value=" ">
-                  <!-- <label for="nama_pimpinan_unit_kerja">Nama Pimpinan Unit Kerja</label> -->
-                </div>
-              </div>
-
             </div>
             <input type="text" value="" id="lanjut" name="lanjut" style="display:none" required />
             <input type="text" value="<?= $menu ?>" id="menu" name="menu" style="display:none" required />
