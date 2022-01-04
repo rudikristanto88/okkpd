@@ -26,9 +26,8 @@
           Daftar Permohonan Layanan
           </div>
           <div class="card-body">
- 
                                 <div class="alert alert-info">
-                                <strong>Sertifikat LHU dapat diunduh jika sudah mengisi survey SKM</strong>  
+                                <strong>Sertifikat dapat diunduh jika sudah mengisi survey SKM</strong>  
                             </div>
             <br />
             <div class="table-responsive-md">
