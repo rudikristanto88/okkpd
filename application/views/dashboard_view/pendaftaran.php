@@ -20,8 +20,8 @@
           }
           ?>
           <?php if ($datalogin['punya_usaha'] == 0 && $datalogin['kode_role'] == 'pelaku') : ?>
-            <span>Daftarkan usaha anda</span><br />
-            <a href="<?= base_url() ?>dashboard/daftar_usaha" id="btn-daftar" class="btn btn-primary">Daftar</a>
+            <span>Pendaftaran Layanan BPMKP</span><br />
+            <a href="<?= base_url() ?>dashboard/daftar_usaha" id="btn-daftar" class="btn btn-info">Isi Identitas Usaha Anda</a>
           <?php elseif ($datalogin['punya_usaha'] != 0 && $datalogin['kode_role'] == 'pelaku') : ?>
             <div class="row">
               <div class="col-md-4">
