@@ -294,9 +294,8 @@ class Dashboard extends MY_Controller
 
 		$foto_ktp_temp = $this->uploads($_FILES, 'foto_ktp');
 		$foto_npwp_temp = $this->uploads($_FILES, 'foto_npwp');
-		$kop_surat_temp = $this->uploads($_FILES, 'kop_surat');
 
-		if ($_FILES['foto_ktp']['size'] > $max || $_FILES['foto_npwp']['size'] > $max || $_FILES['kop_surat']['size'] > $max) {
+		if ($_FILES['foto_ktp']['size'] > $max || $_FILES['foto_npwp']['size'] > $max) {
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>File terlalu besar</div>");
 			redirect("dashboard/identitas_usaha", "redirect");
 		}
@@ -334,10 +333,6 @@ class Dashboard extends MY_Controller
 		if ($foto_npwp_temp != null) {
 			$foto_npwp = file_get_contents($foto_npwp_temp['full_path']);
 			$arr["foto_npwp"] = $foto_npwp;
-		}
-		if ($kop_surat_temp != null) {
-			$kop_surat = file_get_contents($kop_surat_temp['full_path']);
-			$arr["kop_surat"] = $kop_surat;
 		}
 
 		$hasil;
