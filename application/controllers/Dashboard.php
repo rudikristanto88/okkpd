@@ -3491,4 +3491,18 @@ class Dashboard extends MY_Controller
 			redirect("dashboard/u_layanan_kelolakomuditas", 'redirect');
 		}
 	}
+
+	function cobaemail(){
+		$id_identitas_usaha = 55;
+		$sSQL = "SELECT * FROM  identitas_usaha   WHERE id_identitas_usaha = '" . $id_identitas_usaha . "' ";
+
+		$dataidentitas = $this->model_user->getDataBySQL($sSQL);
+		print_r($dataidentitas);
+		$data['link'] = base_url() . "dokumen/berkas_pendaftaran/?q=" ;
+		$data['nama'] = "rudi kristanto";
+		$data['kode'] = "123";
+		$pesan = $this->load->view('default/email/lhu', $data, true);
+		echo $pesan;
+		//$this->loadView('default/email/notifikasi_daftar_layanan', $data);
+	}
 }
