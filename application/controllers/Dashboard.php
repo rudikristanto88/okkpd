@@ -3523,7 +3523,7 @@ class Dashboard extends MY_Controller
 		$data['nama'] = "rudi kristanto";
 		$data['kode'] = "123";
 		//$cetak = $this->loadView('dashboard_view/cetak/lhu', $data, TRUE);
-		$pesan = $this->loadView('default/email/lhu', $data, TRUE); 
+		$pesan = $this->load->view('default/email/lhu', $data, TRUE); 
 		$email_to = "rudi.kristanto@gmail.com";
 		$subject ="Tanda Terima Berkas Pendaftaran Uji Mutu";
 		//$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu", "rudi.kristanto@gmail.com", $pesan);
