@@ -3493,7 +3493,7 @@ class Dashboard extends MY_Controller
 	}
 
 	function cobaemail(){
-		$id_identitas_usaha = 57;
+		$id_identitas_usaha = 55;
 		$sSQL = "SELECT * FROM  identitas_usaha   WHERE id_identitas_usaha = '" . $id_identitas_usaha . "' ";
 
 		$dataidentitas = $this->model_user->getDataBySQL($sSQL); 
