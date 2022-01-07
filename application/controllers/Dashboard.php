@@ -3499,7 +3499,7 @@ class Dashboard extends MY_Controller
 		$dataidentitas = $this->model_user->getDataBySQL($sSQL); 
 		
 		$this->load->library('ciqrcode'); //pemanggilan library QR CODE
-
+		$data = array();
 		$config['cacheable']    = true; //boolean, the default is true
 		$config['cachedir']     = './assets/'; //string, the default is application/cache/
 		$config['errorlog']     = './assets/'; //string, the default is application/logs/
@@ -3561,7 +3561,7 @@ class Dashboard extends MY_Controller
         if (!$this->email->send()) {
             echo $this->email->print_debugger(array('headers'));
         } else {
-           // echo 'email terkirim';
+            echo 'email terkirim';
         }
 	}
 }
