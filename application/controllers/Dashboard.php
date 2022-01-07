@@ -3524,7 +3524,7 @@ class Dashboard extends MY_Controller
 		$data['kode'] = "123";
 		$pesan = $this->load->view('default/email/lhu', $data, true); 
 		
-		$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu" . $data['kode'], "rudi.kristanto@gmail.com", $message);
+		$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu" . $data['kode'], "rudi.kristanto@gmail.com", $pesan);
 		//$this->loadView('default/email/notifikasi_daftar_layanan', $data);
 	}
 }
