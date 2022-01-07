@@ -3559,6 +3559,7 @@ class Dashboard extends MY_Controller
 
         $this->email->set_mailtype("html");
         if (!$this->email->send()) {
+			echo "gagal";
             echo $this->email->print_debugger(array('headers'));
         } else {
             echo 'email terkirim';
