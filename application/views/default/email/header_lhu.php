@@ -4,7 +4,7 @@
 </tr>
 <tr>
     <td align="center"><p style="font-size:15px" align=center>PEMERINTAH PROVINSI JAWA TENGAH<br>
-       DINAS KETAHANAN PANGAN PROVINSI JAWA TENGAH<br>BALAI PENINGKATAN MUTU DAN KEAMANAN PANGAN
+       DINAS KETAHANAN PANGAN PROVINSI JAWA TENGAH<br>OTORITAS KOMPETEN KEAMANAN PANGAN DAERAH
      </p>
      </td>
      <td align="left" rowspan='3' width='80px'></td>
