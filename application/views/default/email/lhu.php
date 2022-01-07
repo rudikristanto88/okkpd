@@ -66,11 +66,4 @@ include 'header_lhu.php';
             </div>
           </div>
         </div>
-      </div>
-<script>
-	//jQuery('#qrcode').qrcode("this plugin is great");
-	jQuery('#qrcodeTable').qrcode({
-		render	: "table",
-		text	: "<?= $detail[0]['kodelhu'] ?>"
-	});	 
-</script>
+      </div> 
