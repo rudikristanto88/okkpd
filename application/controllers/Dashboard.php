@@ -538,6 +538,44 @@ class Dashboard extends MY_Controller
 					"idjenis" => $id_jenis[$i], "idjenisdetail" => $id_detail[$i], "tandatangan" => $tandatangan
 				);
 				$this->model_user->insertData("layanan_ujimutu", $dat);
+				$sSQL = "SELECT * FROM  identitas_usaha   WHERE id_identitas_usaha = '" . $id_identitas_usaha . "' ";
+
+				$dataidentitas = $this->model_user->getDataBySQL($sSQL); 
+				
+				$this->load->library('ciqrcode'); //pemanggilan library QR CODE
+				$data = array();
+				$config['cacheable']    = true; //boolean, the default is true
+				$config['cachedir']     = './assets/'; //string, the default is application/cache/
+				$config['errorlog']     = './assets/'; //string, the default is application/logs/
+				$config['imagedir']     = ''; //direktori penyimpanan qr code
+				$config['quality']      = true; //boolean, the default is true
+				$config['size']         = '1024'; //interger, the default is 1024
+				$config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+				$config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+				$this->ciqrcode->initialize($config);
+
+				$image_name = 'qrcode.png'; //buat name dari qr code sesuai dengan nim
+
+				$params['data'] = $kodependaftaran; //data yang akan di jadikan QR CODE
+				$params['level'] = 'H'; //H=High
+				$params['size'] = 10;
+				$params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
+				$this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+				$data['qrcode'] = $image_name;
+				$data['detail'] = $dataidentitas;
+				$data['link'] = base_url() . "dokumen/berkas_pendaftaran/?q=" ;
+				$data['nama'] = "rudi kristanto";
+				$data['kode'] = $kodependaftaran;
+				//$cetak = $this->loadView('dashboard_view/cetak/lhu', $data, TRUE);
+				$pesan = $this->load->view('default/email/lhu', $data, TRUE); 
+				
+				$datalogin = $this->session->userdata("dataLogin");
+				$id_saya = $datalogin['id_user'];
+				$email = $this->model_user->getEmail($id_saya);
+				$email_to = "rudi.kristanto@gmail.com";
+				$subject ="Tanda Terima Berkas Pendaftaran Uji Mutu";
+				//echo $pesan;
+				$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu " . $kodependaftaran, $email, $pesan);
 			}
 		} else if ($jenis == "psat") {
 			$data['datalogin'] = $this->session->userdata("dataLogin");
