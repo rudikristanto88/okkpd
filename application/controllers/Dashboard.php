@@ -3522,9 +3522,46 @@ class Dashboard extends MY_Controller
 		$data['link'] = base_url() . "dokumen/berkas_pendaftaran/?q=" ;
 		$data['nama'] = "rudi kristanto";
 		$data['kode'] = "123";
-		$pesan = $this->load->view('default/email/lhu', $data, true); 
-		
-		$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu", "rudi.kristanto@gmail.com", $pesan);
+		$message = $this->load->view('default/email/lhu', $data, true); 
+		$email_to = "rudi.kristanto@gmail.com";
+		$subject ="Tanda Terima Berkas Pendaftaran Uji Mutu";
+		//$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu", "rudi.kristanto@gmail.com", $pesan);
 		//$this->loadView('default/email/notifikasi_daftar_layanan', $data);
+		$email_from = 'bpmkpjateng@gmail.com';
+
+        $config = [
+            'mailtype'  => 'html',
+            'charset'   => 'utf-8',
+            'protocol'  => 'smtp',
+            'smtp_host' => 'smtp.gmail.com',
+            'smtp_user' => $email_from,  // Email gmail
+            'smtp_pass'   => 'mutuhasil',  // Password gmail
+            'smtp_crypto' => 'ssl',
+            'smtp_port'   => 465,
+            'crlf'    => "\r\n",
+            'newline' => "\r\n"
+        ];
+
+        // Load library email dan konfigurasinya
+        $this->load->library('email', $config);
+
+        // Email dan nama pengirim
+        $this->email->from($email_from, 'Sistem Notifikasi OKKPD JATENG');
+
+        // Email penerima
+        $this->email->to($email_to); // Ganti dengan email tujuan
+
+        // Subject email
+        $this->email->subject($subject);
+
+        // Isi email
+        $this->email->message($message);
+
+        $this->email->set_mailtype("html");
+        if (!$this->email->send()) {
+            echo $this->email->print_debugger(array('headers'));
+        } else {
+           // echo 'email terkirim';
+        }
 	}
 }
