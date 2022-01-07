@@ -3526,8 +3526,8 @@ class Dashboard extends MY_Controller
 		$pesan = $this->load->view('default/email/lhu', $data, TRUE); 
 		$email_to = "rudi.kristanto@gmail.com";
 		$subject ="Tanda Terima Berkas Pendaftaran Uji Mutu";
-		echo $pesan;
-		//$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu", "rudi.kristanto@gmail.com", $pesan);
+		//echo $pesan;
+		$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu", "rudi.kristanto@gmail.com", $pesan);
 		//$this->loadView('default/email/notifikasi_daftar_layanan', $data);
 		/*$email_from = 'bpmkpjateng@gmail.com';
 
