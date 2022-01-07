@@ -3556,7 +3556,9 @@ class Dashboard extends MY_Controller
 
         // Isi email
         $this->email->message($pesan);
+		$this->email->set_header('MIME-Version', '1.0; charset=utf-8');
 
+		$this->email->set_header('Content-type', 'text/html');
         $this->email->set_mailtype("html");
         if (!$this->email->send()) {
 			echo "gagal";
