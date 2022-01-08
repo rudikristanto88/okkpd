@@ -176,13 +176,13 @@ if ($menu == 'ubah') {
 
               <div class="col-sm-3">
                 <div class="input-field">
-                  <input id="rt" type="number" name="rt" class="text-white" value="<?= $rt ?>" data-length="10" required>
+                  <input id="rt" type="number" name="rt" class="text-white" value="<?= $rt ?>" data-length="10" >
                   <label for="rt">RT *</label>
                 </div>
               </div>
               <div class="col-sm-3">
                 <div class="input-field">
-                  <input id="rw" type="number" name="rw" class="text-white" value="<?= $rw ?>" data-length="10" required>
+                  <input id="rw" type="number" name="rw" class="text-white" value="<?= $rw ?>" data-length="10">
                   <label for="rw">RW *</label>
                 </div>
               </div>
