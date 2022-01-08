@@ -255,7 +255,7 @@ class Dokumen extends MY_Controller
   {
     $id = $_GET['q']; 
     $data['berkas'] = $this->model_dokumen->getberkasUjimutu($id);
-    $this->load->view('dashboard_view/dokumen/berkas_pendaftaran', $data);
+    $this->load->view('dashboard_view/dokumen/berkas_pendaftaran_ujimutu', $data);
   }
   
 
