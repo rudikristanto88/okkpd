@@ -541,7 +541,7 @@ class Dashboard extends MY_Controller
 				$sSQL = "SELECT * FROM  identitas_usaha   WHERE id_identitas_usaha = '" . $id_identitas_usaha . "' ";
 
 				$dataidentitas = $this->model_user->getDataBySQL($sSQL); 
-				
+				/*
 				$this->load->library('ciqrcode'); //pemanggilan library QR CODE
 				$data = array();
 				$config['cacheable']    = true; //boolean, the default is true
@@ -575,7 +575,19 @@ class Dashboard extends MY_Controller
 				$email_to = "rudi.kristanto@gmail.com";
 				$subject ="Tanda Terima Berkas Pendaftaran Uji Mutu";
 				//echo $pesan;
-				$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu " . $kodependaftaran, $email, $pesan);
+				//$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu " . $kodependaftaran, $email, $pesan);
+				*/
+				$data = array();
+				$data['datalogin'] = $this->session->userdata("dataLogin");
+
+				$email_to = $data['datalogin']['username'];
+				$subject = "Pendaftaran Layanan - Kode Pendaftaran";
+
+				$data['link'] = base_url() . "dokumen/berkas_pendaftaran_ujimutu/?q=" . sha1($kodependaftaran);
+				$data['nama'] = $data['datalogin']['nama_lengkap'];
+				$data['kode'] = $kodependaftaran;
+				$message = $this->load->view('default/email/notifikasi_daftar_layanan', $data, true);
+				$this->kirim_email($subject, $email_to, $message);
 			}
 		} else if ($jenis == "psat") {
 			$data['datalogin'] = $this->session->userdata("dataLogin");
