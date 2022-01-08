@@ -3550,7 +3550,7 @@ class Dashboard extends MY_Controller
 
 		$image_name = 'qrcode.png'; //buat name dari qr code sesuai dengan nim
 
-		$params['data'] = "123"; //data yang akan di jadikan QR CODE
+		$params['data'] = "008/UNG/I/2022"; //data yang akan di jadikan QR CODE
 		$params['level'] = 'H'; //H=High
 		$params['size'] = 10;
 		$params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
@@ -3559,13 +3559,13 @@ class Dashboard extends MY_Controller
 		$data['detail'] = $dataidentitas;
 		$data['link'] = base_url() . "dokumen/berkas_pendaftaran/?q=" ;
 		$data['nama'] = "rudi kristanto";
-		$data['kode'] = "123";
+		$data['kode'] = "008/UNG/I/2022";
 		//$cetak = $this->loadView('dashboard_view/cetak/lhu', $data, TRUE);
 		$pesan = $this->load->view('default/email/lhu', $data, TRUE); 
 		$email_to = "rudi.kristanto@gmail.com";
 		$subject ="Tanda Terima Berkas Pendaftaran Uji Mutu";
 		//echo $pesan;
-		$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu", "rudi.kristanto@gmail.com", $pesan);
+		$this->kirim_email("Tanda Terima Berkas Pendaftaran Uji Mutu".$data['kode'], "rudi.kristanto@gmail.com", $pesan);
 		//$this->loadView('default/email/notifikasi_daftar_layanan', $data);
 		/*$email_from = 'bpmkpjateng@gmail.com';
 

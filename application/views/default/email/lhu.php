@@ -12,32 +12,33 @@ include 'header_lhu.php';
     <tr>
         <td width="30%" align="left">No Tiket Pendaftaran</td>
         <td width="1">:</td>
-        <td><?= $kode ?></td>
+        <td colspan="2"><?= $kode ?></td>
     </tr>
     <tr>
         <td width="30%" align="left">Nama Pemohon</td>
         <td width="1">:</td>
-        <td><?= $detail->nama_pemohon ?></td>
+        <td colspan="2"><?= $detail->nama_pemohon ?></td>
     </tr>
     <tr>
         <td width="30%" align="left">Jenis / Nama Usaha</td>
         <td width="1">:</td>
-        <td><?= $detail->jenis_usaha . " / " . $detail->nama_usaha ?></td>
+        <td colspan="2"><?= $detail->jenis_usaha . " / " . $detail->nama_usaha ?></td>
     </tr>
     <tr>
         <td width="30%" align="left">Alamat</td>
         <td width="1">:</td>
-        <td><?= $detail->alamat_usaha . " RT " . $detail->rt . " RW " . $detail->rw . " Kel " . $detail->kelurahan. " Kec " . $detail->kecamatan ." ". $detail->kota ?></td>
+        <td colspan="2"><?= $detail->alamat_usaha . " RT " . $detail->rt . " RW " . $detail->rw . " Kel " . $detail->kelurahan. " Kec " . $detail->kecamatan ." ". $detail->kota ?></td>
     </tr>
     <tr>
         <td width="30%" align="left">No Telp / HP</td>
         <td width="1">:</td>
         <td><?= $detail->no_telp . " / " .  $detail->no_hp_pemohon?></td>
+        <td rowspan="5"><img style="width: 200px;" src="<?php echo base_url().''.$qrcode;?>"></td>
     </tr>
     <tr>
         <td width="30%" align="left">Jenis Layanan</td>
         <td width="1">:</td>
-        <td>Uji Mutu</td>
+        <td >Uji Mutu</td>
     </tr>
     <tr>
         <td width="30%" align="left">Jabatan Pemohon</td>
@@ -47,18 +48,15 @@ include 'header_lhu.php';
     <tr>
         <td width="30%" align="left">Status</td>
         <td width="1">:</td>
-        <td>Online</td>
+        <td >Online</td>
     </tr>
     <tr>
         <td width="30%" align="left">Tanggal Pendaftaran</td>
         <td width="1">:</td>
-        <td><?php echo date('Y-m-d') ?></td>
-    </tr>
+        <td ><?php echo date('Y-m-d') ?></td>
+    </tr> 
     <tr>
-        <td colspan="3"><img style="width: 100px;" src="<?php echo base_url().''.$qrcode;?>"></td>
-    </tr>
-    <tr>
-        <td colspan="3">Dicetak oleh  <?= $detail->nama_pemohon . " " . date('Y-m-d H:i:s') ?></td>
+        <td colspan="3">Dicetak oleh  <?= $detail->nama_pemohon . " " . date('d-m-Y H:i:s') ?></td>
     </tr>
     
 </table> 
