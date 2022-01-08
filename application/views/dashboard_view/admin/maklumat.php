@@ -8,86 +8,78 @@
               <a href="<?= base_url() ?>dashboard">
                 <i class="material-icons">home</i>
                 Beranda</a>
-              </li>
-              <li class="breadcrumb-item active">Maklumat</li>
-            </ul>
-          </div>
+            </li>
+            <li class="breadcrumb-item active">Maklumat</li>
+          </ul>
         </div>
       </div>
-      <!-- Input -->
-      <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="card">
-            <div class="body">
-              <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                <strong>Maklumat</strong> </h2>
-                            <!-- <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <button href="javascript:void(0);" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                    <span>Aksi</span> <i class="material-icons">more_vert</i>
-                                                </button>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li>
-                                            <a href="<?= base_url('admin/tambah_maklumat') ?>">Tambah</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul> -->
-                        </div>
-                        <div class="body">
-                          <?php foreach ($maklumat as $maklumat) ; ?>
+    </div>
+    <!-- Input -->
+    <div class="row clearfix">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="body">
+            <div class="row clearfix">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                  <div class="header">
+                    <h2>
+                      <strong>Maklumat</strong>
+                    </h2>
+                
+                  </div>
+                  <?php
+                  if ($this->session->flashdata("status")) {
+                    echo $this->session->flashdata("status");
+                  }
+                  ?>
+                  <div class="body">
+                    <?php foreach ($maklumat as $maklumat); ?>
 
-                          <div class="row">
-                            <?php
-                            $attribute = array('style'=>'color:black');
-                            echo form_open_multipart('admin/insert_maklumat',$attribute); ?>
-                              <div class="col-md-12">
-                                <textarea name="maklumat" id="ckeditor" style="height:500px;color:black"><?php if($maklumat!=null){echo $maklumat['maklumat'];}?></textarea>
-                                <br/><button class='btn btn-info text-white'>Simpan</button></a>
+                    <div class="row">
+                      <?php
+                      $attribute = array('style' => 'color:black;width:100%');
+                      echo form_open_multipart('admin/insert_maklumat', $attribute); ?>
+                      <div class="col-md-12">
+                        <textarea name="maklumat" id="ckeditor" style="height:800px;color:black;width:100%"><?php if ($maklumat != null) {
+                                                                                                    echo $maklumat['maklumat'];
+                                                                                                  } ?></textarea>
+                        <br /><button class='btn btn-info text-white'>Simpan</button></a>
 
-                              </div>
+                      </div>
 
-                            </form>
+                      </form>
 
-                          </div>
-                        </div>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
             <!-- #END# Basic Table -->
-
-
           </div>
         </div>
       </div>
     </div>
     <!-- #END# Input -->
-
+  </div>
 
   </div>
 
-</div>
+  <!-- Widgets -->
 
-<!-- Widgets -->
+  <!-- #END# Widgets -->
 
-<!-- #END# Widgets -->
-
-</div>
+  </div>
 </section>
 
 <script type="text/javascript">
-let editor
-ClassicEditor
-    .create( document.querySelector( '#ckeditor' ) )
-    .then(newEditor =>{
+  let editor
+  ClassicEditor
+    .create(document.querySelector('#ckeditor'))
+    .then(newEditor => {
       editor = newEditor;
     })
-    .catch( error => {
-        console.error( error );
-    } );
-
+    .catch(error => {
+      console.error(error);
+    });
 </script>

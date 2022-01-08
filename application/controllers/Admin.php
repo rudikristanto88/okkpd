@@ -79,13 +79,9 @@ class Admin extends MY_Controller
           $data = array($data_ubah => $value, 'kode_layanan' => $jenis);
           $hasil = $this->model_user->insertData('info_layanan', $data);
         }
-        if ($hasil) {
-          $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-          redirect("admin/info_layanan/" . $jenis, "redirect");
-        } else {
-          $this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-          redirect("admin/gambar_slider/" . $jenis, "redirect");
-        }
+        $this->showAlert("simpan","Info Layanan", $hasil);
+
+        redirect("admin/info_layanan/" . $jenis, "redirect");
       }
     }
   }
@@ -115,7 +111,9 @@ class Admin extends MY_Controller
   }
   public function hapus_slider($id_gambar)
   {
-    $this->model_user->deleteData('gambar_slider', $id_gambar, 'id_gambar');
+    $hasil = $this->model_user->deleteData('gambar_slider', $id_gambar, 'id_gambar');
+    $this->showAlert("hapus","Slider", $hasil);
+
     redirect("dashboard/gambar_slider");
   }
 
@@ -145,13 +143,11 @@ class Admin extends MY_Controller
       "id_gambar" => '',
       "gambar_slider" => $gambar_slider
     );
-    if ($this->model_admin->insertData("gambar_slider", $arr)) {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-      redirect("admin/gambar_slider", "redirect");
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-      redirect("admin/gambar_slider", "redirect");
-    }
+
+    $hasil = $this->model_admin->insertData("gambar_slider", $arr);
+    $this->showAlert("simpan","Slider", $hasil);
+
+    redirect("admin/gambar_slider", "redirect");
   }
 
   public function kontak_kami()
@@ -249,14 +245,9 @@ class Admin extends MY_Controller
       }
       $hasil = $this->model_admin->updateData("identitas_kepala_dinas", $nip, 'nip', $arr);
     }
+    $this->showAlert("simpan","Data", $hasil);
 
-    if ($hasil) {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-      redirect("admin/identitas_kepala_dinas", "redirect");
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-      redirect("admin/identitas_kepala_dinas", "redirect");
-    }
+    redirect("admin/identitas_kepala_dinas", "redirect");
   }
 
   public function tautan_terkait()
@@ -268,15 +259,11 @@ class Admin extends MY_Controller
   public function hapus_tautan()
   {
     $id = $this->input->post('id_tautan');
-    if ($this->model_user->deleteData('tautan', $id, 'id_tautan')) {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil dihapus</div>");
-      redirect("admin/tautan_terkait", "redirect");
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menghapus data</div>");
-      redirect("admin/tautan_terkait", "redirect");
-    }
-  }
+    $hasil = $this->model_user->deleteData('tautan', $id, 'id_tautan');
+    $this->showAlert("hapus","Tautan", $hasil);
 
+    redirect("admin/tautan_terkait", "redirect");
+  }
 
   public function tambah_tautan()
   {
@@ -291,20 +278,15 @@ class Admin extends MY_Controller
     $nama_tautan = $i->post("nama_tautan");
     $alamat_tautan = $i->post("alamat_tautan");
 
-
     $data = array(
       'id_tautan' => null,
       'nama_tautan' => $nama_tautan,
       'alamat_tautan' => $alamat_tautan
     );
+    $hasil = $this->model_admin->insertData('tautan', $data);
+    $this->showAlert("tambah","Tautan", $hasil);
 
-    if ($this->model_admin->insertData('tautan', $data)) {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-success'>Tautan berhasil ditambahkan</div>");
-      redirect("admin/tautan_terkait", "redirect");
-    } else {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-warning'>Tautan gagal ditambahkan</div>");
-      redirect("admin/tautan_terkait", "redirect");
-    }
+    redirect("admin/tautan_terkait", "redirect");
   }
 
   public function konsultasi_online()
@@ -421,8 +403,7 @@ class Admin extends MY_Controller
       $this->insert_layanan_migrasi($element[11], $data_pelaku, 'detail_komoditas', $data_excel);
       $iterasi++;
     }
-    $this->session->set_flashdata("status", "<div class='alert alert-success'>Proses migrasi berhasil</div>");
-    // redirect("admin/migrasi_layanan", "redirect");
+    $this->redirectMigrasi();
   }
 
   private function migrasi_sppb($data)
@@ -463,8 +444,7 @@ class Admin extends MY_Controller
       $this->insert_layanan_migrasi("sppb", $data_pelaku, 'detail_identitas_sppb', $data_excel);
       $iterasi++;
     }
-    $this->session->set_flashdata("status", "<div class='alert alert-success'>Proses migrasi berhasil</div>");
-    redirect("admin/migrasi_layanan", "redirect");
+    $this->redirectMigrasi();
   }
 
   private function migrasi_psat($data)
@@ -503,8 +483,7 @@ class Admin extends MY_Controller
       $this->insert_layanan_migrasi("psat", $data_pelaku, 'detail_identitas_produk', $data_excel);
       $iterasi++;
     }
-    $this->session->set_flashdata("status", "<div class='alert alert-success'>Proses migrasi berhasil</div>");
-    redirect("admin/migrasi_layanan", "redirect");
+    $this->redirectMigrasi();
   }
 
   private function migrasi_kemas($data)
@@ -545,7 +524,11 @@ class Admin extends MY_Controller
       $this->insert_layanan_migrasi("kemas", $data_pelaku, 'detail_identitas_kemas', $data_excel);
       $iterasi++;
     }
-    $this->session->set_flashdata("status", "<div class='alert alert-success'>Proses migrasi berhasil</div>");
+    $this->redirectMigrasi();
+  }
+
+  private function redirectMigrasi(){
+    $this->showAlertWithMessage("Proses migrasi berhasil");
     redirect("admin/migrasi_layanan", "redirect");
   }
 
@@ -569,6 +552,18 @@ class Admin extends MY_Controller
     $this->loadView('dashboard_view/admin/tambah_berita', $data);
   }
 
+  public function hapus_berita()
+  {
+    $data['datalogin'] = $this->session->userdata("dataLogin");
+    $i = $this->input;
+    $id_berita = $i->post("id_berita");
+
+    $result = $this->model_user->deleteData('berita', $id_berita, 'id_berita');
+    $this->showAlert("hapus","Berita", $result);
+
+    redirect("admin/berita", "redirect");
+  }
+
   public function insert_berita()
   {
     $i = $this->input;
@@ -582,14 +577,12 @@ class Admin extends MY_Controller
     $id_berita = $i->post("id_berita");
     $max = 1000000;
 
-
     if ($_FILES['gambar_berita']['size'] > $max) {
       $this->session->set_flashdata("status", "<div class='alert alert-warning'>File terlalu besar</div>");
       redirect("admin/kelola_berita/" . $jenis, "redirect");
     } else {
       $gambar_berita_temp = $this->uploads($_FILES, 'gambar_berita');
     }
-    $dat = "";
 
     if ($gambar_berita_temp != null) {
       $gambar_berita = file_get_contents($gambar_berita_temp['full_path']);
@@ -608,22 +601,15 @@ class Admin extends MY_Controller
     }
     $data['slug'] = $slug;
     $hasil = "";
-    $kata = 'ditambahkan';
 
     if ($jenis == 'tambah') {
       $hasil = $this->model_admin->insertData('berita', $data);
     } else {
-      $kata = 'diubah';
       $hasil = $this->model_admin->updateData('berita', $id_berita, 'id_berita', $data);
     }
-
-    if ($hasil) {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Berita berhasil " . $kata . "</div>");
-      redirect("admin/berita", "redirect");
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>Berita gagal " . $kata . "</div>");
-      redirect("admin/berita", "redirect");
-    }
+    $this->showAlert($jenis,"Berita", $hasil);
+    
+    redirect("admin/berita", "redirect");
   }
 
   public function cek_status_layanan()
@@ -643,13 +629,11 @@ class Admin extends MY_Controller
   public function hapus_panduan()
   {
     $id = $this->input->post('id_panduan');
-    if ($this->model_user->deleteData('panduan', $id, 'id')) {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil dihapus</div>");
-      redirect("admin/panduan", "redirect");
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menghapus data</div>");
-      redirect("admin/panduan", "redirect");
-    }
+    
+    $hasil = $this->model_user->deleteData('panduan', $id, 'id');
+    $this->showAlert("hapus","Panduan", $hasil);
+
+    redirect("admin/panduan", "redirect");
   }
 
   public function kelola_panduan($judul)
@@ -697,15 +681,9 @@ class Admin extends MY_Controller
       $arr = array("nama_panduan" => $nama_panduan);
       $result = $this->model_admin->updateData("panduan", $id, 'id', $arr);
     }
+    $this->showAlert("tambah","Panduan", $result);
 
-
-    if ($result) {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-      redirect("admin/panduan", "redirect");
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-      redirect("admin/panduan", "redirect");
-    }
+    redirect("admin/panduan", "redirect");
   }
 
   public function tentang_kami()
@@ -722,11 +700,13 @@ class Admin extends MY_Controller
     $data['kemasan'] = $this->model_user->getAllData("master_kemasan", 'nama_kemasan');
     $this->loadView('dashboard_view/admin/master_kemasan', $data);
   }
+
   public function tambah_kemasan()
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
     $this->loadView('dashboard_view/admin/tambah_master_kemasan', $data);
   }
+
   public function data_kemasan($menu = null)
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
@@ -749,11 +729,8 @@ class Admin extends MY_Controller
       } else {
         redirect('dashboard/master_kemasan');
       }
-      if ($isTrue) {
-        $this->session->set_flashdata("status", "<div class='alert alert-success alert-dismissible fade show'>Data berhasil disimpan</div>");
-      } else {
-        $this->session->set_flashdata("status", "<div class='alert alert-warning alert-dismissible fade show'>Gagal menyimpan data</div>");
-      }
+      
+      $this->showAlert("simpan","Kemasan", $isTrue);
 
       redirect("dashboard/master_kemasan", "redirect");
     }
@@ -761,7 +738,6 @@ class Admin extends MY_Controller
     $data['kemasan'] = $this->model_user->getAllData("master_kemasan");
     $this->loadView('dashboard_view/admin/master_kemasan', $data);
   }
-
 
   public function master_satuan()
   {
@@ -796,11 +772,7 @@ class Admin extends MY_Controller
       } else {
         redirect('dashboard/master_satuan');
       }
-      if ($isTrue) {
-        $this->session->set_flashdata("status", "<div class='alert alert-success alert-dismissible fade show'>Data berhasil disimpan</div>");
-      } else {
-        $this->session->set_flashdata("status", "<div class='alert alert-warning alert-dismissible fade show'>Gagal menyimpan data</div>");
-      }
+      $this->showAlert("simpan","Satuan", $isTrue);
 
       redirect("dashboard/master_satuan", "redirect");
     }
@@ -891,14 +863,10 @@ class Admin extends MY_Controller
     $visi_misi = $i->post("visi_misi");
 
     $data = array('visi_misi' => $visi_misi);
+    $hasil = $this->model_admin->updateData("tentang_kami", 1, "id", $data);
+    $this->showAlert("Tambah","Visi Misi", $hasil);
 
-    if ($this->model_admin->updateData("tentang_kami", 1, "id", $data)) {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-success'>Berita berhasil ditambahkan</div>");
-      redirect("admin/visi_misi", "redirect");
-    } else {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-warning'>Berita gagal ditambahkan</div>");
-      redirect("admin/visi_misi", "redirect");
-    }
+    redirect("admin/visi_misi", "redirect");
   }
 
   public function struktur_organisasi()
@@ -913,11 +881,6 @@ class Admin extends MY_Controller
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
     $data['role'] = $this->model_user->getAllData("master_role");
-    // $this->load->view('dashboard_view/template/header',$data);
-    // $this->load->view('dashboard_view/template/top_nav');
-    // $this->load->view('dashboard_view/template/side_nav',$this->menu);
-    // $this->load->view('dashboard_view/admin/tambah_struktur_organisasi',$data);
-    // $this->load->view('dashboard_view/template/footer');
     $this->loadView('dashboard_view/admin/tambah_struktur_organisasi', $data);
   }
 
@@ -937,13 +900,10 @@ class Admin extends MY_Controller
     }
 
     $data = array('struktur_organisasi' => $struktur_organisasi);
-    if ($this->model_admin->updateData("tentang_kami", 1, "id", $data)) {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-      redirect("admin/struktur_organisasi", "redirect");
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-      redirect("admin/struktur_organisasi", "redirect");
-    }
+    $hasil = $this->model_admin->updateData("tentang_kami", 1, "id", $data);
+    $this->showAlert("simpan","Struktur Organisasi", $hasil);
+
+    redirect("admin/struktur_organisasi", "redirect");
   }
 
   public function maklumat()
@@ -953,12 +913,6 @@ class Admin extends MY_Controller
     $data['role'] = $this->model_user->getAllData("master_role");
     $data['maklumat'] = $this->model_admin->getAllData("tentang_kami");
     $this->loadView('dashboard_view/admin/maklumat', $data);
-
-    /*$this->load->view('dashboard_view/template/header',$data);
-      $this->load->view('dashboard_view/template/top_nav');
-      $this->load->view('dashboard_view/template/side_nav',$this->menu);
-      $this->load->view('dashboard_view/admin/maklumat',$data);
-      $this->load->view('dashboard_view/template/footer');*/
   }
 
   public function tambah_maklumat()
@@ -978,23 +932,16 @@ class Admin extends MY_Controller
     $maklumat = $i->post("maklumat");
 
     $data = array('maklumat' => $maklumat);
+    $hasil = $this->model_admin->updateData("tentang_kami", 1, "id", $data);
+    $this->showAlert("simpan","Maklumat", $hasil);
 
-    if ($this->model_admin->updateData("tentang_kami", 1, "id", $data)) {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-success'>Maklumat berhasil ditambahkan</div>");
-      redirect("admin/maklumat", "redirect");
-    } else {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-warning'>Maklumat gagal ditambahkan</div>");
-      redirect("admin/maklumat", "redirect");
-    }
+    redirect("admin/maklumat", "redirect");
   }
-
-
 
   public function tugas_fungsi()
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
     $data['tugas'] = $this->model_admin->getAllData("tentang_kami");
-
     $this->loadView('dashboard_view/admin/tugas_fungsi', $data);
   }
 
@@ -1011,14 +958,10 @@ class Admin extends MY_Controller
     $tugas_fungsi = $i->post("tugas_fungsi");
 
     $data = array('tugas_fungsi' => $tugas_fungsi);
+    $hasil = $this->model_admin->updateData("tentang_kami", 1, "id", $data);
+    $this->showAlert("simpan","Tugas Fungsi", $hasil);
 
-    if ($this->model_admin->updateData("tentang_kami", 1, "id", $data)) {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-success'>Maklumat berhasil ditambahkan</div>");
-      redirect("admin/tugas_fungsi", "redirect");
-    } else {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-warning'>Maklumat gagal ditambahkan</div>");
-      redirect("admin/maklumat", "redirect");
-    }
+    redirect("admin/tugas_fungsi", "redirect");
   }
 
   public function legalitas()
@@ -1042,14 +985,10 @@ class Admin extends MY_Controller
     $legalitas = $i->post("legalitas");
 
     $data = array('legalitas' => $legalitas);
+    $hasil = $this->model_admin->updateData("tentang_kami", 1, "id", $data);
+    $this->showAlert("tambah","Legalitas", $hasil);
 
-    if ($this->model_admin->updateData("tentang_kami", 1, "id", $data)) {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-success'>Legalitas berhasil ditambahkan</div>");
-      redirect("admin/legalitas", "redirect");
-    } else {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-warning'>Legalitas gagal ditambahkan</div>");
-      redirect("admin/legalitas", "redirect");
-    }
+    redirect("admin/legalitas", "redirect");
   }
 
   public function produk_hukum()
@@ -1096,13 +1035,10 @@ class Admin extends MY_Controller
   public function hapus_produk_hukum()
   {
     $id = $this->input->post('id_produk');
-    if ($this->model_user->deleteData('produk_hukum', $id, 'id')) {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil dihapus</div>");
-      redirect("admin/produk_hukum", "redirect");
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menghapus data</div>");
-      redirect("admin/produk_hukum", "redirect");
-    }
+    $hasil = $this->model_user->deleteData('produk_hukum', $id, 'id');
+    $this->showAlert("hapus","Produk Hukum", $hasil);
+
+    redirect("admin/produk_hukum", "redirect");
   }
 
   public function insert_produk_hukum($jenis = null)
@@ -1157,26 +1093,18 @@ class Admin extends MY_Controller
       }
       $hasil = $this->model_admin->updateData("produk_hukum", $id_produk, 'id', $arr);
     }
+    $this->showAlert($jenis,"Produk Hukum", $hasil);
 
-
-    if ($hasil) {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-      redirect("admin/produk_hukum", "redirect");
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-      redirect("admin/produk_hukum", "redirect");
-    }
+    redirect("admin/produk_hukum", "redirect");
   }
 
   function ubah_data_dinas()
   {
     $i = $this->input;
     $data = array("nama_instansi" => $i->post('nama_instansi'), "nama_ketua" => $i->post('nama_ketua'));
-    if ($this->model_user->updateData("kota", $i->post('kode_kota'), "kode_kota", $data)) {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-    }
+    $hasil = $this->model_user->updateData("kota", $i->post('kode_kota'), "kode_kota", $data);
+    $this->showAlert("Simpan","Data Dinas", $hasil);
+
     redirect("dashboard/kelola_dinas");
   }
 
@@ -1202,14 +1130,10 @@ class Admin extends MY_Controller
     $whatsapp = $i->post("whatsapp");
 
     $data = array('alamat' => $alamat, 'nomor_telepon' => $nomor_telepon, 'whatsapp' => $whatsapp);
+    $hasil = $this->model_admin->updateData("kontak_kami", 1, "id", $data);
+    $this->showAlert("tambah","Alamat", $hasil);
 
-    if ($this->model_admin->updateData("kontak_kami", 1, "id", $data)) {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-success'>Berita berhasil ditambahkan</div>");
-      redirect("admin/kelola_alamat", "redirect");
-    } else {
-      $this->session->set_flashdata("status_registrasi", "<div class='alert alert-warning'>Berita gagal ditambahkan</div>");
-      redirect("admin/kelola_alamat", "redirect");
-    }
+    redirect("admin/kelola_alamat", "redirect");
   }
 
   public function kelola_medsos()
@@ -1235,14 +1159,10 @@ class Admin extends MY_Controller
     $instagram = $i->post("instagram");
 
     $data = array('email' => $email, 'facebook' => $facebook, 'twitter' => $twitter, 'instagram' => $instagram);
+    $hasil = $this->model_admin->updateData("kontak_kami", 1, "id", $data);
+    $this->showAlert("tambah","Media Sosial", $hasil);
 
-    if ($this->model_admin->updateData("kontak_kami", 1, "id", $data)) {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambahkan</div>");
-      redirect("admin/kelola_medsos", "redirect");
-    } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-warning'>Data gagal ditambahkan</div>");
-      redirect("admin/kelola_medsos", "redirect");
-    }
+    redirect("admin/kelola_medsos", "redirect");
   }
 
   public function kelola_komoditas($kelompok = null, $id_sektor = null, $komoditas = null, $id_kelompok = null)
@@ -1262,6 +1182,7 @@ class Admin extends MY_Controller
       $this->loadView('dashboard_view/admin/kelola_master_komoditas', $data);
     }
   }
+
   public function tambah_sektor($menu = null, $id_sektor = null)
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
@@ -1276,6 +1197,7 @@ class Admin extends MY_Controller
       $this->loadView('dashboard_view/admin/tambah_sektor', $data);
     }
   }
+
   public function tambah_kelompok($menu = null, $id_sektor = null, $id_kelompok = null)
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
@@ -1292,6 +1214,7 @@ class Admin extends MY_Controller
       $this->loadView('dashboard_view/admin/tambah_kelompok', $data);
     }
   }
+
   public function tambah_master_komoditas($menu = null, $id_kelompok = null, $id_sektor = null, $kode_komoditas = null)
   {
     $data['datalogin'] = $this->session->userdata("dataLogin");
@@ -1320,9 +1243,11 @@ class Admin extends MY_Controller
       $this->model_user->insertData('komoditas_sektor', $arr);
       $i++;
     }
-    $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambahkan</div>");
+    $this->showAlert("tambah","Sektor", true);
+
     redirect('admin/kelola_komoditas');
   }
+
   public function simpan_kelompok()
   {
     $id_kelompok = $this->input->post('id_kelompok');
@@ -1335,7 +1260,8 @@ class Admin extends MY_Controller
       $this->model_user->insertData('komoditas_kelompok', $arr);
       $i++;
     }
-    $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambahkan</div>");
+    $this->showAlert("tambah","Kelompok", true);
+
     redirect('admin/kelola_komoditas/kelompok/' . $id_sektor);
   }
   public function simpan_master()
@@ -1351,7 +1277,8 @@ class Admin extends MY_Controller
       $this->model_user->insertData('master_komoditas', $arr);
       $i++;
     }
-    $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambahkan</div>");
+    $this->showAlert("tambah","Data", true);
+
     redirect('admin/kelola_komoditas/kelompok/' . $id_sektor . '/komoditas/' . $id_kelompok);
   }
 
@@ -1360,7 +1287,7 @@ class Admin extends MY_Controller
     $id_sektor = $this->input->post('id_sektor');
     $id_kelompok = $this->input->post('id_kelompok');
     $kode_komoditas = $this->input->post('kode_komoditas');
-    $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil dihapus</div>");
+    $this->showAlert("hapus","data", true);
 
     if ($menu == 'sektor') {
       $this->model_user->deleteData('komoditas_sektor', $id_sektor, 'id_sektor');
@@ -1381,6 +1308,7 @@ class Admin extends MY_Controller
       redirect('admin/kelola_komoditas/kelompok/' . $id_sektor . '/komoditas/' . $id_kelompok);
     }
   }
+
   public function kelola_kuesioner()
   {
     $data['list_periode'] = $this->model_admin->getAllData("master_periode", "id", "desc");
@@ -1417,6 +1345,8 @@ class Admin extends MY_Controller
     $id = $this->input->post('id');
     $param["deleted"] = 1;
     $this->model_admin->updateData("master_kuesioner", $id, "id", $param);
+    $this->showAlert("tambah","Kuesioner", true);
+
     $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil dihapus</div>");
     redirect('dashboard/kelola_kuesioner');
   }
@@ -1583,14 +1513,14 @@ class Admin extends MY_Controller
     $input = $this->input;
     $id = $input->post('id');
     $data = array("nama_parameter" => $input->post("nama_parameter"), "isaktif" => $input->post("isaktif"));
-
+    
     if ($input->post('action') == "Tambah") {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil ditambah</div>");
       $this->model_admin->insertData("master_parameter", $data);
     } else {
-      $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil diubah</div>");
       $this->model_admin->updateData("master_parameter", $id, "id", $data);
     }
+    $this->showAlert($input->post('action'),"Parameter", true);
+
     redirect('dashboard/kelola_parameter');
   }
 
@@ -1598,7 +1528,8 @@ class Admin extends MY_Controller
   {
     $id = $this->input->post('id');
     $this->model_user->deleteData('master_parameter', $id, 'id');
-    $this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil dihapus</div>");
+    $this->showAlert("Hapus","Parameter", true);
+    
     redirect('dashboard/kelola_parameter');
   }
 }

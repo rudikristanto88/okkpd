@@ -92,44 +92,44 @@ class MY_Controller extends CI_Controller
   }
 
   protected function kirim_email($subject, $email_to, $message)
-    {
-        $email_from = 'bpmkpjateng@gmail.com';
+  {
+    $email_from = 'bpmkpjateng@gmail.com';
 
-        $config = [
-            'mailtype'  => 'html',
-            'charset'   => 'utf-8',
-            'protocol'  => 'smtp',
-            'smtp_host' => 'smtp.gmail.com',
-            'smtp_user' => $email_from,  // Email gmail
-            'smtp_pass'   => 'mutuhasil',  // Password gmail
-            'smtp_crypto' => 'ssl',
-            'smtp_port'   => 465,
-            'crlf'    => "\r\n",
-            'newline' => "\r\n"
-        ];
+    $config = [
+      'mailtype'  => 'html',
+      'charset'   => 'utf-8',
+      'protocol'  => 'smtp',
+      'smtp_host' => 'smtp.gmail.com',
+      'smtp_user' => $email_from,  // Email gmail
+      'smtp_pass'   => 'mutuhasil',  // Password gmail
+      'smtp_crypto' => 'ssl',
+      'smtp_port'   => 465,
+      'crlf'    => "\r\n",
+      'newline' => "\r\n"
+    ];
 
-        // Load library email dan konfigurasinya
-        $this->load->library('email', $config);
+    // Load library email dan konfigurasinya
+    $this->load->library('email', $config);
 
-        // Email dan nama pengirim
-        $this->email->from($email_from, 'Sistem Notifikasi OKKPD JATENG');
+    // Email dan nama pengirim
+    $this->email->from($email_from, 'Sistem Notifikasi OKKPD JATENG');
 
-        // Email penerima
-        $this->email->to($email_to); // Ganti dengan email tujuan
+    // Email penerima
+    $this->email->to($email_to); // Ganti dengan email tujuan
 
-        // Subject email
-        $this->email->subject($subject);
+    // Subject email
+    $this->email->subject($subject);
 
-        // Isi email
-        $this->email->message($message);
+    // Isi email
+    $this->email->message($message);
 
-        $this->email->set_mailtype("html");
-        if (!$this->email->send()) {
-            echo $this->email->print_debugger(array('headers'));
-        } else {
-           // echo 'email terkirim';
-        }
+    $this->email->set_mailtype("html");
+    if (!$this->email->send()) {
+      echo $this->email->print_debugger(array('headers'));
+    } else {
+      // echo 'email terkirim';
     }
+  }
 
   protected function validateCaptcha($captcha)
   {
@@ -210,5 +210,21 @@ class MY_Controller extends CI_Controller
       }
       return $this->upload->data();
     }
+  }
+
+  // $context = berita, pemberitahuan, pendaftaran, dll
+  // $action = hapus, tambah, ubah, dll
+  protected function showAlert($action, $context, $isSuccess)
+  {
+    $class = $isSuccess ? "alert alert-success" : "alert alert-warning";
+    $message = ucfirst($action) . " " . ucfirst($context);
+    $message .= $isSuccess ? " berhasil" : "gagal";
+    $this->showAlertWithMessage($message, $isSuccess);
+  }
+
+  protected function showAlertWithMessage($message, $isSuccess = true)
+  {
+    $class = $isSuccess ? "alert alert-success" : "alert alert-warning";
+    $this->session->set_flashdata("status", "<div class='" . $class . "'>" . $message . "</div>");
   }
 }
