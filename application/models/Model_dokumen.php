@@ -40,7 +40,7 @@ class Model_dokumen extends MY_Model
   public function getberkasUjimutu($id)
   {
     $this->db->select("nama_pemohon,jenis_usaha,kode_pendaftaran,nama_usaha,alamat_usaha,no_telp,no_hp_pemohon,jabatan_pemohon,m.nama_layanan,'Diproses' as status, tanggal_buat,nama_pemohon");
-    $this->db->from('layanan_ujimutu  l');
+    $this->db->from('layanan_ujimutu l');
     $this->db->join('identitas_usaha i', 'l.id_identitas_usaha = i.id_identitas_usaha');
     $this->db->join('master_layanan m', 'l.kode_layanan = m.kode_layanan');
     $this->db->where("sha1(kode_pendaftaran)", $id);

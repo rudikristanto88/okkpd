@@ -588,7 +588,7 @@ class Dashboard extends MY_Controller
 				$data['kode'] = $kodependaftaran;
 				$message = $this->load->view('default/email/notifikasi_daftar_layanan', $data, true);
 				$this->kirim_email($subject, $email_to, $message);
-			}
+			} 
 		} else if ($jenis == "psat") {
 			$data['datalogin'] = $this->session->userdata("dataLogin");
 			$i = $this->input;
