@@ -113,7 +113,7 @@ $style = array(
 
                         // $html.='</table>';
                         $pdf->writeHTML($html, true, false, true, false, '');
-                        $pdf->write2DBarcode($berkas['kode_pendaftaran'], 'QRCODE,H', 150, 80, 40, 40, $style, 'N');
+                       // $pdf->write2DBarcode($berkas['kode_pendaftaran'], 'QRCODE,H', 150, 80, 40, 40, $style, 'N');
 
                         $pdf->Output('Berkas Pendaftaran.pdf', 'I');
 
