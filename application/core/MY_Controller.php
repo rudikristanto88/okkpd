@@ -13,7 +13,6 @@ class MY_Controller extends CI_Controller
     $this->load->model('model_admin');
     $this->load->library('email');
 
-
     $this->menu =  $this->model_admin->getMenu($this->saya());
     $this->bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
   }

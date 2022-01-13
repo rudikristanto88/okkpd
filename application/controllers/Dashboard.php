@@ -195,14 +195,15 @@ class Dashboard extends MY_Controller
 		$this->loadView('dashboard_view/fragment/daftar_usaha_fragment', $data);
 	}
 
-	function getDataKecamatan()
+	function getDataKecamatan($kecamatan = "")
 	{
 		$kode_kota = $this->input->post("kode_kota");
 		$kec = $this->model_user->getDataWhere("kecamatan", "kode_kota", $kode_kota);
 		echo "<option value='X;X'>--Pilih Kecamatan--</option>";
 
 		foreach ($kec as $kec) {
-			echo "<option value='" . $kec['kode_kec'] . ';' . $kec['nama_kec'] . "'>" . $kec['nama_kec'] . "</option>";
+			$selected = strtoupper(str_replace("%20","_",$kecamatan)) == strtoupper(str_replace(" ","_",$kec['nama_kec'])) ? "selected" : "";
+			echo "<option ".$selected." value='" . $kec['kode_kec'] . ';' . $kec['nama_kec'] . "'>" . $kec['nama_kec'] . "</option>";
 		}
 	}
 
@@ -214,14 +215,15 @@ class Dashboard extends MY_Controller
 		echo $kota['nama_instansi'] . '<>' . $kota['nama_ketua'];
 	}
 
-	function getDataKelurahan()
+	function getDataKelurahan($kelurahan = "")
 	{
 		$kode_kec = $this->input->post("kode_kec");
 		$kel = $this->model_user->getDataWhere("kelurahan", "kode_kec", $kode_kec);
 		echo "<option value='X;X'>--Pilih Kelurahan--</option>";
 
 		foreach ($kel as $kel) {
-			echo "<option value='" . $kel['kode_kel'] . ';' . $kel['nama_kel'] . "'>" . $kel['nama_kel'] . "</option>";
+			$selected = strtoupper(str_replace("%20","_",$kelurahan)) == strtoupper(str_replace(" ","_",$kel['nama_kel'])) ? "selected" : "";
+			echo "<option ".$selected." value='" . $kel['kode_kel'] . ';' . $kel['nama_kel'] . "'>" . $kel['nama_kel'] . "</option>";
 		}
 	}
 
@@ -370,31 +372,16 @@ class Dashboard extends MY_Controller
 		$alamat_lengkap = $i->post("alamat_lengkap");
 		$kode_kota = $i->post("kode_kota");
 		$no_ktp = $i->post("no_ktp");
-		// $foto_ktp = "";
 		$kode_role = $i->post("kode_role");
 		$status = 1;
 		$password = sha1("Okkpd2018!12345678");
 
 		$files = $_FILES;
-		/*
-			if($this->uploads($_FILES,'foto_ktp') == null){
-				$this->session->set_flashdata("status","<div class='alert alert-warning'>Foto KTP Kosong</div>");
-				var_dump($_FILES);
-				redirect("dashboard");
-			}else{
-				$foto_ktp_temp = $this->uploads($_FILES,'foto_ktp');
-				$foto_ktp = file_get_contents($foto_ktp_temp['full_path']);
-			}
-*/
 
 		$arr = array(
 			"id_user" => null,
 			"nama_lengkap" => $nama_lengkap,
 			"username" => $username,
-			//"alamat_lengkap" => $alamat_lengkap,
-			//"kode_kota"=>$kode_kota,
-			//"no_ktp"=>$no_ktp,
-			// "foto_ktp"=>$foto_ktp,
 			"kode_role" => $kode_role,
 			"status" => $status,
 			"password" => $password
@@ -1897,11 +1884,8 @@ class Dashboard extends MY_Controller
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Terdapat kesalahan ketika mereset password</div>");
 		}
 
-		if ($jenis == 'pelaku') {
-			//	redirect('dashboard/akun_pelaku_usaha');
-		} else {
-			redirect('dashboard/kelola_user');
-		}
+	
+		redirect('dashboard/kelola_user');
 	}
 
 	function cek_username()
