@@ -72,7 +72,7 @@
                           ?>
                         </td>
                         <td>
-                          <?php// if($ppc['id_survey'] == null):?>
+                          <?php // if($ppc['id_survey'] == null):?>
                             <!--<a href="<?= base_url() ?>dashboard/survey?id=<?= $ppc['uid']?>" class="btn btn-primary">Isi Survey</a>-->
                             <?php //else :?>
                                
