@@ -232,6 +232,7 @@ if ($menu == 'ubah') {
             <input type="text" value="" id="lanjut" name="lanjut" style="display:none" required />
             <input type="text" value="<?= $menu ?>" id="menu" name="menu" style="display:none" required />
             <div class="alert alert-warning" style="display:none" id="alert_identitas">Identitas usaha sudah didaftarkan sebelumnya</div>
+            <div class="alert alert-warning" style="display:none" id="alert_required">Kolom dengan tanda (*) wajib diisi</div>
 
             <button class="btn btn-info waves-effect" data-toggle="modal" data-target="#myModal" id="simpan" type="button">Simpan</button>
             <button class="btn btn-info waves-effect" id="submits" style="display:none" type="submit">Simpan</button>
@@ -297,7 +298,14 @@ if ($menu == 'ubah') {
         success: function(result) {
           var menu = $("#menu").val();
 
+          if($("#kecamatan").val() == "X;X" || $("#kelurahan").val() == "X;X"){
+            $("#lanjut").val("");
+            $("#alert_required").css("display", "block");
+            return;
+          }
+
           if ((result == 0 && menu == "tambah") || menu == "ubah") {
+            $("#alert_required").css("display", "none");
             $("#alert_identitas").css("display", "none");
             $("#lanjut").val("ok");
             $("#submits").trigger("click");
@@ -351,8 +359,6 @@ if ($menu == 'ubah') {
     });
   }
 
-
-
   $('#jenis_usaha').on('change', function() {
     var jenis = this.value;
     if (jenis == "Perorangan") {
@@ -360,8 +366,6 @@ if ($menu == 'ubah') {
       $("#kop_surat").val("");
       document.getElementById("no_npwp").required = false;
       $("#npwp_required").html("(Tidak wajib)");
-      // document.getElementById("kop").style.display = "none";
-      // document.getElementById("kop_surat").value = "";
     } else {
       if (jenis == 'Kelompok') {
         $("#npwp_required").html("(Tidak wajib)");
