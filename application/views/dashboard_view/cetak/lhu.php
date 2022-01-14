@@ -105,12 +105,12 @@ include 'header_cetak_lhu.php';
                             
                         </tbody>
                     </table> 
-                    <table border="0" width="100%">
+                    <table border="0" width="100%"><?php if($detail[0]['kesimpulan'] != ""){ ?>
     <tr>
-        <td width="30%" align="left"><?php if($detail[0]['kesimpulan'] != ""){ ?>Kesimpulan<?php }?></td>
+        <td width="30%" align="left">Kesimpulan</td>
         <td width="1">:</td>
         <td><?= $detail[0]['kesimpulan'] ?></td>
-    </tr>
+    </tr><?php }?>
                             </table>
                 <table border="0" width="100%">
                     <tr>
