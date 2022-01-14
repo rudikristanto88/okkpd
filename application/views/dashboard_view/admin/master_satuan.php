@@ -23,11 +23,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-                          <?php
-                          if($this->session->flashdata("status")){
-                            echo $this->session->flashdata("status");
-                          }
-                          ?>
+                          
                             <h2>
                                 <strong>Kelola</strong> Master Satuan</h2>
                             <ul class="header-dropdown m-r--5">

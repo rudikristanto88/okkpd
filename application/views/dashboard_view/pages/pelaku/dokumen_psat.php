@@ -38,9 +38,7 @@ foreach ($identitas as $usaha);
 
                     </div>
                     <div class="body">
-                      <?php if($this->session->flashdata('status')!= ""){
-                        echo $this->session->flashdata('status');
-                      } ?>
+                      
                       <form id="wizard_with_validation" action="<?= base_url() ?>dashboard/uploadDokumen" method="POST" class="wizard_custom" enctype="multipart/form-data">
                         <input type="hidden" name="id_prima_tiga" value="<?= $id_layanan ?>">
                         <input type="hidden" name="jenis" value="psat">

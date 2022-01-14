@@ -1,9 +1,7 @@
 <section class="content">
   <div class="container-fluid">
     <div class="block-header" id="konten">
-      <?php if($this->session->flashdata('status')!= ""){
-        echo $this->session->flashdata('status');
-      } ?>
+      
       <table class="table table-hover display" id="table-datatable">
         <thead>
           <tr>

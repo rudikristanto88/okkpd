@@ -15,9 +15,6 @@
         </div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
           <?php
-          if ($this->session->flashdata("status")) {
-            echo $this->session->flashdata("status");
-          }
 
           $prima3 = 0;
           $prima2 = 0;

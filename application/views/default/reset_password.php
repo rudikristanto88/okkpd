@@ -20,11 +20,7 @@
                 <div class="col-sm-6 col-sm-offset-3">
                   <div class="card">
                     <div class="card-body">
-                      <?php
-                        if($this->session->flashdata("status") != null){
-                          echo $this->session->flashdata("status");
-                        }
-                      ?>
+                    
                       <h4>Reset Ulang Sandi</h4>
                       <span>Silahkan masukkan ulang kata sandi baru anda</span>
                       <form class="" action="<?= base_url() ?>home/reset_password/send" method="post">

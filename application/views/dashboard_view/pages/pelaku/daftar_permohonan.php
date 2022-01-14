@@ -16,9 +16,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <?php if ($this->session->flashdata('status') != "") {
-          echo $this->session->flashdata('status');
-        } ?>
+        
       </div>
       <div class="col-lg-12 col-sm-12">
         <div class="card">

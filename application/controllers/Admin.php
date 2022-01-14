@@ -26,9 +26,20 @@ class Admin extends MY_Controller
   {
     $config['upload_path']          = './upload/';
     $config['allowed_types']        = 'doc|pdf|docx|jpg|png|jpeg';
-    $config['max_size']             = 0;
+    $config['max_size']             = $this->max_upload_size();
 
     $files = $_FILES;
+
+    if($files == null){
+      $this->showAlertWithMessage("Ukuran file melebihi batas yang diperbolehkan");
+      return null;
+    }
+
+    if ($_FILES[$nama]['size'] > $this->max_upload_size()) {
+      $this->showAlertWithMessage("Ukuran file terlalu besar");
+      return null;
+    }
+
     $_FILES[$nama]['name'] = $files[$nama]['name'];
     $_FILES[$nama]['type'] = $files[$nama]['type'];
     $_FILES[$nama]['tmp_name'] = $files[$nama]['tmp_name'];
@@ -93,7 +104,7 @@ class Admin extends MY_Controller
 
     if ($id != null) {
       if (sizeof($data['akun']) == 0 || $data['akun'][0]['nama_pemohon'] == '') {
-        $this->session->set_flashdata("status", "<div class='alert alert-warning'>Akun belum mendaftarkan usaha</div>");
+        $this->showAlertWithMessage("Akun belum mendaftarkan usaha");
         header("location:" . base_url() . 'dashboard/akun_pelaku_usaha');
       }
       $data['akun'] = $data['akun'][0];
@@ -127,10 +138,10 @@ class Admin extends MY_Controller
   public function insert_gambar_slider()
   {
     $i = $this->input;
-    $max = 1000000;
+    
     $gambar_slider_temp = $this->uploads($_FILES, 'gambar_slider');
 
-    if ($_FILES['gambar_slider']['size'] > $max) {
+    if ($_FILES['gambar_slider']['size'] > $this->max_upload_size()) {
       $this->session->set_flashdata("status", "<div class='alert alert-warning'>File terlalu besar</div>");
       redirect("admin/tambah_slider", "redirect");
     }
@@ -216,10 +227,10 @@ class Admin extends MY_Controller
       $akhir_menjabat = null;
     }
 
-    $max = 1000000;
+    
     $foto_kepala_dinas_temp = $this->uploads($_FILES, 'foto_kepala_dinas');
 
-    if ($_FILES['foto_kepala_dinas']['size'] > $max) {
+    if ($_FILES['foto_kepala_dinas']['size'] > $this->max_upload_size()) {
       $this->session->set_flashdata("status", "<div class='alert alert-warning'>File terlalu besar</div>");
       redirect("admin/tambah_identitas_kepala_dinas", "redirect");
     }
@@ -575,9 +586,9 @@ class Admin extends MY_Controller
     $isi_berita = $i->post("isi_berita");
     $jenis = $i->post("jenis");
     $id_berita = $i->post("id_berita");
-    $max = 1000000;
+    
 
-    if ($_FILES['gambar_berita']['size'] > $max) {
+    if ($_FILES['gambar_berita']['size'] > $this->max_upload_size()) {
       $this->session->set_flashdata("status", "<div class='alert alert-warning'>File terlalu besar</div>");
       redirect("admin/kelola_berita/" . $jenis, "redirect");
     } else {
@@ -650,13 +661,15 @@ class Admin extends MY_Controller
     $nama_panduan = $i->post("nama_panduan");
     $jenis = $i->post("jenis");
     $id = $i->post("id");
-    $max = 1000000;
+    
     $panduan_temp = $this->uploads($_FILES, 'panduan');
     $tipe = $_FILES['panduan']['type'];
 
-    if ($_FILES['panduan']['size'] > $max) {
+    if ($_FILES['panduan']['size'] > $this->max_upload_size()) {
+      $this->showAlertWithMessage("File terlalu besar");
+
       $this->session->set_flashdata("status", "<div class='alert alert-warning'>File terlalu besar</div>");
-      redirect("admin/tambah_panduan", "redirect");
+      redirect("admin/kelola_panduan/".$jenis."", "redirect");
     }
     $result = null;
 
@@ -887,10 +900,10 @@ class Admin extends MY_Controller
   public function insert_struktur_organisasi()
   {
     $i = $this->input;
-    $max = 1000000;
+    
     $struktur_organisasi_temp = $this->uploads($_FILES, 'struktur_organisasi');
 
-    if ($_FILES['struktur_organisasi']['size'] > $max) {
+    if ($_FILES['struktur_organisasi']['size'] > $this->max_upload_size()) {
       $this->session->set_flashdata("status", "<div class='alert alert-warning'>File terlalu besar</div>");
       redirect("admin/struktur_organisasi", "redirect");
     }
@@ -1045,13 +1058,13 @@ class Admin extends MY_Controller
   {
     $i = $this->input;
     $nama_produk_hukum = $i->post("nama_produk_hukum");
-    $max = 1000000;
+    
     $tipe = $_FILES['produk_hukum']['type'];
     $gambar = null;
 
-    if ($_FILES['produk_hukum']['size'] > $max) {
+    if ($_FILES['produk_hukum']['size'] > $this->max_upload_size()) {
       $this->session->set_flashdata("status", "<div class='alert alert-warning'>File terlalu besar</div>");
-      redirect("admin/tambah_produk_hukum", "redirect");
+      redirect("admin/kelola_produk_hukum/tambah", "redirect");
     }
 
     if ($jenis == 'tambah') {
@@ -1301,7 +1314,7 @@ class Admin extends MY_Controller
       $this->model_user->deleteDataParam('master_komoditas', $where1, $where2);
       redirect('admin/kelola_komoditas/kelompok/' . $id_sektor);
     } else if ($menu == 'master') {
-      $where1 = 'id_kelompok = ' . $id_kelompok;
+      $where1 = "id_kelompok = '" . $id_kelompok."'";
       $where2 = "id_sektor = '" . $id_sektor . "'";
       $where3 = "kode_komoditas = '" . $kode_komoditas . "'";
       $this->model_user->deleteDataParam('master_komoditas', $where1, $where2, $where3);
@@ -1425,7 +1438,7 @@ class Admin extends MY_Controller
   function cetakSurvey(){
 		$this->db->trans_begin();
 		$this->db->trans_commit();
-  
+    $data = "";
 		$this->load->library('ciqrcode'); //pemanggilan library QR CODE
 
 		$config['cacheable']    = true; //boolean, the default is true

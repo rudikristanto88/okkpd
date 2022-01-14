@@ -23,9 +23,7 @@
           <div >
             <div class="body">
               <h4 class="card-inside-title">Daftar Foto Hasil Inspeksi</h4>
-              <?php if($this->session->flashdata('status')!= ""){
-                echo $this->session->flashdata('status');
-              } ?>
+              
               <div class="table-responsive-md">
                 <table class="table table-hover" id="table-datatable" class="display">
                   <thead>

@@ -23,7 +23,7 @@
               <h4 class="card-inside-title">Daftar Permohonan Inspeksi</h4>
               <hr>
 
-              <?php if($this->session->flashdata('status')!= ""){ echo $this->session->flashdata('status');} ?>
+              
 
                 <div class="">
                   <div class="table-responsive-md">

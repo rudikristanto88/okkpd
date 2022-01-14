@@ -11,11 +11,7 @@
 					<span class="login100-form-title p-b-34 p-t-27">
 						Log in
 					</span>
-					<?php
-						if($this->session->flashdata("status") != null){
-							echo $this->session->flashdata("status");
-						}
-					?>
+					
 					<div class="wrap-input100 validate-input" data-validate="Enter username">
 						<input class="input100" type="text" name="username" placeholder="Username">
 						<i class="material-icons focus-input1001">person</i>

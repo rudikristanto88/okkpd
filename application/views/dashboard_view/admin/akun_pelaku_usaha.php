@@ -39,9 +39,7 @@
                               </li>
                             </ul>
                         </div>
-                        <?php if ($this->session->flashdata('status')) {
-                              echo $this->session->flashdata('status');
-                          } ?>
+                        
                         <div class="body table-responsive">
                             <table class="table table-hover display" id="table-datatable">
                                 <thead>
@@ -66,10 +64,10 @@
                                         <td><?= $akun['no_hp_pemohon'] == '' || $akun['no_hp_pemohon'] == null ? $akun['no_telp'] : $akun['no_hp_pemohon']; ?></td>
                                         <td><?php if($akun['status'] == 1){echo "Aktif"; $akun['status'] = 0;}else {echo 'Non Aktif';$akun['status'] = 1;} ?></td>
 
-                                        <td><a href="<?=base_url() ?>dashboard/user_nonaktif/pelaku/<?= $akun['id_user'] ?>/<?= $akun['status'] ?>" class="<?= $akun['status'] == 1 ? 'btn btn-info' : 'btn btn-warning' ?> "> <?= $akun['status'] == 1 ? "Aktifkan" : 'Non Aktifkan'; ?></a></td>
+                                        <td><a href="<?=base_url() ?>dashboard/user_nonaktif/pelaku/<?= $akun['user_id'] ?>/<?= $akun['status'] ?>" class="<?= $akun['status'] == 1 ? 'btn btn-info' : 'btn btn-warning' ?> "> <?= $akun['status'] == 1 ? "Aktifkan" : 'Non Aktifkan'; ?></a></td>
                                         <td>
                                           <?php if( $akun['nama_pemohon'] != '' && $akun['nama_pemohon'] != null) : ?>
-                                            <a href="<?=base_url() ?>dashboard/akun_pelaku_usaha/<?= $akun['id_user'] ?>" class="btn btn-primary"> Detail </a>
+                                            <a href="<?=base_url() ?>dashboard/akun_pelaku_usaha/<?= $akun['user_id'] ?>" class="btn btn-primary"> Detail </a>
                                           <?php endif; ?>
                                         </td>
 

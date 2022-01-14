@@ -21,11 +21,7 @@
             <div class="body">
               <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <?php
-                  if($this->session->flashdata("status")){
-                    echo $this->session->flashdata("status");
-                  }
-                  ?>
+                  
                     <div class="card">
 
                         <div class="header">

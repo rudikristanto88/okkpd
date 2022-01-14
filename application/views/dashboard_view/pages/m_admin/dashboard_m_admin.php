@@ -19,9 +19,7 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <?php if($this->session->flashdata('status')!= ""){
-                  echo $this->session->flashdata('status');
-                } ?>
+                
               </div>
                 <div class="col-lg-6 col-sm-6">
                   <a href="<?= base_url() ?>dashboard/daftar_sertifikat">

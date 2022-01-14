@@ -24,9 +24,7 @@
                                 <strong>Identitas Usaha</strong></h2>
                         </div>
                         <div class="body">
-                          <?php if ($this->session->flashdata('status')) {
-                              echo $this->session->flashdata('status');
-                          } ?>
+                          
                           <table class="table">
                             <tr>
                               <th width="200px;">Jenis Usaha :</th>
@@ -83,9 +81,7 @@
                               </tr>
                               <tr>
                                 <th>Nomor Telepon Usaha</th>
-                                <th><input class="text-white" type="text" readonly value="<?= $akun[
-                                    'no_telp'
-                                ] ?>" /> </th>
+                                <th><input class="text-white" type="text" readonly value="<?= $akun['no_hp_pemohon'] == '' || $akun['no_hp_pemohon'] == null ? $akun['no_telp'] : $akun['no_hp_pemohon']; ?>" /> </th>
                               </tr>
                           </table>
                         </div>

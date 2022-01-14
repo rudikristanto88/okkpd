@@ -23,9 +23,7 @@
           <div class="body">
             <h4 class="card-inside-title">Pilih Perusahaan</h4><br />
             <hr />
-            <?php if ($this->session->flashdata('status') != "") {
-              echo $this->session->flashdata('status');
-            } ?>
+            
 
             <div class="row">
               <div class="col-md-12">
