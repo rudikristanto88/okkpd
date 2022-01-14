@@ -150,7 +150,7 @@
 
                       <div class="col-sm-12">
                           <div class="input-field"> 
-                              <input id="kode_pendaftaran" type="text" name="kode_pendaftaran" class="text-white" data-length="100" value="<?= $kesimpulan ?>">
+                              <input id="kesimpulan" type="text" name="kesimpulan" class="text-white" data-length="100" value="<?= $kesimpulan ?>">
                               <label for="nama_perusahaan">Kesimpulan</label>
                           </div>
                       </div>
