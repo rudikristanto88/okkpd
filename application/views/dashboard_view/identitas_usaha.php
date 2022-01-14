@@ -45,13 +45,7 @@
                             </ul>
                         </div>
                         <div class="body">
-                          <?php
-                          if($this->session->flashdata("status")){
-                            echo $this->session->flashdata("status");
-                          }
-                          ?>
-
-
+                          
                           <?php if($datalogin['punya_usaha'] == 0 && $datalogin['kode_role'] == "pelaku"):
                             echo '<span>Pendaftaran Layanan BPMKP</span><br/>';
                             echo '<a href="'.base_url().'dashboard/daftar_usaha" id="btn-daftar" class="btn btn-info">Isi Identitas Usaha Anda</a>';

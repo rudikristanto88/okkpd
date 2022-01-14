@@ -39,9 +39,7 @@ foreach ($footer as $data);
 
                                     <div class="sc_contact_form_right">
                                       <?php
-                                        if($this->session->flashdata("status") != null){
-                                          echo $this->session->flashdata("status");
-                                        }
+                                        
                                       ?>
                                       <p class="sc_contact_form_description" style="color:black">Alamat email tidak akan ditampilkan. <br/>Bagian yang ditandai * harus diisi</p>
                                       <form class="" data-formtype="contact" action="<?= base_url() ?>home/kontak_kami" method="post">

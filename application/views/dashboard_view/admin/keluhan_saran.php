@@ -47,7 +47,6 @@
                                         <th>Email</th>
                                         <th>Tanggal</th>
                                         <th>Jenis</th>
-                                        <th>Judul</th>
                                         <th>Isi Keluhan</th>
                                     </tr>
                                 </thead>
@@ -59,7 +58,6 @@
                                       <td><?= $data['email']?></td>
                                       <td><?= $data['tanggal_keluhan']?></td>
                                       <td><?= $data['jenis']?></td>
-                                      <td><?= $data['judul_keluhan']?></td>
                                       <td><?= $data['pesan']?></td>
                                       <td></td>
                                     </tr>

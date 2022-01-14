@@ -75,12 +75,12 @@ class Home extends MY_Controller
 		if ($validate == 1) {
 			redirect("dashboard", "redirect");
 		} else if ($validate == 2) {
-			$this->session->set_flashdata("status_registrasi", "<div class='alert alert-warning'>Akun anda belum aktif, silahkan aktivasi melalui email</div>");
-			redirect("home/pendaftaran_online", "redirect");
+			$this->showAlertWithMessage("Akun anda belum aktif, silahkan aktivasi melalui email", false);
 		} else {
-			$this->session->set_flashdata("status_registrasi", "<div class='alert alert-warning'>Username atau password tidak ditemukan</div>");
-			redirect("home/pendaftaran_online", "redirect");
+			$this->showAlertWithMessage("Username atau password tidak ditemukan", false);
 		}
+
+		redirect("home/pendaftaran_online", "redirect");
 	}
 
 	public function sign_up_process()

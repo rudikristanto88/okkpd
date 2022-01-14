@@ -10,11 +10,7 @@
       </ul>
     </div>
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-      <?php
-      if($this->session->flashdata("status")){
-        echo $this->session->flashdata("status");
-      }
-      ?>
+      
       <?php if($datalogin['punya_usaha'] == 0 && $datalogin['kode_role'] == 'pelaku'){ ?>
         <span>Pendaftaran Layanan BPMKP</span><br/>
         <a href="<?= base_url()?>dashboard/daftar_usaha" id="btn-daftar" class="btn btn-info">Isi Identitas Usaha Anda</a>

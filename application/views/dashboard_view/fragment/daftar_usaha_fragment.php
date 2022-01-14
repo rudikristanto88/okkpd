@@ -67,11 +67,7 @@ if ($menu == 'ubah') {
         <div class="card">
           <div class="body">
             <h2 class="card-inside-title">Daftar Usaha</h2>
-            <?php
-            if ($this->session->flashdata("status")) {
-              echo $this->session->flashdata("status");
-            }
-            ?>
+            
             <?php
 
             $attribute = array("class" => "text-white", "id" => "form_identitas");
@@ -292,7 +288,7 @@ if ($menu == 'ubah') {
         data: {
           kota: id[1],
           alamat: $("#alamat_usaha").val(),
-          nama_usaha: $("#alamat_usaha").val()
+          nama_usaha: $("#nama_usaha").val()
         },
         type: "POST",
         success: function(result) {

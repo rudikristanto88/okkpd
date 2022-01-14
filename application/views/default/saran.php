@@ -15,11 +15,7 @@
                 <div class="col-sm-6 col-sm-offset-3">
                   <div class="card">
                     <div class="card-body">
-                      <?php
-                        if($this->session->flashdata("status") != null){
-                          echo $this->session->flashdata("status");
-                        }
-                      ?>
+                      
                       <h4>Keluhan dan saran</h4>
                       <p class="sc_contact_form_description" style="color:black">Alamat email tidak akan ditampilkan. <br/>Bagian yang ditandai * harus diisi</p>
                       <form class="" action="<?= base_url() ?>home/keluhan_saran/kirim" method="post" enctype="multipart/form-data">

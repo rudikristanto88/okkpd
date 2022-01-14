@@ -146,11 +146,11 @@ class Dashboard extends MY_Controller
 		$id_user = $this->session->userdata("dataLogin")['id_user'];
 
 		$max = 1000000;
-		$foto_profil;
+		$foto_profil = "";
 		$foto_profil_temp = $this->uploads($_FILES, 'foto_profil');
 
 		if ($_FILES['foto_profil']['size'] > $max) {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>File terlalu besar</div>");
+			$this->showAlertWithMessage("File terlalu besar", false);
 			redirect("dashboard/kelola_profil", "redirect");
 		}
 
@@ -164,14 +164,10 @@ class Dashboard extends MY_Controller
 			$arr['password'] = $pass;
 		}
 
-		if ($this->model_user->updateData('user', $id_user, 'id_user', $arr)) {
-			$this->session->set_flashdata("statCI_Controllerus", "<div class='alert alert-success'>Profile sudah diubah</div>");
-			redirect("dashboard/profile/" . $id_user, 'redirect');
-		} else {
+		$hasil = $this->model_user->updateData('user', $id_user, 'id_user', $arr);
+		$this->showAlert("Ubah","Profil", $hasil);
 
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal mengubah foto</div>");
-			redirect("dashboard/profile/" . $id_user, 'redirect');
-		}
+		redirect("dashboard/profile/" . $id_user, 'redirect');
 	}
 
 	public function daftar_usaha()
@@ -265,8 +261,6 @@ class Dashboard extends MY_Controller
 		$this->load->view('dashboard_view/template/footer');
 	}
 
-
-
 	public function insert_identitas_usaha($menu = null)
 	{
 		if ($menu == null) {
@@ -298,10 +292,9 @@ class Dashboard extends MY_Controller
 		$foto_npwp_temp = $this->uploads($_FILES, 'foto_npwp');
 
 		if ($_FILES['foto_ktp']['size'] > $max || $_FILES['foto_npwp']['size'] > $max) {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>File terlalu besar</div>");
+			$this->showAlertWithMessage("File terlalu besar", false);
 			redirect("dashboard/identitas_usaha", "redirect");
 		}
-
 
 		$id_user = $this->session->userdata("dataLogin")['id_user'];
 
@@ -337,7 +330,7 @@ class Dashboard extends MY_Controller
 			$arr["foto_npwp"] = $foto_npwp;
 		}
 
-		$hasil;
+		$hasil = "";
 		if ($menu == 'tambah') {
 			$hasil = $this->model_user->insertData("identitas_usaha", $arr);
 		} else if ($menu == 'ubah') {
@@ -349,19 +342,10 @@ class Dashboard extends MY_Controller
 			$ses = $this->session->userdata("dataLogin");
 			$ses['punya_usaha'] = 1;
 			$this->session->set_userdata("dataLogin", $ses);
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-
-			if ($hasil) {
-				$ses = $this->session->userdata("dataLogin");
-				$ses['punya_usaha'] = 1;
-				$this->session->set_userdata("dataLogin", $ses);
-				$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-				redirect("dashboard/identitas_usaha", "redirect");
-			} else {
-				$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-				redirect("dashboard/identitas_usaha", "redirect");
-			}
 		}
+		$this->showAlert("simpan","Data", $hasil);
+
+		redirect("dashboard/identitas_usaha", "redirect");
 	}
 
 	public function insert_aktor()
@@ -386,11 +370,9 @@ class Dashboard extends MY_Controller
 			"status" => $status,
 			"password" => $password
 		);
-		if ($this->model_user->insertData("user", $arr)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data user berhasil disimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menambah data user</div>");
-		}
+		$hasil = $this->model_user->insertData("user", $arr);
+		$this->showAlert("simpan","Data user", $hasil);
+
 		redirect("dashboard/daftarkan_aktor");
 	}
 
@@ -399,7 +381,6 @@ class Dashboard extends MY_Controller
 	{
 		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$data['identitas_usaha'] = $this->model_user->getDataUsaha($data['datalogin']['id_user']);
-
 
 		if ($jenis == null) {
 			$this->loadView('dashboard_view/pendaftaran', $data);
@@ -695,11 +676,7 @@ class Dashboard extends MY_Controller
 				}
 			}
 		}
-		if ($isSuccess) {
-			$this->session->set_flashdata("status_registrasi", "<div class='alert alert-success'>Berhasil mencatat data</div>");
-		} else {
-			$this->session->set_flashdata("status_registrasi", "<div class='alert alert-warning'>Gagal mencatat data</div>");
-		}
+		$this->showAlert("simpan","Data", $isSuccess);
 
 		redirect("dashboard", "redirect");
 	}
@@ -813,12 +790,8 @@ class Dashboard extends MY_Controller
 				"level" => $level
 			);
 		}
-
-		if ($this->model_user->updateData('layanan', $id_layanan, 'uid', $arr)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Gagal menyimpan data</div>");
-		}
+		$hasil = $this->model_user->updateData('layanan', $id_layanan, 'uid', $arr);
+		$this->showAlert("simpan","Data user", $hasil);
 
 		redirect("dashboard/penilaian_dokumen");
 
@@ -910,12 +883,9 @@ class Dashboard extends MY_Controller
 		} else if ($jenis == 'hc') {
 			$tabel = "detail_identitas_ekspor";
 		}
+		$hasil = $this->model_admin->updateData($tabel, $id_detail_komoditas, $nama_kolom, $arr);
+		$this->showAlert("simpan","Data", $hasil);
 
-		if ($this->model_admin->updateData($tabel, $id_detail_komoditas, $nama_kolom, $arr)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Gagal menyimpan data</div>");
-		}
 		redirect("dashboard/cetak_sertifikat/" . $jenis);
 	}
 
@@ -1004,7 +974,7 @@ class Dashboard extends MY_Controller
 		}
 
 		if ($this->uploads($_FILES, 'gambar') == null) {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Dokumen tidak dapat diunggah</div>");
+			$this->showAlertWithMessage("Dokumen tidak dapat diunggah", false);
 			redirect("dashboard/cetak_sertifikat/" . $kode_layanan);
 		} else {
 			$gambar_temp = $this->uploads($_FILES, 'gambar');
@@ -1042,7 +1012,8 @@ class Dashboard extends MY_Controller
 		} else {
 			$this->model_user->updateData('detail_komoditas', $id_detail, 'id_detail', $data);
 		}
-		$this->session->set_flashdata("status", "<div class='alert alert-info'>Dokumen telah dibekukan</div>");
+		$this->showAlertWithMessage("Dokumen telah dibekukan");
+
 		redirect("dashboard/daftar_sertifikat/" . $kode_layanan);
 	}
 
@@ -1059,10 +1030,6 @@ class Dashboard extends MY_Controller
 		echo "<div class='row'>";
 
 		foreach ($identitas as $identitas);
-
-		// echo '<img width="100%" class="tp-bgimg defaultimg" src="data:image/jpeg;base64,'.base64_encode( $data[0] ).'" alt="Card image">';
-
-
 
 		foreach ($dokumen as $dokumen) {
 			if ($dokumen['file'] != null || $dokumen['file'] != "") {
@@ -1166,11 +1133,10 @@ class Dashboard extends MY_Controller
 		$datePPC = date("Y-m-d", strtotime($tanggal_ppc)) . " " . $waktu_ppc[0] . ":" . $waktu_ppc[1];
 
 		$data = array("inspektor" => $inspektor[0], "nama_inspektor" => $inspektor[1], "ppc" => $ppc[0], "nama_ppc" => $ppc[1], "pelaksana" => $pelaksana[0], "nama_pelaksana" => $pelaksana[1], "tanggal_inspeksi" => $dateInspeksi, "tanggal_pc" => $datePPC);
-		if ($this->model_user->updateData("layanan", $id_layanan, "uid", $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data tersimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-		}
+
+		$hasil = $this->model_user->updateData("layanan", $id_layanan, "uid", $data);
+		$this->showAlert("simpan","Data", $hasil);
+
 		redirect('dashboard/penugasan_petugas_inspeksi');
 	}
 	function update_mt_status()
@@ -1199,33 +1165,28 @@ class Dashboard extends MY_Controller
 		}
 
 		$data = array("manager_tek" => date("Y-m-d"));
-		if ($this->model_user->updateData("layanan", $id_layanan, "uid", $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data tersimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-		}
+		$hasil = $this->model_user->updateData("layanan", $id_layanan, "uid", $data);
+		$this->showAlert("simpan","Data", $hasil);
+
 		redirect('dashboard');
 	}
 	function update_status_ppc()
 	{
 		$id_layanan = $this->input->post("id_layanan");
 		$data = array("status_ppc" => "1");
-		if ($this->model_user->updateData("layanan", $id_layanan, "uid", $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data tersimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-		}
+	
+		$hasil = $this->model_user->updateData("layanan", $id_layanan, "uid", $data);
+		$this->showAlert("simpan","Data", $hasil);
+
 		redirect('dashboard/penugasan_inspektor');
 	}
 	function update_status_komtek()
 	{
 		$id_layanan = $this->input->post("id_layanan");
 		$data = array("status_komtek" => "1", 'surat_pengantar_uji_sampel' => '1');
-		if ($this->model_user->updateData("layanan", $id_layanan, "uid", $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data tersimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-		}
+		$hasil = $this->model_user->updateData("layanan", $id_layanan, "uid", $data);
+		$this->showAlert("simpan","Data", $hasil);
+
 		redirect('dashboard/penugasan_ppc');
 	}
 
@@ -1233,7 +1194,7 @@ class Dashboard extends MY_Controller
 	{
 		$id_layanan = $this->input->post("id_layanan_surat");
 		$files = $_FILES;
-		$tipe_dokumen;
+		$tipe_dokumen = "";
 
 		$lokasi = $this->getNamaFolder($id_layanan);
 		$isUpload = $this->upload_dokumen($_FILES, 'surat_tugas', $lokasi);
@@ -1248,11 +1209,9 @@ class Dashboard extends MY_Controller
 		}
 
 		$data = array("surat_tugas" => $surat_tugas, 'tipe_surat_tugas' => $tipe_dokumen);
-		if ($this->model_user->updateData("layanan", $id_layanan, "uid", $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data tersimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-		}
+		$hasil = $this->model_user->updateData("layanan", $id_layanan, "uid", $data);
+		$this->showAlert("simpan","Data", $hasil);
+
 		redirect('dashboard/penugasan_petugas_inspeksi');
 	}
 
@@ -1367,11 +1326,8 @@ class Dashboard extends MY_Controller
 			} else {
 				$isSuccess = $this->model_user->insertData("master_dokumen_inspeksi", $data);
 			}
-			if ($isSuccess) {
-				$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-			} else {
-				$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-			}
+			$this->showAlert("simpan","Data", $isSuccess);
+
 			redirect("dashboard/kelola_form/" . $jenis . "/" . $id);
 		}
 	}
@@ -1394,11 +1350,10 @@ class Dashboard extends MY_Controller
 		$jenis_form = $this->input->post("jenis_form");
 		$jenis = $this->input->post("jenis");
 		$data = array("keterangan" => $keterangan, "kode_layanan" => $kode_layanan, "jenis_form" => $jenis_form, "jenis" => $jenis);
-		if ($this->model_user->insertData("master_form_uji", $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data tersimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-		}
+
+		$hasil = $this->model_user->insertData("master_form_uji", $data);
+		$this->showAlert("simpan","Data", $hasil);
+
 		$menu = "dashboard/kelola_form/" . $jenis . "/" . $kode_layanan;
 		redirect($menu);
 	}
@@ -1408,11 +1363,10 @@ class Dashboard extends MY_Controller
 		$jenis_form = $this->input->post("jenis_form");
 		$jenis = $this->input->post("jenis");
 		$id = $this->input->post("id_hapus");
-		if ($this->model_user->deleteData("master_form_uji", $id, "id")) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data dihapus</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menghapus data</div>");
-		}
+
+		$hasil = $this->model_user->deleteData("master_form_uji", $id, "id");
+		$this->showAlert("hapus","Data", $hasil); 
+		
 		$menu = "dashboard/kelola_form/" . $jenis . "/" . $kode_layanan;
 		redirect($menu);
 	}
@@ -1424,11 +1378,10 @@ class Dashboard extends MY_Controller
 		$jenis = $this->input->post("jenis");
 		$id = $this->input->post("id_ubah");
 		$data = array("keterangan" => $keterangan, "kode_layanan" => $kode_layanan, "jenis_form" => $jenis_form, "jenis" => $jenis);
-		if ($this->model_user->updateData("master_form_uji", $id, "id", $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Perubahan data disimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan perubahan data</div>");
-		}
+
+		$hasil = $this->model_user->updateData("master_form_uji", $id, "id", $data);
+		$this->showAlert("simpan","Data", $hasil);
+
 		$menu = "dashboard/kelola_form/" . $jenis . "/" . $kode_layanan;
 		redirect($menu);
 	}
@@ -1454,11 +1407,10 @@ class Dashboard extends MY_Controller
 			$st_temp = $isUpload;
 			$file = $lokasi . $st_temp["file_name"];
 			$data = array('tipe_surat_pengantar' => $_FILES['surat_lab']['type'], 'laporan_hasil_uji' => $file);
-			if ($this->model_user->updateData("layanan", $id, "uid", $data)) {
-				$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-			} else {
-				$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-			}
+
+			$hasil = $this->model_user->updateData("layanan", $id, "uid", $data);
+			$this->showAlert("simpan","Data", $hasil);
+			
 			redirect("dashboard/hasil_laboratorium");
 		}
 	}
@@ -1468,17 +1420,16 @@ class Dashboard extends MY_Controller
 		$tolak = $this->input->post('Tolak');
 		$simpan = $this->input->post('Simpan');
 		$id_sampling = $this->input->post('id_sampling');
-		$data;
+		$data = "";
 		if ($tolak == '1') {
 			$data = array('status' => '1');
 		} else if ($simpan == '2') {
 			$data = array('status' => '2');
 		}
-		if ($this->model_user->updateData('data_sampling_plan', $id_sampling, 'id_sampling', $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-		}
+
+		$hasil = $this->model_user->updateData('data_sampling_plan', $id_sampling, 'id_sampling', $data);
+		$this->showAlert("simpan","Data", $hasil);
+
 		redirect('dashboard/penugasan_ppc', 'redirect');
 	}
 
@@ -1554,11 +1505,11 @@ class Dashboard extends MY_Controller
 			$redirect = "dashboard/hasil_laboratorium";
 			$data = array("status_hasil_uji" => $value, 'w_hasil_mt' => date('Y-m-d'));
 		}
-		if ($this->model_user->updateData("layanan", $uid, "uid", $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>" . $msg . "</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-		}
+		$hasil = $this->model_user->updateData("layanan", $uid, "uid", $data);
+		$msg = $hasil == true ? $msg : "Gagal menyimpan data"; 
+
+		$this->showAlertWithMessage($msg, $hasil);
+		
 		redirect($redirect);
 	}
 
@@ -1571,18 +1522,15 @@ class Dashboard extends MY_Controller
 
 		$datalogin = $this->session->userdata("dataLogin");
 		$id_saya = $datalogin['id_user'];
-		$data;
+		$data = "";
 
 		$arr = array("dari" => $id_saya, "kepada" => $id_user, "title" => "Perubahan status dokumen", "body" => "Dokumen ditolak, segera daftar ulang pengajuan layanan anda");
 		$this->model_user->insertData("notification", $arr);
 
 		$data = array("ditolak_oleh" => $id_saya, "alasan_penolakan" => $alasan_penolakan, "tanggal_ditolak" => $tanggal_ditolak);
+		$hasil = $this->model_user->updateData("layanan", $uid, "uid", $data);
+		$this->showAlert("simpan","Data", $hasil);
 
-		if ($this->model_user->updateData("layanan", $uid, "uid", $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data tersimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-		}
 		redirect('Dashboard');
 	}
 	//------------------------------------------------ Manager Teknis END ------------------------------------
@@ -1636,18 +1584,14 @@ class Dashboard extends MY_Controller
 			$file = $this->getNamaFolder($id_layanan) . $st_temp["file_name"];
 			$data = array("id_dokumen" => $id_dokumen, "id_layanan" => $id_layanan,	"nama_dokumen" => $nama_dokumen,	"dokumen" =>	$dokumen, "tipe_dokumen" => $tipe_dokumen, 'file' => $file);
 
-			$isSUccess = false;
+			$isSuccess = false;
 			if ($isUpload == 0) {
-				$isSUccess = $this->model_user->insertData("detail_dokumen_inspeksi", $data);
+				$isSuccess = $this->model_user->insertData("detail_dokumen_inspeksi", $data);
 			} else {
-				$isSUccess = $this->model_user->updateDetailForm($id_dokumen, $id_layanan, $data);
+				$isSuccess = $this->model_user->updateDetailForm($id_dokumen, $id_layanan, $data);
 			}
-
-			if ($isSUccess) {
-				$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-			} else {
-				$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-			}
+			$this->showAlert("simpan","Data", $isSuccess);
+			
 			if ($jenis == 'ppc') {
 				redirect("dashboard/form_ppc/" . $id_layanan);
 			} else {
@@ -1685,16 +1629,14 @@ class Dashboard extends MY_Controller
 		} else {
 			$isClear = true;
 		}
-
-
+		$isSuccess = false;
 		if ($isClear) {
+			$isSuccess = true;
 			$dat = array('hasil_inspeksi' => 1, 'w_inspeksi' => date("Y-m-d"));
-			$this->model_user->updateData("layanan", $uid, 'uid', $dat);
-
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Terdapat kesalahan ketika menyimpan data</div>");
+			$isSuccess = $this->model_user->updateData("layanan", $uid, 'uid', $dat);
 		}
+		$this->showAlert("simpan","Data", $isSuccess);
+
 		redirect("dashboard/form_inspeksi/" . $uid);
 	}
 
@@ -1702,7 +1644,9 @@ class Dashboard extends MY_Controller
 	{
 		$id = $this->input->post("uid");
 		$dat = array('hasil_pelaksana' => 1);
-		$this->model_user->updateData("layanan", $id, 'uid', $dat);
+		
+		$hasil = $this->model_user->updateData("layanan", $id, 'uid', $dat);
+		$this->showAlert("simpan","Data", $hasil);
 
 		redirect("dashboard/pelaksanaan_jenis_layanan");
 	}
@@ -1757,14 +1701,9 @@ class Dashboard extends MY_Controller
 						$isUpload = true;
 					}
 				}
-
-				if ($isUpload) {
-					$this->session->set_flashdata("status", "<div class='alert alert-success'>Gambar berhasil diunggah</div>");
-				} else {
-					$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gambar gagal diunggah</div>");
-				}
+				$this->showAlert("Unggah","Gambar", $isUpload);
 			} else {
-				$this->session->set_flashdata("status", "<div class='alert alert-warning'>Tidak ada gambar yang diunggah</div>");
+				$this->showAlertWithMessage("Tidak ada gambar yang diunggah", false);
 			}
 		}
 		$data['datalogin'] = $this->session->userdata("dataLogin");
@@ -1780,11 +1719,9 @@ class Dashboard extends MY_Controller
 		if ($this->input->post("id") != "") {
 			$id_layanan = $this->input->post("id");
 			$data = array("surat_pengantar_uji_sampel" => "1");
-			if ($this->model_user->updateData("layanan", $id_layanan, "uid", $data)) {
-				$this->session->set_flashdata("status", "<div class='alert alert-success'>Pengambilan contoh berhasil</div>");
-			} else {
-				$this->session->set_flashdata("status", "<div class='alert alert-warning'>Gagal menyimpan data</div>");
-			}
+
+			$hasil = $this->model_user->updateData("layanan", $id_layanan, "uid", $data);
+			$this->showAlert("Pengambilan","Contoh", $hasil);
 		}
 		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$data['ppc'] = $this->model_user->getDataJenisInspeksi("ppc");
@@ -1810,8 +1747,8 @@ class Dashboard extends MY_Controller
 		} else {
 			$this->model_user->updateData('data_sampling_plan', $id_sampling, 'id_sampling', $data);
 		}
+		$this->showAlertWithMessage("Sampling plan terkirim");
 
-		$this->session->set_flashdata("status", "<div class='alert alert-success'>Sampling plan terkirim</div>");
 		$msg = array('dari' => $this->id_saya(), 'kepada' => '7', 'title' => 'Sampling plan', 'body' => 'Pengajuan sampling plan');
 		$this->model_user->insertData('notification', $msg);
 
@@ -1829,7 +1766,6 @@ class Dashboard extends MY_Controller
 		$data['dokumen'] = $this->model_user->getDokumenInspeksi('ppc', 'dokumen', $id);
 		$data['dokumen_inspeksi'] = $this->model_user->getDetailForm("ppc", $data['jenis_layanan'], $id);
 
-
 		$this->loadView('dashboard_view/pages/ppc/form_pelaksanaan_ppc', $data);
 	}
 	function simpan_hasil_ppc()
@@ -1841,11 +1777,10 @@ class Dashboard extends MY_Controller
 			redirect("dashboard/form_inspeksi/" . $uid);
 		} else {
 			$dat = array('hasil_ppc' => '1', 'surat_pengantar_uji_sampel' => '1', 'w_ppc' => date('Y-m-d'));
-			if ($this->model_user->updateData("layanan", $uid, 'uid', $dat)) {
-				$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-			} else {
-				$this->session->set_flashdata("status", "<div class='alert alert-warning'>Terdapat kesalahan ketika menyimpan data</div>");
-			}
+
+			$hasil = $this->model_user->updateData("layanan", $uid, 'uid', $dat);
+			$this->showAlert("Pengambilan","Contoh", $hasil);
+
 			redirect("dashboard/form_ppc/" . $uid);
 		}
 	}
@@ -1858,17 +1793,15 @@ class Dashboard extends MY_Controller
 		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
 		$this->loadView('dashboard_view/kelola_user', $data);
 	}
+
 	function user_nonaktif($jenis, $idUser, $status)
 	{
 		$data = array("status" => $status);
-		if ($this->model_user->updateData('user', $idUser, 'id_user', $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Terdapat kesalahan ketika menyimpan data</div>");
-		}
+		$hasil = $this->model_user->updateData('user', $idUser, 'id_user', $data);
+		$this->showAlert("simpan","Data", $hasil);
 
 		if ($jenis == 'pelaku') {
-			//	redirect('dashboard/akun_pelaku_usaha');
+			redirect('dashboard/akun_pelaku_usaha');
 		} else {
 			redirect('dashboard/kelola_user');
 		}
@@ -1878,13 +1811,10 @@ class Dashboard extends MY_Controller
 	{
 		$pass = sha1("Okkpd2018!12345678");
 		$data = array("password" => $pass);
-		if ($this->model_user->updateData('user', $idUser, 'id_user', $data)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Reset password berhasil</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Terdapat kesalahan ketika mereset password</div>");
-		}
 
-	
+		$hasil = $this->model_user->updateData('user', $idUser, 'id_user', $data);
+		$this->showAlert("Reset","Password", $hasil);
+		
 		redirect('dashboard/kelola_user');
 	}
 
@@ -1908,7 +1838,6 @@ class Dashboard extends MY_Controller
 	public function verifikasi_pengurus()
 	{
 		$i = $this->input;
-
 
 		if ($this->model_user->validasi($i->post('username'), $i->post('password'), $i->post('role'))) {
 			redirect("dashboard", "redirect");
@@ -2134,14 +2063,14 @@ class Dashboard extends MY_Controller
 
 
 		$arr = array('kesanggupan' => $uploadData[0]['file_name'], 'legalitas' => $uploadData[1]['file_name'], 'struktur_organisasi' => $uploadData[2]['file_name'], 'jenis_komoditas' => $uploadData[3]['file_name']);
-		if ($this->model_user->updateData('prima_tiga', $this->input->post('id'), 'id_prima_tiga', $arr)) {
+		if ($this->model_user->updateData('prima_tiga', $this->input->post('id'), 'id_prima_tiga', $arr)) {			
 			if ($isGagal) {
-				$this->session->set_flashdata("status", "<div class='alert alert-warning'>Ada beberapa file gagal diunggah, cek kembali</div>");
+				$this->showAlertWithMessage("Ada beberapa file gagal diunggah, cek kembali", false);
 			} else {
-				$this->session->set_flashdata("status", "<div class='alert alert-success'>File berhasil diunggah</div>");
+				$this->showAlertWithMessage("File berhasil diunggah");
 			}
 		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Gagal menyimpan data</div>");
+			$this->showAlert("Simpan", "Data", false);
 		}
 		redirect("dashboard");
 	}
@@ -2333,8 +2262,7 @@ class Dashboard extends MY_Controller
 
 			$this->loadView("dashboard_view/pages/analislab/prosesubijalar", $data);
 		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Laporan Pengujian jenis tersebut belum tersedia.</div>");
-
+			$this->showAlertWithMessage("Laporan Pengujian jenis tersebut belum tersedia");
 			redirect("dashboard/valid_hasilpengujian");
 		}
 
@@ -3102,15 +3030,10 @@ class Dashboard extends MY_Controller
 			"kesimpulan" => $kesimpulan
 		);
 
-		if ($this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $arr)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Gagal menyimpan data</div>");
-		}
+		$hasil = $this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $arr); 
+		$this->showAlert("simpan","Data", $hasil);
 
 		redirect("dashboard/valid_hasilpengujian");
-
-		// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
 	}
 
 	function proses_valid_ujimantek()
@@ -3178,16 +3101,10 @@ class Dashboard extends MY_Controller
 			"kondisi" => $kondisi,
 			"userValidSample" => $data['datalogin']['id_user']
 		);
-
-		if ($this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $arr)) {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Data berhasil disimpan</div>");
-		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Gagal menyimpan data</div>");
-		}
+		$hasil = $this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $arr);
+		$this->showAlert("simpan","Data", $hasil);
 
 		redirect("dashboard/valid_sample");
-
-		// $this->loadView('dashboard_view/cetak/pernyataan_kesanggupan');
 	}
 
 	function helloword()
@@ -3198,7 +3115,6 @@ class Dashboard extends MY_Controller
 
 	function update_valid_ujimtek()
 	{
-
 		$i = $this->input;
 		$id_layanan = $i->post("id_layanan");
 		$kode_pendaftaran = $i->post("kode_pendaftaran");
@@ -3225,7 +3141,7 @@ class Dashboard extends MY_Controller
 
 			$this->loadView("dashboard_view/pages/m_teknis/prosesgabah", $data);
 		} else {
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Laporan Pengujian jenis tersebut belum tersedia.</div>");
+			$this->showAlertWithMessage("Laporan Pengujian jenis tersebut belum tersedia", false);
 
 			redirect("dashboard/mteklist_validujimutu");
 		}
@@ -3264,17 +3180,17 @@ class Dashboard extends MY_Controller
 			"userValidMantek" => $data['datalogin']['id_user']
 		);
 		$this->db->trans_begin();
-		if ($this->model_user->updateLayananmutuDetail('layanan_ujimutu_hasil', $id_layanan, $arr) && $this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $arr2)) {
+
+		$hasil = $this->model_user->updateLayananmutuDetail('layanan_ujimutu_hasil', $id_layanan, $arr) && $this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $arr2);
+		if ($hasil) {
 			$this->db->trans_commit();
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Proses berhasil disimpan</div>");
-			redirect("dashboard/mteklist_validujimutu", 'redirect');
 		} else {
 			$this->db->trans_rollback();
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Proses Gagal Disimpan</div>");
-			redirect("dashboard/mteklist_validujimutu", 'redirect');
 		}
-	}
+		$this->showAlert("simpan","Proses", $hasil);
 
+		redirect("dashboard/mteklist_validujimutu", 'redirect');
+	}
 
 	function mtek_tolak_ujimutu()
 	{
@@ -3290,15 +3206,16 @@ class Dashboard extends MY_Controller
 			"userValidMantek" => $data['datalogin']['id_user']
 		);
 		$this->db->trans_begin();
-		if ($this->model_user->updateData('layanan_ujimutu_hasil', $id_layanan, 'idlayanan_ujimutu', $arr) && $this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $arr2)) {
+
+		$hasil = $this->model_user->updateData('layanan_ujimutu_hasil', $id_layanan, 'idlayanan_ujimutu', $arr) && $this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $arr2);
+		if ($hasil) {
 			$this->db->trans_commit();
-			$this->session->set_flashdata("status", "<div class='alert alert-success'>Proses berhasil disimpan</div>");
-			redirect("dashboard/mteklist_validujimutu", 'redirect');
 		} else {
 			$this->db->trans_rollback();
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Proses Gagal Disimpan</div>");
-			redirect("dashboard/mteklist_validujimutu", 'redirect');
 		}
+		$this->showAlert("simpan","Proses", $hasil);
+
+		redirect("dashboard/mteklist_validujimutu", 'redirect');
 	}
 
 	function u_layanan_cetakLHU()
@@ -3415,6 +3332,7 @@ class Dashboard extends MY_Controller
 
 		$userdata = $this->session->userdata("dataLogin");
 		$identitas_usaha = $this->model_admin->getDataWhere("identitas_usaha", "id_user", $userdata['id_user']);
+
 		if (!$isaktif) {
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Maaf, skm belum disiapkan oleh admin</div>");
 			redirect("dashboard");
@@ -3476,7 +3394,8 @@ class Dashboard extends MY_Controller
 			$param_survey["kepentingan"] = array_key_exists("kepentingan", $element) ? $element['kepentingan'][0] : 0;
 			$this->model_admin->insertData("survey_kuesioner", $param_survey);
 		}
-		$this->session->set_flashdata("status", "<div class='alert alert-success'>Data survey berhasil disimpan</div>");
+		$this->showAlert("simpan","Data Survey", true);
+
 		redirect("dashboard");
 	}
 
@@ -3487,7 +3406,6 @@ class Dashboard extends MY_Controller
 		$data['user'] = $this->model_user->getAllUser($data['datalogin']['id_user']);
 		$this->loadView("dashboard_view/pages/u_layanan/kelola_form", $data);
 	}
-
 
 	public function ubah_statuskomoditas()
 	{
@@ -3516,14 +3434,10 @@ class Dashboard extends MY_Controller
 		$arr['isaktif'] = "1";
 		$arr['keterangan'] = "";
 
-		if ($this->model_user->updateData('jenis_komoditas_detil', $kode, 'idjenisdetail', $arr)) {
-			$this->session->set_flashdata("status", "Data berhasil diubah.");
-			redirect("dashboard/u_layanan_kelolakomuditas", 'redirect');
-		} else {
+		$hasil = $this->model_user->updateData('jenis_komoditas_detil', $kode, 'idjenisdetail', $arr);
+		$this->showAlert("simpan","Data", true);
 
-			$this->session->set_flashdata("status", "Data gagal diubah.");
-			redirect("dashboard/u_layanan_kelolakomuditas", 'redirect');
-		}
+		redirect("dashboard/u_layanan_kelolakomuditas", 'redirect');
 	}
 
 	function cobaemail(){

@@ -15,11 +15,7 @@
           </div>
         </div>
       </div>
-      <?php
-      if($this->session->flashdata("status")){
-        echo $this->session->flashdata("status");
-      }
-      ?>
+      
       <!-- Input -->
       <div class="row clearfix">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">

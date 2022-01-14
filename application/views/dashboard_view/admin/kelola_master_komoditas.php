@@ -33,11 +33,7 @@
               <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                      <?php
-                      if($this->session->flashdata("status")){
-                        echo $this->session->flashdata("status");
-                      }
-                      ?>
+                      
                         <div class="header">
                             <h2>
                                 <strong>Jenis Komoditas <strong></h2>

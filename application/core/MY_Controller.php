@@ -17,6 +17,10 @@ class MY_Controller extends CI_Controller
     $this->bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
   }
 
+  protected function max_upload_size(){
+    return 5000000
+  }
+
   protected function index()
   {
     $this->load->view('welcome_message');
@@ -43,6 +47,7 @@ class MY_Controller extends CI_Controller
     $data['role_saya'] = $this->saya();
     $data['foto_profil_saya'] = $this->model_user->getFotoProfil($this->id_saya());
     $this->load->view('dashboard_view/template/header', $data);
+    $this->load->view('notification_fragment');
     $this->load->view('dashboard_view/template/top_nav', $data);
     $this->load->view('dashboard_view/template/side_nav', $data);
     $this->load->view($view, $data);
@@ -76,6 +81,7 @@ class MY_Controller extends CI_Controller
     $data['link'] = $this->model_user->getAllData('tautan');
     $data['panduan'] = $this->model_user->getAllData('panduan');
     $this->load->view('default/template/header', $data);
+    $this->load->view('notification_fragment');
     if ($with_navigation) $this->load->view('default/template/navigation-small');
     $this->load->view($halaman, $data);
     $this->load->view('default/template/footer_navigation');
@@ -223,7 +229,14 @@ class MY_Controller extends CI_Controller
 
   protected function showAlertWithMessage($message, $isSuccess = true)
   {
-    $class = $isSuccess ? "alert alert-success" : "alert alert-warning";
-    $this->session->set_flashdata("status", "<div class='" . $class . "'>" . $message . "</div>");
+    $class = $isSuccess ? "alert-success" : "alert-warning";
+
+    $notif = "<div class='alert " . $class . "'>
+    <div class='alert-title'>Notifikasi
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+    </div>" . $message . "</div>";
+    $this->session->set_flashdata("status", $notif);
   }
 }

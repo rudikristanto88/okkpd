@@ -22,9 +22,7 @@
             <div class="body">
               <h4 class="card-inside-title">Pilih Perusahaan</h4><br/>
                 <hr/>
-              <?php if($this->session->flashdata('status')!= ""){
-                echo $this->session->flashdata('status');
-              } ?>
+              
               <div class="table-responsive-md">
                 <table class="table table-hover" id="table-datatable" class="display">
                   <thead>

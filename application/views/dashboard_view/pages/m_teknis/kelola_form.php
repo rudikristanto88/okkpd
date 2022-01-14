@@ -27,9 +27,7 @@
                 <?php if($jenis == 'inspeksi'){ echo 'Dokumen Form Uji '; }else{ echo 'Dokumen Berita Acara '; } ?>
                 <?= $menu ?>
               </h4><br/>
-              <?php if($this->session->flashdata('status')!= ""){
-                echo $this->session->flashdata('status');
-              } ?>
+              
 
               <?php if($jenis == 'inspeksi'){ ?>
               <button type="button" name="button" class="btn btn-info" data-toggle="modal" data-target="#modalTambah">Syarat Teknis <i class="fas fa-plus"></i></button>

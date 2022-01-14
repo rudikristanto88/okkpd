@@ -20,9 +20,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div >
             <div class="body">
-              <?php if($this->session->flashdata('status')!= ""){
-                echo $this->session->flashdata('status');
-              } ?>
+              
 
 
               <h4 class="card-inside-title">Hasil Lab</h4>

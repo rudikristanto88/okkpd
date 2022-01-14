@@ -28,11 +28,7 @@
                     </h2>
                 
                   </div>
-                  <?php
-                  if ($this->session->flashdata("status")) {
-                    echo $this->session->flashdata("status");
-                  }
-                  ?>
+                  
                   <div class="body">
                     <?php foreach ($maklumat as $maklumat); ?>
 
