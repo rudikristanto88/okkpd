@@ -18,7 +18,24 @@ include 'header_cetak_lhu.php';
     <tr>
         <td width="30%" align="left">2. Alamat</td>
         <td width="1">:</td>
-        <td><?= $detail[0]['alamat_usaha'] . " RT " . $detail[0]['rt'] . " RW " . $detail[0]['rw']. " Kel " . $detail[0]['kelurahan']. " Kec " . $detail[0]['kecamatan'] ." ". $detail[0]['kota'] ?></td>
+        <td><?php 
+        $alamatcetak = "";
+        if($detail[0]['rt'] != ""){
+            $alamatcetak .= " RT " . $detail[0]['rt'];
+        }
+        if($detail[0]['rw'] != ""){
+            $alamatcetak .= " RW " . $detail[0]['rw'];
+        }
+        if($detail[0]['kelurahan'] != ""){
+            $alamatcetak .= " Kel " . $detail[0]['kelurahan'];
+        }
+        if($detail[0]['kecamatan'] != ""){
+            $alamatcetak .= " Kec " . $detail[0]['kecamatan'];
+        }
+        if($detail[0]['kota'] != ""){
+            $alamatcetak .= " " . $detail[0]['kota'];
+        }
+        echo $detail[0]['alamat_usaha'] . $alamatcetak ?></td>
     </tr>
     <tr>
         <td width="30%" align="left">3. Deskripsi Contoh</td>
@@ -105,7 +122,7 @@ include 'header_cetak_lhu.php';
                             $bulan = date("m",strtotime($tanggal));
                             $tahun = date("Y",strtotime($tanggal));
                             $month = array('01' => 'Januari','02' => 'Februari','03' => 'Maret','04' => 'April','05' => 'Mei','06' => 'Juni','07' => 'Juli','08' => 'Agustus','09' => 'September','10' => 'Oktober','11' => 'November','12' => 'Desember');
-                          echo "Ungaran, ". $hari . " " . $month[$bulan]. " " . $tahun?><br>Manager Puncak</td>
+                          echo "Ungaran, ". $hari . " " . $month[$bulan]. " " . $tahun?><br>Kepala BPMKP Selaku Manajer Puncak</td>
                     </tr> 
                     <tr><td colspan="3"><br/></td></tr>
                     <tr><td colspan="3"><br/></td></tr>
