@@ -74,7 +74,7 @@
                             <!--<a href="<?= base_url() ?>dashboard/survey?id=<?= $ppc['uid']?>" class="btn btn-primary">Isi Survey</a>-->
                             <?php //else :?>
                                
-                            <button  onclick="openModal(<?= $ppc['uid'] ?>)" type="sumbit" name="button" class="btn btn-info col-md-12">Download Draft LHU</button>
+                            <button onclick="openModal(<?= $ppc['uid'] ?>)" type="sumbit" name="button" class="btn btn-info col-md-12">Download Draft LHU</button>
                             <?php if($ppc['mime_type'] == ""){?>
                             <button onclick="modalUpload(<?= $ppc['uid'] ?>,'<?= $ppc['username'] ?>','<?= $ppc['nama_pemohon'] ?>','<?= $ppc['kode_pendaftaran'] ?>')" type="sumbit" name="button" class="btn btn-danger col-md-12">Upload LHU</button>
                             <?php }else if($ppc['mime_type'] != ""){?>
