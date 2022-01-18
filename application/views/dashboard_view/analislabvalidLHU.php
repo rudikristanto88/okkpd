@@ -197,8 +197,8 @@
       $("#id_layanan_surat").val(id_layanan);
     }
     
-    function modalUpload(kode,email,nama,kode){
-      $("#id_layananu").val(kode);
+    function modalUpload(id,email,nama,kode){
+      $("#id_layananu").val(id);
       $("#uploademail").val(email);
       $("#uploadnama").val(nama);
       $("#uploadkode").val(kode);
