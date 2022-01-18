@@ -18,7 +18,7 @@ class MY_Controller extends CI_Controller
   }
 
   protected function max_upload_size(){
-    return 5000000
+    return 5000000;
   }
 
   protected function index()
