@@ -3301,7 +3301,7 @@ class Dashboard extends MY_Controller
                   Sertifikat / Laporan Hasil Uji (LHU) telah terbit dan dapat diambil di kantor BPMKP Ungaran pada jam kerja.<br/>
 				  Untuk LHU versi berkas digital dapat diunduh pada halaman dashboard website okkpd Anda.<br/> 
 				  Terima Kasih."; //$this->load->view('default/email/notifikasi_sertifikat_terbit', $data, true);
-		$this->kirim_email("Pemberitahuan", $uploademail, $message);
+		
 		if ($this->uploads($_FILES, 'gambar') == null) {
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Dokumen tidak dapat diunggah</div>");
 			redirect("dashboard/u_layanan_cetakLHU");
@@ -3310,7 +3310,7 @@ class Dashboard extends MY_Controller
 			$gambar = file_get_contents($gambar_temp['full_path']);
 			$data = array("sertifikat" => $gambar, "mime_type" => $_FILES['gambar']['type']);
 			$this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $data);
-
+			$this->kirim_email("Pemberitahuan", $uploademail, $message);
 			redirect("dashboard/u_layanan_cetakLHU");
 		}
 	}
