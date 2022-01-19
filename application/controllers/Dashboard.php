@@ -3310,6 +3310,7 @@ class Dashboard extends MY_Controller
 			$gambar = file_get_contents($gambar_temp['full_path']);
 			$data = array("sertifikat" => $gambar, "mime_type" => $_FILES['gambar']['type']);
 			$this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $data);
+			//print_r($data);
 			$this->kirim_email("Pemberitahuan", $uploademail, $message);
 			redirect("dashboard/u_layanan_cetakLHU");
 		}
