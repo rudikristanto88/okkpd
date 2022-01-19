@@ -20,10 +20,10 @@ include 'header_cetak_lhu.php';
         <td width="1">:</td>
         <td><?php 
         $alamatcetak = "";
-        if($detail[0]['rt'] != ""){
+        if($detail[0]['rt'] != "" || $detail[0]['rt'] != "0"){
             $alamatcetak .= " RT " . $detail[0]['rt'];
         }
-        if($detail[0]['rw'] != ""){
+        if($detail[0]['rw'] != "" || $detail[0]['rw'] != "0"){
             $alamatcetak .= " RW " . $detail[0]['rw'];
         }
         if($detail[0]['kelurahan'] != ""){
@@ -136,7 +136,8 @@ include 'header_cetak_lhu.php';
                     </tr>
                 </table>
                 Catatan :<br/><br/>
-•	Laporan ini dilarang diperbanyak tanpa persertujuan tertulis dari Laboratorium Pengujian BPMKP Prov Jateng.<br/>
+•	Laporan ini dilarang diperbanyak tanpa persetujuan tertulis dari <br/>
+&nbsp;&nbsp;Laboratorium Pengujian BPMKP Prov Jateng.<br/>
 •	Laporan ini hanya berlaku bagi contoh yang diuji.<br/>
 •	Laporan ini merupakan hasil pengujian bukan penelitian.<br/>
 
