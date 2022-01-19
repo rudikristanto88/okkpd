@@ -106,10 +106,10 @@ include 'header_cetak_lhu.php';
                                 }
                                 
                                 ?></td>
-                                <td><?=$r['satuan']?></td>
-                                <td><?=$r['hasiluji']?></td>
-                                <td><?=$r['kelasmutu']?></td>
-                                <td><?=$r['metodeuji']?></td>
+                                <td align="center"><?=$r['satuan']?></td>
+                                <td align="center"><?=$r['hasiluji']?></td>
+                                <td align="center"><?=$r['kelasmutu']?></td>
+                                <td align="center"><?=$r['metodeuji']?></td>
                               </tr>
                             <?php }?>
                             
