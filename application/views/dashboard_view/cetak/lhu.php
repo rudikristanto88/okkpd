@@ -100,7 +100,7 @@ include 'header_cetak_lhu.php';
                             <?php foreach($hasil as $r){?>
                               <tr>
                                 <td><?php if($r['jenisuji'] == "5.	Butir Lainnya (Maks) Terdiri dari Butir Menir, Butir Merah, Butir Kuning/Rusak, Butir kapur"){
-                                    echo "5. Butir Lainnya (Maks) Terdiri dari Butir <br/>&nbsp;&nbsp;&nbsp;Menir, Butir Merah, Butir Kuning/Rusak, <br/>&nbsp;&nbsp;&nbsp;Butir kapur";
+                                    echo "5. Butir Lainnya (Maks) Terdiri dari <br/>&nbsp;&nbsp;&nbsp;Butir Menir, Butir Merah, <br/>&nbsp;&nbsp;&nbsp;Butir Kuning/Rusak, Butir kapur";
                                 }else{
                                     echo $r['jenisuji'];
                                 }
