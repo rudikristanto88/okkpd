@@ -185,18 +185,7 @@
 
 
     <script type="text/javascript">
-    function setDataSampling(id_sampling,deskripsi){
-      $("#id_sampling").val(id_sampling);
-      $("#deskripsi").html(deskripsi);
-
-    }
-    function sendData(id_layanan){
-      $("#id_layanan").val(id_layanan);
-    }
-    function sendDataUpload(id_layanan){
-      $("#id_layanan_surat").val(id_layanan);
-    }
-    
+     
     function modalUpload(id,email,nama,kode){
       $("#id_layananu").val(id);
       $("#uploademail").val(email);
@@ -208,22 +197,6 @@
       $("#id_layanan").val(kode); 
       $('#modalUnggah').modal();
     }
-    function ijinPPC(id_layanan){
-      $.ajax({
-        url: "<?= base_url()?>dashboard/ijin",
-        data:{role: "ppc", id_layanan: id_layanan},
-        type: "POST",
-        success: function(result){
-          if(result == "1"){
-            $("#ppc"+id_layanan).html("<button class='btn btn-success btn-block fas fa-check'></button>");
-          }else if(result == "0"){
-            console.log("gagal");
-          }else{
-            $("#ppc"+id_layanan).html("<button class='btn btn-success btn-block fas fa-check'></button>");
-            $("#action"+id_layanan).html(result);
-          }
-        }
-      });
-    }
+   
 
   </script>
