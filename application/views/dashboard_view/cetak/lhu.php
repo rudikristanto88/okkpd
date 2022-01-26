@@ -13,7 +13,7 @@ include 'header_cetak_lhu.php';
     <tr>
         <td width="30%" align="left">1. Nama Pelanggan</td>
         <td width="1">:</td>
-        <td><?= $detail[0]['nama_pemohon'] ?></td>
+        <td><?= $detail[0]['nama_usaha'] ?></td>
     </tr>
     <tr>
         <td width="30%" align="left">2. Alamat</td>
