@@ -2922,8 +2922,8 @@ class Dashboard extends MY_Controller
 				"jenisuji" => $jenisuji,
 				"satuan" => $satuan,
 				"metodeuji" => $metodeuji,
-				"hasiluji" => "",
-				"kelasmutu" => ""
+				"hasiluji" => $hasiluji,
+				"kelasmutu" => $kelasmutu
 			);
 			$this->model_user->insertData("layanan_ujimutu_hasil", $arr);
 		} elseif ($idjenisdetail == "9") {
