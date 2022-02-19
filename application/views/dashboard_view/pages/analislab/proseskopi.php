@@ -185,11 +185,11 @@
                                 <td>SNI 01-2907-2008</td>
                             </tr>
                             <tr>
-                                <td>5.	Lolos ayakan : (Besar)</td>
+                                <td>5.	Lolos ayakan :</td>
                                 <td></td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;
-                                <input type="hidden" name="jenisuji5" value="5.	Lolos ayakan : (Besar)">
+                                <input type="hidden" name="jenisuji5" value="5.	Lolos ayakan :">
                                 <input type="hidden" name="satuan5" value="">
                                 <input type="hidden" name="metodeuji5" value="SNI 01-2907-2008">
                                 </td>
@@ -218,9 +218,9 @@
                                 }echo $hasil;?>">
                                 <input type="hidden" name="jenisuji6" value=" - 6,5 mm">
                                 <input type="hidden" name="satuan6" value="%">
-                                <input type="hidden" name="metodeuji6" value="">
+                                <input type="hidden" name="metodeuji6" value="SNI 01-2907-2008">
                                 </td>
-                                <td></td>
+                                <td>SNI 01-2907-2008</td>
                             </tr>
                             <tr>
                                 <td> - 3,5 mm</td>
@@ -245,9 +245,9 @@
                                 }echo $hasil;?>">
                                 <input type="hidden" name="jenisuji7" value=" - 3,5 mm">
                                 <input type="hidden" name="satuan7" value="%">
-                                <input type="hidden" name="metodeuji7" value="">
+                                <input type="hidden" name="metodeuji7" value="SNI 01-2907-2008">
                                 </td>
-                                <td></td>
+                                <td>SNI 01-2907-2008</td>
                             </tr>
                             <tr>
                                 <td>6. Nilai Cacat</td>
@@ -274,7 +274,7 @@
                                 <input type="hidden" name="satuan8" value="%">
                                 <input type="hidden" name="metodeuji8" value="SNI 01-2907-2008">
                                 </td>
-                                <td>SNI 6128:2015</td>
+                                <td>SNI 01-2907-2008</td>
                             </tr>
                         </tbody>
                     </table>
