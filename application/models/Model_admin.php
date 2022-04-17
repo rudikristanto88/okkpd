@@ -379,6 +379,10 @@ class Model_admin extends MY_Model
     $result["ukuran_kinerja"] = $total_mutu["ukuran_kinerja"];
     $result["index_kepuasan"] = round($total_nilai / 8 * 25,0);
     $result["index_kepentingan"] = round($total_kepentingan / 8 * 25,0);
+
+    $result["ukuran_kepuasan"] =  $this->getMutuPelayanan($result["index_kepuasan"]);
+    $result["ukuran_kepentingan"] =  $this->getMutuPelayanan($result["index_kepentingan"]);
+
     $result["exclude_column"] = $exclude_column;
     $result["data"] = $data;
     return $result;

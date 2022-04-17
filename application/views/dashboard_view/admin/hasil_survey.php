@@ -44,9 +44,8 @@
                           <li>
                             <a
                               style="cursor: pointer"
-                              data-toggle="modal"
-                              onclick="alert('Maaf fitur unduh laporan belum tersedia')"
-                              data-target="#update"
+                              href="<?= base_url() ?>dokumen/hasil_survey?periode=<?= $periode; ?>"
+                              target="_blank"
                               >Unduh Laporan</a
                             >
                           </li>

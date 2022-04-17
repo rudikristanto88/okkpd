@@ -58,7 +58,7 @@ class Dokumen extends MY_Controller
         $this->load->view('dashboard_view/cetak/prima3', $data);
       } else if ($jenis == 'prima_2') {
         $this->load->view('dashboard_view/cetak/prima2', $data);
-      } 
+      }
     } else if ($jenis == 'psat') {
       $data['sertifikat'] = $this->model_admin->getsertifikatPSAT($id);
       $this->load->view('dashboard_view/cetak/psat', $data);
@@ -97,12 +97,10 @@ class Dokumen extends MY_Controller
       }
     }
     $data['tipe'] = $dokumen['tipe_sertifikat_produk'];
-    if($jenis == 'ujimutu'){
+    if ($jenis == 'ujimutu') {
       $data['nama'] = 'LHU_' . str_replace(' ', '_', $dokumen['kodelhu']);
-    
-    }else{
+    } else {
       $data['nama'] = 'Sertifikat_' . str_replace(' ', '_', $dokumen['nama_usaha']) . '_' . $dokumen['kode_layanan'] . '_' . str_replace(' ', '_', $produk);
-          
     }
     $data['dokumen'] = $dokumen['sertifikat_produk'];
     $this->load->view('dashboard_view/dokumen/lihat_dokumen', $data);
@@ -250,14 +248,14 @@ class Dokumen extends MY_Controller
     $this->load->view('dashboard_view/dokumen/berkas_pendaftaran', $data);
   }
 
-  
+
   public function berkas_pendaftaran_ujimutu()
   {
-    $id = $_GET['q']; 
+    $id = $_GET['q'];
     $data['berkas'] = $this->model_dokumen->getberkasUjimutu($id);
     $this->load->view('dashboard_view/dokumen/berkas_pendaftaran_ujimutu', $data);
   }
-  
+
 
   public function berkas_diterima()
   {
@@ -305,5 +303,30 @@ class Dokumen extends MY_Controller
     } else {
       echo "<h3>Forbidden Access</h3>Anda tidak dapat mengakses halaman ini";
     }
+  }
+
+  public function hasil_survey()
+  {
+    $data['list_periode'] = $this->model_admin->getAllData("master_periode", "id", "desc");
+    $data['periode'] = $this->input->get("periode");
+    $data['selected_periode'] = "";
+
+
+    foreach ($data['list_periode'] as $periode) {
+      if ($data['periode'] == null) {
+        if ($periode['isaktif'] == 1) {
+          $data['periode'] = $periode['id'];
+          $data['selected_periode'] = $periode;
+        }
+      }else{
+        if($periode['id'] == $data['periode']){
+          $data['selected_periode'] = $periode;
+        }
+      }
+    }
+
+    $data['report_survey'] = $this->model_admin->getReportSurvey($data['periode']);
+    $data['hasil_survey'] = $this->model_admin->getSurvey($data['periode']);
+    $this->load->view('dashboard_view/dokumen/hasil_survey', $data);
   }
 }
