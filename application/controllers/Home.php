@@ -11,6 +11,10 @@ class Home extends MY_Controller
 		$this->load->model('model_admin');
 		$this->load->model('model_dokumen');
 		$this->load->model('model_ujimutu');
+		Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
+		Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
+		Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
+
 	}
 
 	public function testEmail()
