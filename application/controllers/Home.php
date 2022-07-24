@@ -54,10 +54,22 @@ class Home extends MY_Controller
 		$this->load->view('default/template/footer_navigation', $data);
 	}
 
+	function getKotaByProvinsi(){
+		$prov = $this->input->post('provinsi'); 
+		$kota = $this->model_user->getDataKotaById($prov);
+		//print_r($kota);
+		$html = "";
+		foreach ($kota as $kota){
+			$html .= "<option value='".$kota['kode_kota']."'>".$kota['nama_kota']."</option>";
+		}
+		echo $html;
+	}
+
 	public function sign_up($status = null)
 	{
 		$data['islogin'] = false;
-		$data['kota'] = $this->model_user->getDataKota();
+		$data['kota'] = array();//$this->model_user->getDataKota();
+		$data['propinsi'] = $this->model_user->getDataPropinsi();
 		// $this->checkUser(true, "", "home/pendaftaran_online");
 
 		if ($this->session->userdata("dataLogin") != null) {

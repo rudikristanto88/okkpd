@@ -39,13 +39,20 @@
                   <div class="col-md-6">
                     <div class="form-container">
                       <label for="">Provinsi</label>
-                      <input type="text" readonly value="Jawa Tengah" class="form-input form-block">
+                      <!--<input type="text" readonly value="Jawa Tengah" class="form-input form-block">-->
+                      
+                      <select class="form-input form-block" name="provinsi" id="provinsi">
+                        <option value="">- Pilih Provinsi -</option>
+                        <?php foreach ($propinsi as $val) : ?>
+                          <option value="<?= $val['kode_provinsi']; ?>"><?= $val['nama_provinsi']; ?></option>
+                        <?php endforeach; ?>
+                      </select>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-container">
                       <label for="">Kota / Kabupaten *</label>
-                      <select class="form-input form-block" name="kode_kota">
+                      <select class="form-input form-block" id="kode_kota" name="kode_kota">
                         <?php foreach ($kota as $kota) : ?>
                           <option value="<?= $kota['kode_kota']; ?>"><?= $kota['nama_kota']; ?></option>
                         <?php endforeach; ?>
@@ -83,5 +90,21 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('#form_registration').captcha();
+    $('#provinsi').change(function(){
+        var provinsi = $("#provinsi").val();
+        if(provinsi != ""){
+          $('#kode_kota').empty();
+          $.ajax({
+              url: "<?php echo base_url() . "home/getKotaByProvinsi"?>",
+              data: { "provinsi": provinsi},
+              dataType:"html",
+              type: "post",
+              success: function(data){
+                $('#kode_kota').append(data);
+              }
+          });
+        }
+        
+    });
   });
 </script>

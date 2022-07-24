@@ -91,6 +91,25 @@ class Model_user extends MY_Model
     $query = $this->db->get();
     return $query->result_array();
   }
+
+  
+  public function getDataPropinsi()
+  {
+    $this->db->select("*");
+    $this->db->from('provinsi'); 
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+
+  
+  public function getDataKotaById($propinsi)
+  {
+    $this->db->select("*");
+    $this->db->from('kota');
+    $this->db->where("kode_provinsi", $propinsi);
+    $query = $this->db->get();
+    return $query->result_array();
+  }
   public function getDataUsaha($id_user)
   {
     $this->db->select("*");

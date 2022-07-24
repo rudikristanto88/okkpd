@@ -31,7 +31,7 @@ $(document).ready(function(){
     $('#table-datatable').DataTable({
         responsive: true
     });
-    new $.fn.dataTable.FixedHeader( table );
+    //new $.fn.dataTable.FixedHeader( table );
 })
 </script>
 
