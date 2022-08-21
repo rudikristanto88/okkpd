@@ -169,7 +169,33 @@ if ($menu == 'ubah') {
                   </div>
                 </div>
               </div>
+              
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="kota">Propinsi *</label>
+                  <select class="form-control  text-white" name="propinsi" id="propinsi" required>
+                    <?php foreach ($propinsi as $propinsi) : ?>
+                      <option value="<?= $propinsi['kode_provinsi'] . ";" . $propinsi['nama_provinsi'] ?>" <?php if ($usaha['kode_kota'] == "" && $propinsi['kode_provinsi'] == "33") {
+                                                                                          echo 'selected';
+                                                                                        }elseif(substr($usaha['kode_kota'],0,2) == $propinsi['kode_provinsi']){echo 'selected';} ?>><?= $propinsi['nama_provinsi'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
 
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="kota">Kab/Kota *</label>
+                  <select class="form-control  text-white" name="kota" id="kota" required>
+                    <?php foreach ($kota as $kota) : ?>
+                      <option value="<?= $kota['kode_kota'] . ";" . $kota['nama_kota'] ?>" <?php if ($kotanya == $kota['nama_kota']) {
+                                                                                          echo 'selected';
+                                                                                        } ?>><?= $kota['nama_kota'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
+
+                </div>
+              </div>                                                              
               <div class="col-sm-3">
                 <div class="input-field">
                   <input id="rt" type="number" name="rt" class="text-white" value="<?= $rt ?>" data-length="10" >
@@ -183,19 +209,6 @@ if ($menu == 'ubah') {
                 </div>
               </div>
 
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="kota">Kab/Kota *</label>
-                  <select class="form-control  text-white" name="kota" id="kota" required>
-                    <?php foreach ($kota as $kota) : ?>
-                      <option value="<?= $kota['kode_kota'] . ";" . $kota['nama_kota'] ?>" <?php if ($kotanya == $kota['nama_kota']) {
-                                                                                          echo 'selected';
-                                                                                        } ?>><?= $kota['nama_kota'] ?></option>
-                    <?php endforeach; ?>
-                  </select>
-
-                </div>
-              </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="kecamatan">Kecamatan *</label>
@@ -280,6 +293,24 @@ if ($menu == 'ubah') {
   var id_kelurahan = $("#id_kelurahan").val() ?? 0;
   $(document).ready(function() {
     getKota($("#kota").val());
+
+    $('#propinsi').change(function(){
+        var provinsi = $("#propinsi").val();
+        if(provinsi != ""){
+          $('#kota').empty();
+          var test = provinsi.split(";");
+          $.ajax({
+              url: "<?php echo base_url() . "Dashboard/getKotaByProvinsi"?>",
+              data: { "provinsi": test[0]},
+              dataType:"html",
+              type: "post",
+              success: function(data){
+                $('#kota').append(data);
+              }
+          });
+        }
+        
+    });
 
     $("#btn_lanjut").click(function() {
       var id = $("#kota").val().split(";");

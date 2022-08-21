@@ -311,6 +311,7 @@ class Dashboard extends MY_Controller
 			"no_hp_pemohon" => $no_hp_pemohon,
 			"unit_kerja" => $unit_kerja,
 			"nama_pimpinan" => $nama_pimpinan,
+			"kode_kota" => $kota[0],
 		);
 
 		if ($menu == "tambah") {
@@ -691,8 +692,15 @@ class Dashboard extends MY_Controller
 	{
 		$data['datalogin'] = $this->session->userdata("dataLogin");
 		$variable = $this->model_user->getDataWhere("identitas_usaha", "id_user", $data['datalogin']['id_user']);
+		
 		foreach ($variable as $data['usaha']);
-		$data['kota'] = $this->model_user->getDataKota();
+		$data['propinsi'] = $this->model_user->getDataPropinsi();
+		if($variable[0]['kode_kota'] == ""){
+			$data['kota'] = $this->model_user->getDataKota();
+		}else{
+			$data['kota'] = $this->model_user->getDataKotaById(substr($variable[0]['kode_kota'],0,2));
+		}
+		echo substr($variable[0]['kode_kota'],0,2);
 		$data['menu'] = 'ubah';
 
 		if ($data['datalogin']['punya_usaha'] == 0 && $data['datalogin']['kode_role'] == "pelaku") :
@@ -701,6 +709,7 @@ class Dashboard extends MY_Controller
 		endif;
 
 		$this->loadView('dashboard_view/fragment/daftar_usaha_fragment', $data);
+		/**/
 	}
 	function daftar($kode_layanan = null)
 	{
@@ -3518,5 +3527,16 @@ class Dashboard extends MY_Controller
             echo 'email terkirim';
         }
 		*/
+	}
+	
+	function getKotaByProvinsi(){
+		$prov = $this->input->post('provinsi'); 
+		$kota = $this->model_user->getDataKotaById($prov);
+		//print_r($kota);
+		$html = "";
+		foreach ($kota as $kota){
+			$html .= "<option value='".$kota['kode_kota']."'>".$kota['nama_kota']."</option>";
+		}
+		echo $html;
 	}
 }

@@ -102,6 +102,16 @@ class Model_user extends MY_Model
   }
 
   
+  public function getDataKotaByNama($nama)
+  {
+    $this->db->select("*");
+    $this->db->from('kota');
+    $this->db->where("kode_provinsi", $propinsi);
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+
+  
   public function getDataKotaById($propinsi)
   {
     $this->db->select("*");
@@ -110,6 +120,7 @@ class Model_user extends MY_Model
     $query = $this->db->get();
     return $query->result_array();
   }
+
   public function getDataUsaha($id_user)
   {
     $this->db->select("*");
