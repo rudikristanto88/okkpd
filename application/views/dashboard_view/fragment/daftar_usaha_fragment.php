@@ -291,7 +291,7 @@ if ($menu == 'ubah') {
 
 
 <script type="text/javascript">
-    console.log("kota = "+$("#id_kecamatan").val()+"|0");
+    console.log($("#id_kecamatan").val());
   var id_kecamatan = $("#id_kecamatan").val() ?? 0;
   var id_kelurahan = $("#id_kelurahan").val() ?? 0;
   $(document).ready(function() {
