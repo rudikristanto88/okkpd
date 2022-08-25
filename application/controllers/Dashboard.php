@@ -695,12 +695,17 @@ class Dashboard extends MY_Controller
 		
 		foreach ($variable as $data['usaha']);
 		$data['propinsi'] = $this->model_user->getDataPropinsi();
-		if($variable[0]['kode_kota'] == ""){
+		if($data['datalogin']['punya_usaha'] == 0 && $data['datalogin']['kode_role'] == "pelaku"){
 			$data['kota'] = $this->model_user->getDataKota();
 		}else{
-			$data['kota'] = $this->model_user->getDataKotaById(substr($variable[0]['kode_kota'],0,2));
+			if($variable[0]['kode_kota'] == ""){
+				$data['kota'] = $this->model_user->getDataKota();
+			}else{
+				$data['kota'] = $this->model_user->getDataKotaById(substr($variable[0]['kode_kota'],0,2));
+			}
 		}
-		echo substr($variable[0]['kode_kota'],0,2);
+		
+		//echo substr($variable[0]['kode_kota'],0,2);
 		$data['menu'] = 'ubah';
 
 		if ($data['datalogin']['punya_usaha'] == 0 && $data['datalogin']['kode_role'] == "pelaku") :
