@@ -19,6 +19,7 @@ $no_hp = '';
 $kop_surat = '';
 $unit_kerja = '';
 $nama_pimpinan = '';
+$kode_kota = '';
 
 if ($menu == 'ubah') {
   $id_identitas_usaha =  $usaha['id_identitas_usaha'];
@@ -41,6 +42,7 @@ if ($menu == 'ubah') {
   $kop_surat = $usaha['kop_surat'];
   $unit_kerja = $usaha['unit_kerja'];
   $nama_pimpinan = $usaha['nama_pimpinan'];
+  $kode_kota = usaha['kode_kota'];
 }
 
 ?>
@@ -175,9 +177,9 @@ if ($menu == 'ubah') {
                   <label for="kota">Propinsi *</label>
                   <select class="form-control  text-white" name="propinsi" id="propinsi" required>
                     <?php foreach ($propinsi as $propinsi) : ?>
-                      <option value="<?= $propinsi['kode_provinsi'] . ";" . $propinsi['nama_provinsi'] ?>" <?php if ($usaha['kode_kota'] == "" && $propinsi['kode_provinsi'] == "33") {
+                      <option value="<?= $propinsi['kode_provinsi'] . ";" . $propinsi['nama_provinsi'] ?>" <?php if ($kode_kota == "" && $propinsi['kode_provinsi'] == "33") {
                                                                                           echo 'selected';
-                                                                                        }elseif(substr($usaha['kode_kota'],0,2) == $propinsi['kode_provinsi']){echo 'selected';} ?>><?= $propinsi['nama_provinsi'] ?></option>
+                                                                                        }elseif(substr($kode_kota,0,2) == $propinsi['kode_provinsi']){echo 'selected';} ?>><?= $propinsi['nama_provinsi'] ?></option>
                     <?php endforeach; ?>
                   </select>
 
