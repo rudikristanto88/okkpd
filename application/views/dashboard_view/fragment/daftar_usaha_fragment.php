@@ -294,6 +294,7 @@ if ($menu == 'ubah') {
   var id_kecamatan = $("#id_kecamatan").val() ?? 0;
   var id_kelurahan = $("#id_kelurahan").val() ?? 0;
   $(document).ready(function() {
+    console.log("kota = "+$("#kota").val());
     getKota($("#kota").val());
 
     $('#propinsi').change(function(){
