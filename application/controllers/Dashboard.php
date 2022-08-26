@@ -3540,7 +3540,7 @@ class Dashboard extends MY_Controller
 		//print_r($kota);
 		$html = "";
 		foreach ($kota as $kota){
-			$html .= "<option value='".$kota['kode_kota']."'>".$kota['nama_kota']."</option>";
+			$html .= "<option value='".$kota['kode_kota'].";".$kota['nama_kota']."'>".$kota['nama_kota']."</option>";
 		}
 		echo $html;
 	}
