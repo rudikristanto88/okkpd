@@ -42,7 +42,7 @@ if ($menu == 'ubah') {
   $kop_surat = $usaha['kop_surat'];
   $unit_kerja = $usaha['unit_kerja'];
   $nama_pimpinan = $usaha['nama_pimpinan'];
-  $kode_kota = usaha['kode_kota'];
+  $kode_kota = $usaha['kode_kota'];
 }
 
 ?>
@@ -225,6 +225,7 @@ if ($menu == 'ubah') {
                   <input type="hidden" value="<?= $kelurahannya ?>" id="id_kelurahan"/>
                   <select class="form-control text-white" name="kelurahan" id="kelurahan" required>
                   </select>
+                  <input id="kelurahanlainnya" type="text" name="kelurahanlainnya" class="text-white" value="<?= $kelurahannya ?>" data-length="100">
                 </div>
               </div>
               <div class="col-sm-6">
@@ -297,7 +298,24 @@ if ($menu == 'ubah') {
   $(document).ready(function() {
     console.log("kota = "+$("#kota").val());
     getKota($("#kota").val());
-
+    $("#kelurahanlainnya").hide();
+    var provinsi = $("#propinsi").val();
+          var test = provinsi.split(";");
+    console.log(provinsi);
+    if(test[0] != ""){
+      if(test[0] != "33"){
+        $("#kelurahan").hide();        
+        $("#kelurahanlainnya").show();
+        $("#kelurahan").attr("required", false);
+        $("#kelurahanlainnya").attr("required", true);
+      }else{
+            
+          $("#kelurahan").show();
+          $("#kelurahanlainnya").hide();
+          $("#kelurahanlainnya").attr("required", false);
+          $("#kelurahan").attr("required", true);
+      }
+    }
     $('#propinsi').change(function(){
         var provinsi = $("#propinsi").val();
         if(provinsi != ""){
@@ -312,12 +330,26 @@ if ($menu == 'ubah') {
                 $('#kota').append(data);
               }
           });
+          if(test[0] != "33"){
+            $("#kelurahan").hide();
+            $("#kelurahanlainnya").show();
+            $("#kelurahan").attr("required", false);
+            $("#kelurahanlainnya").attr("required", true);
+          }else{
+            
+            $("#kelurahan").show();
+            $("#kelurahanlainnya").hide();
+            $("#kelurahanlainnya").attr("required", false);
+            $("#kelurahan").attr("required", true);
+          }
         }
+
         
     });
 
     $("#btn_lanjut").click(function() {
       var id = $("#kota").val().split(";");
+      var propinsi = $("#propinsi").val().split(";");
       $.ajax({
         url: "<?= base_url() ?>beranda/PelakuUsaha/cekIdentitasUsaha",
         data: {
@@ -328,12 +360,20 @@ if ($menu == 'ubah') {
         type: "POST",
         success: function(result) {
           var menu = $("#menu").val();
-
-          if($("#kecamatan").val() == "X;X" || $("#kelurahan").val() == "X;X"){
-            $("#lanjut").val("");
-            $("#alert_required").css("display", "block");
-            return;
+          if(propinsi[0] == "33"){
+              if($("#kecamatan").val() == "X;X" || $("#kelurahan").val() == "X;X"){
+                $("#lanjut").val("");
+                $("#alert_required").css("display", "block");
+                return;
+              }
+          }else{
+            if($("#kecamatan").val() == "X;X" || $("#kelurahanlainnya").val() == ""){
+                $("#lanjut").val("");
+                $("#alert_required").css("display", "block");
+                return;
+            }
           }
+          
 
           if ((result == 0 && menu == "tambah") || menu == "ubah") {
             $("#alert_required").css("display", "none");

@@ -277,7 +277,9 @@ class Dashboard extends MY_Controller
 		$alamat_usaha = $i->post("alamat_usaha");
 		$rt = $i->post("rt");
 		$rw = $i->post("rw");
+		$propinsi = explode(";", $i->post("propinsi"));
 		$kelurahan = explode(";", $i->post("kelurahan"));
+		$kelurahanlainnya = $i->post("kelurahanlainnya");
 		$kecamatan = explode(";", $i->post("kecamatan"));
 		$kota = explode(";", $i->post("kota"));
 		$no_telp = $i->post("no_telp");
@@ -298,21 +300,40 @@ class Dashboard extends MY_Controller
 
 		$id_user = $this->session->userdata("dataLogin")['id_user'];
 
-		$arr = array(
-			"no_ktp_pemohon" => $no_ktp_pemohon,
-			"no_npwp" => $no_npwp,
-			"alamat_usaha" => $alamat_usaha,
-			"rt" => $rt,
-			"rw" => $rw,
-			"kelurahan" => $kelurahan[1],
-			"kecamatan" => $kecamatan[1],
-			"kota" => $kota[1],
-			"no_telp" => $no_telp,
-			"no_hp_pemohon" => $no_hp_pemohon,
-			"unit_kerja" => $unit_kerja,
-			"nama_pimpinan" => $nama_pimpinan,
-			"kode_kota" => $kota[0],
-		);
+		if($propinsi[0]!="33"){
+			$arr = array(
+				"no_ktp_pemohon" => $no_ktp_pemohon,
+				"no_npwp" => $no_npwp,
+				"alamat_usaha" => $alamat_usaha,
+				"rt" => $rt,
+				"rw" => $rw,
+				"kelurahan" => $kelurahanlainnya,
+				"kecamatan" => $kecamatan[1],
+				"kota" => $kota[1],
+				"no_telp" => $no_telp,
+				"no_hp_pemohon" => $no_hp_pemohon,
+				"unit_kerja" => $unit_kerja,
+				"nama_pimpinan" => $nama_pimpinan,
+				"kode_kota" => $kota[0],
+			);
+		}else{
+			$arr = array(
+						"no_ktp_pemohon" => $no_ktp_pemohon,
+						"no_npwp" => $no_npwp,
+						"alamat_usaha" => $alamat_usaha,
+						"rt" => $rt,
+						"rw" => $rw,
+						"kelurahan" => $kelurahan[1],
+						"kecamatan" => $kecamatan[1],
+						"kota" => $kota[1],
+						"no_telp" => $no_telp,
+						"no_hp_pemohon" => $no_hp_pemohon,
+						"unit_kerja" => $unit_kerja,
+						"nama_pimpinan" => $nama_pimpinan,
+						"kode_kota" => $kota[0],
+					);
+		}
+		
 
 		if ($menu == "tambah") {
 			$arr["nama_pemohon"] = $nama_pemohon;
