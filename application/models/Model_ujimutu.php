@@ -186,7 +186,7 @@ class Model_ujimutu extends CI_Model {
   public function getDataLayananUjiMutu($value)
   {
     if ($value != null) {
-      $query = $this->db->query("SELECT *,
+      /*$query = $this->db->query("SELECT *,
       c.namajenis,d.namadetail,
       a.status status_layanan ,timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(DATE_ADD(now(), INTERVAL 7 DAY), DATE)) selisih
       from layanan_ujimutu a
@@ -195,6 +195,15 @@ class Model_ujimutu extends CI_Model {
       join jenis_komoditas_detil d on a.idjenisdetail = d.idjenisdetail
       where a.id_identitas_usaha = " . $value . "
       and case when a.validlab = 0 then timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(now(), DATE)) else 0 end <= 7 
+      order by a.tanggal_buat desc");*/
+      $query = $this->db->query("SELECT *,
+      c.namajenis,d.namadetail,
+      a.status status_layanan ,timestampdiff(DAY,  CONVERT(a.tanggal_buat, DATE), CONVERT(DATE_ADD(now(), INTERVAL 7 DAY), DATE)) selisih
+      from layanan_ujimutu a
+      join master_layanan b on a.kode_layanan = b.kode_layanan 
+      join jenis_komoditas c on a.idjenis = c.idjenis 
+      join jenis_komoditas_detil d on a.idjenisdetail = d.idjenisdetail
+      where a.id_identitas_usaha = " . $value . "
       order by a.tanggal_buat desc");
       return $query->result_array();
     } else {
