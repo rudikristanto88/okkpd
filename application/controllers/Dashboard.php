@@ -2148,6 +2148,7 @@ class Dashboard extends MY_Controller
 
 		if (!$this->upload->do_upload($nama)) {
 			$error = array('error' => $this->upload->display_errors());
+			$this->session->set_flashdata( 'error_msg', $this->upload->display_errors() );
 			return null;
 		} else {
 			if ($_FILES[$nama]['type'] == 'image/jpeg' || $_FILES[$nama]['type'] == 'image/png') {
@@ -3338,7 +3339,7 @@ class Dashboard extends MY_Controller
 				  Terima Kasih."; //$this->load->view('default/email/notifikasi_sertifikat_terbit', $data, true);
 		
 		if ($this->uploads($_FILES, 'gambar') == null) {
-			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Dokumen tidak dapat diunggah</div>");
+			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Dokumen tidak dapat diunggah.".$this->session->flashdata( 'error_msg' )."</div>");
 			redirect("dashboard/u_layanan_cetakLHU");
 		} else {
 			$gambar_temp = $this->uploads($_FILES, 'gambar');
