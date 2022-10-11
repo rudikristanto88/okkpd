@@ -2140,7 +2140,7 @@ class Dashboard extends MY_Controller
 		$_FILES[$nama]['error'] = $files[$nama]['error'];
 		$_FILES[$nama]['size'] = $files[$nama]['size'];
 		$config = array();
-		$config['upload_path']          = '../upload/';
+		$config['upload_path']          = './upload/';
 		$config['allowed_types']        = 'pdf|gif|jpg|png|xls|xlsx|doc|docx|rar|zip';
 		$config['max_size']             = 2048;
 		$this->load->library('upload', $config);
@@ -2154,7 +2154,7 @@ class Dashboard extends MY_Controller
 			if ($_FILES[$nama]['type'] == 'image/jpeg' || $_FILES[$nama]['type'] == 'image/png') {
 				$data = $this->upload->data();
 				$config['image_library'] = 'gd2';
-				$config['source_image'] = '../upload/' . $data["file_name"];
+				$config['source_image'] = './upload/' . $data["file_name"];
 				$config['create_thumb'] = FALSE;
 				$config['maintain_ratio'] = TRUE;
 				$config['quality'] = '50%';
