@@ -3338,8 +3338,47 @@ class Dashboard extends MY_Controller
 				  Untuk LHU versi berkas digital dapat diunduh pada halaman dashboard website okkpd Anda.<br/> 
 				  Terima Kasih."; //$this->load->view('default/email/notifikasi_sertifikat_terbit', $data, true);
 		/*print_r($_FILES);*/
-		
-		if ($this->uploads($_FILES, 'gambar') == null) {
+		define('IMGPATH', './upload/');
+
+        //image 1
+        $error = "";
+        if ($_FILES['gambar']['name'] != '') {
+            $path = $_FILES['gambar']['name'];
+            $ext = pathinfo($path, PATHINFO_EXTENSION); 
+
+            //$foto = $_FILES['dokumen']['name'];
+            if ($_FILES['gambar']['name'] != '') {
+
+                // $_FILES['dokumen']['name'] = $this->rand_str() . ".jpg";
+                //$foto = $_FILES['dokumen']['name'];
+                if ($_FILES['gambar']['error'] > 0) {
+                    $error.= 'File Error : ' . $_FILES['gambar']['error'];
+                }
+
+                $temp = $_FILES['gambar']['tmp_name'];
+                $dest = IMGPATH . $_FILES['gambar']['name'];
+
+                if (file_exists($dest)) {
+                    $error.= 'Nama file kembar. Ganti nama file Anda';
+                }
+                if (!move_uploaded_file($_FILES['gambar']['tmp_name'], $dest)) {
+                    $error.= 'File tidak dapat di-upload ' . $dest;
+                }
+            }
+            if ($error == "") {
+                //$gambar_temp = $this->uploads($_FILES, 'gambar');
+				$gambar = file_get_contents($_FILES['gambar']['full_path']);
+				$data = array("sertifikat" => $gambar, "mime_type" => $_FILES['gambar']['type']);
+				$this->model_user->updateData('layanan_ujimutu', $id_layanan, 'uid', $data);
+				//print_r($data);
+				$this->kirim_email("Pemberitahuan", $uploademail, $message);
+				redirect("dashboard/u_layanan_cetakLHU");
+            }else{
+				$this->session->set_flashdata("status", "<div class='alert alert-warning'>Dokumen tidak dapat diunggah.".$error."</div>");
+				redirect("dashboard/u_layanan_cetakLHU");
+			}
+        }
+		/*if ($this->uploads($_FILES, 'gambar') == null) {
 			$this->session->set_flashdata("status", "<div class='alert alert-warning'>Dokumen tidak dapat diunggah.".$this->session->flashdata( 'error_msg' )."</div>");
 			redirect("dashboard/u_layanan_cetakLHU");
 		} else {
@@ -3351,7 +3390,7 @@ class Dashboard extends MY_Controller
 			$this->kirim_email("Pemberitahuan", $uploademail, $message);
 			redirect("dashboard/u_layanan_cetakLHU");
 		}
-		
+		*/
 	}
 
 	function survey()
